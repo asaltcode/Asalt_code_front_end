@@ -1,0 +1,32 @@
+.videoPlayer-container{
+    padding: 20px;
+    height: 100vh;
+}
+
+video{
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 3px 3px 30px gray;
+}
+.video-box{
+    overflow:  hidden;
+    border-radius: 10px;
+    margin-top: 10px;
+    
+    box-shadow: 3px 3px 30px gray;
+}
+.card-topic-body{
+    margin-left: 40px;
+    color: black;
+    padding: 10px;
+}
+.syllabus-card{
+    margin-top: 10px;
+    background-color: white;
+}
+.card-title-topic{
+    padding: 5px;
+    background-color: antiquewhite;
+}

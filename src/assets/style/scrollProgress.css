@@ -1,0 +1,52 @@
+::-webkit-scrollbar{
+    width: 0;
+}
+
+#scrollPath{
+  position: fixed;
+  width: 7px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.05);
+  z-index: 1000;
+}
+#progressbar{
+  border-radius: 10px;
+  transition: none;
+  z-index: 1000;
+ position: fixed;
+ width: 5px;
+ top: 0;
+ right: 0;
+ background-image: linear-gradient(to top, #008aff, #00ffe7);
+ animation: bar 5s linear infinite;
+}
+@keyframes bar {
+  0%, 100%{
+    filter: hue-rotate(0deg);
+  }
+  50%{
+    filter: hue-rotate(360deg);
+  }
+}
+#progressbar::before{
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #008aff, #00ffe7);
+  filter: blur(30px);
+}
+#progressbar::after{
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, #008aff, #00ffe7);
+  filter: blur(30px);
+}

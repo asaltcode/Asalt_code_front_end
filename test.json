@@ -1,0 +1,1154 @@
+{
+    "sub-home": {
+        "data": [
+            {
+                "_id": "62f6291ce4b0c1a9d47d8a18",
+                "spayee:resource": {
+                    "spayee:title": "Learn Ethical Hacking + Bug Bounty",
+                    "spayee:courseUrl": "Ethical-Hacking",
+                    "spayee:courseType": "package",
+                    "spayee:availableForMarket": "true",
+                    "spayee:availableForMembership": false,
+                    "spayee:filter1": [
+                        "Ethical Hacking"
+                    ],
+                    "spayee:mrp": 3499,
+                    "spayee:price": 1999,
+                    "spayee:productVariants": [
+                        {
+                            "validityVariants": [
+                                {
+                                    "type": "ONE_TIME",
+                                    "validityType": "none",
+                                    "mrp": 3499,
+                                    "price": 1999,
+                                    "id": "v1-3499-1999",
+                                    "label": "Lifetime"
+                                }
+                            ],
+                            "id": "p1",
+                            "productType": "Life Time"
+                        }
+                    ],
+                    "spayee:purchaseType": "cart",
+                    "spayee:coverVersion": 3,
+                    "spayee:hidePackageRibbon": false,
+                    "spayee:language": "TAMIL",
+                    "spayee:shortDescription": "<p>Learn Ethical Hacking + Bug bounty<\/p>\n",
+                    "spayee:showLearners": false
+                },
+                "courses-count": 3,
+                "courses": [
+                    {
+                        "_id": "62f62c47e4b0023a62ff161f",
+                        "spayee:resource": {
+                            "spayee:title": "Learn About Bug Bounty in Tamil",
+                            "spayee:coverVersion": 1
+                        }
+                    },
+                    {
+                        "_id": "62f624aee4b0bef6ec21affb",
+                        "spayee:resource": {
+                            "spayee:title": "Learn Ethical Hacking - Project 2",
+                            "spayee:coverVersion": 2
+                        }
+                    },
+                    {
+                        "_id": "62f5d9c3e4b07db33ff33e65",
+                        "spayee:resource": {
+                            "spayee:title": "Learn Ethical Hacking - Project 1",
+                            "spayee:coverVersion": 2
+                        }
+                    }
+                ],
+                "modules": 0
+            },
+            {
+                "_id": "62ebc9530cf2d187e0aac20b",
+                "spayee:resource": {
+                    "spayee:title": "Learn Web Development in Tamil",
+                    "spayee:publisher": "Karthik - Tamil Hacks",
+                    "spayee:courseUrl": "Learn-Web-Development-in-Tamil",
+                    "spayee:courseType": "normal",
+                    "spayee:availableForMarket": "true",
+                    "spayee:availableForMembership": false,
+                    "spayee:filter1": [
+                        "Web Development"
+                    ],
+                    "spayee:mrp": 3499,
+                    "spayee:price": 1999,
+                    "spayee:productVariants": [
+                        {
+                            "validityVariants": [
+                                {
+                                    "type": "ONE_TIME",
+                                    "validityType": "none",
+                                    "mrp": 3499,
+                                    "price": 1999,
+                                    "id": "v1-3499-1999",
+                                    "label": "Lifetime"
+                                }
+                            ],
+                            "id": "p1",
+                            "productType": "Learn Web Development in Tamil From Scratch"
+                        }
+                    ],
+                    "spayee:purchaseType": "cart",
+                    "spayee:language": "TAMIL",
+                    "spayee:shortDescription": "<p>Web Developer Boot Camp with HTML &amp; CSS<\/p>\n",
+                    "spayee:showLearners": false,
+                    "spayee:coverVersion": 7,
+                    "spayee:gstRate": 18,
+                    "spayee:pricingIncludingTaxes": true
+                },
+                "rating": {
+                    "total": 4,
+                    "avgRating": 5
+                },
+                "modules": 0
+            },
+            {
+                "_id": "62f62c47e4b0023a62ff161f",
+                "spayee:resource": {
+                    "spayee:title": "Learn About Bug Bounty in Tamil",
+                    "spayee:publisher": "Karthik - Tamil Hacks",
+                    "spayee:courseUrl": "Learn-About-Bug-Bounty-in-Tamil",
+                    "spayee:courseType": "normal",
+                    "spayee:coverVersion": 1,
+                    "spayee:availableForMarket": "true",
+                    "spayee:availableForMembership": false,
+                    "spayee:filter1": [
+                        "Bug Bounty"
+                    ],
+                    "spayee:mrp": 4999,
+                    "spayee:price": 2499,
+                    "spayee:productVariants": [
+                        {
+                            "validityVariants": [
+                                {
+                                    "type": "ONE_TIME",
+                                    "validityType": "none",
+                                    "mrp": 4999,
+                                    "price": 2499,
+                                    "id": "v1-4999-2499",
+                                    "label": "Lifetime"
+                                }
+                            ],
+                            "id": "p1",
+                            "productType": "Life Time"
+                        }
+                    ],
+                    "spayee:purchaseType": "cart",
+                    "spayee:language": "TAMIL",
+                    "spayee:shortDescription": "",
+                    "spayee:showLearners": false
+                },
+                "modules": 0
+            },
+            {
+                "_id": "62f624aee4b0bef6ec21affb",
+                "spayee:resource": {
+                    "spayee:title": "Learn Ethical Hacking - Project 2",
+                    "spayee:publisher": "Karthik - Tamil Hacks",
+                    "spayee:courseUrl": "Learn-Ethical-Hacking-Project-2",
+                    "spayee:courseType": "normal",
+                    "spayee:coverVersion": 2,
+                    "spayee:availableForMarket": "true",
+                    "spayee:availableForMembership": false,
+                    "spayee:filter1": [
+                        "Ethical Hacking"
+                    ],
+                    "spayee:mrp": 2499,
+                    "spayee:price": 1499,
+                    "spayee:productVariants": [
+                        {
+                            "validityVariants": [
+                                {
+                                    "type": "ONE_TIME",
+                                    "validityType": "none",
+                                    "mrp": 2499,
+                                    "price": 1499,
+                                    "id": "v1-2499-1499",
+                                    "label": "Lifetime"
+                                }
+                            ],
+                            "id": "p1",
+                            "productType": "Life Time"
+                        }
+                    ],
+                    "spayee:purchaseType": "cart",
+                    "spayee:language": "TAMIL",
+                    "spayee:shortDescription": "<p>Learn Ethical Hacking Project 2<\/p>\n",
+                    "spayee:showLearners": false
+                },
+                "modules": 0
+            },
+            {
+                "_id": "62f5d9c3e4b07db33ff33e65",
+                "spayee:resource": {
+                    "spayee:title": "Learn Ethical Hacking - Project 1",
+                    "spayee:publisher": "karthik - Tamil Hacks",
+                    "spayee:courseUrl": "Learn-Ethical-Hacking-Project-1",
+                    "spayee:courseType": "normal",
+                    "spayee:coverVersion": 2,
+                    "spayee:availableForMarket": "true",
+                    "spayee:availableForMembership": false,
+                    "spayee:filter1": [
+                        "Ethical Hacking"
+                    ],
+                    "spayee:mrp": 999,
+                    "spayee:price": 499,
+                    "spayee:productVariants": [
+                        {
+                            "validityVariants": [
+                                {
+                                    "type": "ONE_TIME",
+                                    "validityType": "none",
+                                    "mrp": 999,
+                                    "price": 499,
+                                    "id": "v1-999-499",
+                                    "label": "Lifetime"
+                                }
+                            ],
+                            "id": "p1",
+                            "productType": "Life Time Access"
+                        }
+                    ],
+                    "spayee:purchaseType": "cart",
+                    "spayee:language": "TAMIL",
+                    "spayee:shortDescription": "<p>Learn Ethical Hacking in Tamil<\/p>\n",
+                    "spayee:showLearners": false
+                },
+                "rating": {
+                    "total": 2,
+                    "avgRating": 5
+                },
+                "modules": 0
+            },
+            {
+                "_id": "64c6ad33e4b0f2b9c700c030",
+                "spayee:resource": {
+                    "spayee:title": "Learn React and Build awesome apps",
+                    "spayee:publisher": "Karthik - Tamil Hacks",
+                    "spayee:mrp": 4499,
+                    "spayee:price": 1999,
+                    "spayee:productVariants": [
+                        {
+                            "validityVariants": [
+                                {
+                                    "type": "ONE_TIME",
+                                    "validityType": "none",
+                                    "mrp": 4499,
+                                    "price": 1999,
+                                    "id": "v1-4499-1999",
+                                    "label": "Lifetime",
+                                    "pgChargesLearner": true,
+                                    "pgChargesLearnerPercent": 2.124
+                                }
+                            ],
+                            "id": "p1",
+                            "productType": "OTP"
+                        }
+                    ],
+                    "spayee:filter1": [
+                        "Software & Technology"
+                    ],
+                    "spayee:availableForMarket": "true",
+                    "spayee:courseUrl": "Learn-React-and-build-awesome-apps-",
+                    "spayee:courseType": "normal",
+                    "spayee:shortDescription": "<p>Unlock the potential of React and build amazing applications with ease<\/p>\n",
+                    "spayee:coverVersion": 2,
+                    "spayee:language": "TAMIL",
+                    "spayee:showLearners": false,
+                    "spayee:availableForMembership": false,
+                    "spayee:purchaseType": "cart"
+                },
+                "modules": 0
+            }
+        ],
+        "total": 6,
+        "limit": 16,
+        "skip": 0
+    },
+    "response": true
+}
+
+
+{
+    "toc": [
+        {
+            "title": "Introduction",
+            "id": "85irzz8do",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "1.1  What is web development, why do you need to learn it_",
+                    "id": "62f35294e4b0ee2b7310b143",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.1083333
+                },
+                {
+                    "title": "1.2 Who can learn this course?",
+                    "id": "62f29bf40cf2a331e5ca9ed0",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 2.3277833
+                },
+                {
+                    "title": "1.3 Requirements for starting this course",
+                    "id": "62f29bf40cf20962caf45403",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 2.3177834
+                },
+                {
+                    "title": "1.4 Overview of what we are going to learn",
+                    "id": "62f29bee0cf2a331e5ca9ecf",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 2.6516666
+                },
+                {
+                    "title": "1.5 Basic code setup to start learning",
+                    "id": "62f29bfe0cf2a331e5ca9ed1",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 5.338333
+                }
+            ]
+        },
+        {
+            "title": "Learn HTML",
+            "id": "isw1ce9tbn",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "2.1 HTML Introduction",
+                    "id": "62f29db00cf238063b4c5cc4",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 16.703333
+                },
+                {
+                    "title": "2.2 HTML Syntax & Usage",
+                    "id": "62f29d510cf23bbefc411d71",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.185
+                },
+                {
+                    "title": "2.3 Understand the structure & basics",
+                    "id": "62f29da00cf238063b4c5cc2",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 11.402783
+                },
+                {
+                    "title": "2.4. Learn about head & meta",
+                    "id": "62f29d7b0cf238063b4c5cbe",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.441116
+                },
+                {
+                    "title": "2.5. Automate loading using server",
+                    "id": "62f29d480cf296b09e5ca6f3",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.74
+                },
+                {
+                    "title": "2.6. Bring out the text content",
+                    "id": "62f29da40cf238063b4c5cc3",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 10.983334
+                },
+                {
+                    "title": "2.7. Learn about Formatters",
+                    "id": "62f29d7b0cf296b09e5ca6f6",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 9.127784
+                },
+                {
+                    "title": "2.8. Understanding comments & quotes",
+                    "id": "62f29d730cf23bbefc411d74",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.905
+                },
+                {
+                    "title": "2.9. Learn about links & Attributes",
+                    "id": "62f29d850cf296b09e5ca6f8",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.892783
+                },
+                {
+                    "title": "2.10. Using Images on our website",
+                    "id": "62f29d890cf238063b4c5cc0",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.4183335
+                },
+                {
+                    "title": "2.11. Display data using lists",
+                    "id": "62f29d790cf23bbefc411d75",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.266667
+                },
+                {
+                    "title": "2.12. Build a table in HTML",
+                    "id": "62f29d800cf296b09e5ca6f7",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.9277835
+                },
+                {
+                    "title": "2.13. Learn about Block & Inline property",
+                    "id": "62f29d4f0cf296b09e5ca6f4",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.9266667
+                },
+                {
+                    "title": "2.14. Design forms in a website",
+                    "id": "62f29d920cf238063b4c5cc1",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 7.5311165
+                },
+                {
+                    "title": "2.15. Learn about Iframes",
+                    "id": "62f29d5f0cf23bbefc411d73",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 5.0822167
+                },
+                {
+                    "title": "2.16. Html Entities & set favicon",
+                    "id": "62f29d880cf296b09e5ca6f9",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 5.62
+                },
+                {
+                    "title": "2.17. Intro to Semantic elements",
+                    "id": "62f29d7e0cf238063b4c5cbf",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 6.09055
+                },
+                {
+                    "title": "2.18. Web challenge 1",
+                    "id": "62f29d5a0cf23bbefc411d72",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.30055
+                },
+                {
+                    "title": "2.19. Web challenge 1 solutions",
+                    "id": "62f29dbd0cf238063b4c5cc5",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 22.663334
+                },
+                {
+                    "title": "2.20. Build your first website",
+                    "id": "62f29dc40cf238063b4c5cc6",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 16.69
+                }
+            ]
+        },
+        {
+            "title": "Learn CSS",
+            "id": "mn63p5kwh0i",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "3.1. CSS Introduction",
+                    "id": "62f29e8f0cf2c15e46569c02",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.48945
+                },
+                {
+                    "title": "3.2. CSS Syntax & Usage",
+                    "id": "62f29e7e0cf2c15e46569c00",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.80555
+                },
+                {
+                    "title": "3.3. Different style methods & priority",
+                    "id": "62f29ebf0cf23bbefc411d81",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 12.81555
+                },
+                {
+                    "title": "3.4. Learn about selectors & use cases",
+                    "id": "62f29e990cf2c15e46569c03",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.013333
+                },
+                {
+                    "title": "3.5. More selectors info & comments",
+                    "id": "62f29e740cf2c15e46569bff",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.36555
+                },
+                {
+                    "title": "3.6. Intro to Colors & Borders",
+                    "id": "62f29eab0cf2c15e46569c06",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.075
+                },
+                {
+                    "title": "3.7. Understanding the Background Property",
+                    "id": "62f29ebb0cf23bbefc411d80",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 7.0627832
+                },
+                {
+                    "title": "3.8. Element relation & solving doubts",
+                    "id": "62f29e850cf2c15e46569c01",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.9372168
+                },
+                {
+                    "title": "3.9. Design using Margin & padding",
+                    "id": "62f29ee40cf23bbefc411d83",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 10.891666
+                },
+                {
+                    "title": "3.10. Learn about the box-model",
+                    "id": "62f29ea00cf2c15e46569c05",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 5.6566668
+                },
+                {
+                    "title": "3.11. Understanding text & font in details",
+                    "id": "62f29eb40cf23bbefc411d7f",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 7.83555
+                },
+                {
+                    "title": "3.12. Learn about CSS Positions",
+                    "id": "62f29f0f0cf23bbefc411d85",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 16.79555
+                },
+                {
+                    "title": "3.13 Apply Z Index to overlapping designs",
+                    "id": "62f29eb30cf2c15e46569c07",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.287784
+                },
+                {
+                    "title": "3.14. Introduction to Flex - Game changer",
+                    "id": "62f29f0b0cf23bbefc411d84",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 15.702784
+                },
+                {
+                    "title": "3.15. More Flex to build dynamic designs",
+                    "id": "62f29ec30cf23bbefc411d82",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 11.782217
+                },
+                {
+                    "title": "3.16. Websites using Flex in Real World",
+                    "id": "62f29ef40cf2c15e46569c0a",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.52445
+                },
+                {
+                    "title": "3.17. Web challenge 2",
+                    "id": "62f29e640cf2c15e46569bfe",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 2.535
+                },
+                {
+                    "title": "3.18. Web challenge 2 - solution part 1",
+                    "id": "62f29f230cf23bbefc411d86",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 25.107784
+                },
+                {
+                    "title": "3.19. Web challenge 2 - solution part 2",
+                    "id": "62f2a14ae4b066c9a755f7f8",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 43.418335
+                },
+                {
+                    "title": "3.20. Additional useful information",
+                    "id": "62f29e9d0cf2c15e46569c04",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.8516665
+                }
+            ]
+        },
+        {
+            "title": "Build Websites",
+            "id": "4uizfx10r4",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "4.1 project 1 - intro ",
+                    "id": "63046918e4b0c7d099fc30b3",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.2027833
+                },
+                {
+                    "title": "4.2 code project 1",
+                    "id": "6304691fe4b0b9f4955f4261",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.451117
+                },
+                {
+                    "title": "4.3 applying design to project 1",
+                    "id": "6304695de4b0b9f4955f4287",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 23.442783
+                },
+                {
+                    "title": "4.4 Intro to figma ",
+                    "id": "63046947e4b0b9f4955f4280",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 2.6136167
+                },
+                {
+                    "title": "4.5 How to use Figma ",
+                    "id": "63046989e4b075160b33c1f9",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.831667
+                },
+                {
+                    "title": "4.6  Project 2 - intro ",
+                    "id": "6304694de4b0bbd9694481fc",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.55055
+                },
+                {
+                    "title": "4.7 Project 2 - header Design ",
+                    "id": "6304697fe4b0b9f4955f4299",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 19.867216
+                },
+                {
+                    "title": "4.8 Project 2 - Home screen ",
+                    "id": "63046a4ae4b008929cdb72b8",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 31.198883
+                },
+                {
+                    "title": "4.9 Project 2 - Feature Screen",
+                    "id": "63046a19e4b0bbd969448263",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 13.018333
+                },
+                {
+                    "title": "4.10 Project 2 - Plan screen",
+                    "id": "630469cde4b028caaf6a817e",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 29.351116
+                },
+                {
+                    "title": "4.11 Project 2 - network screen",
+                    "id": "6304693de4b027082a9b6915",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 5.4661164
+                },
+                {
+                    "title": "4.12 Project 2 - Review screen",
+                    "id": "630469c6e4b0dfe46c36cc75",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 20.739717
+                },
+                {
+                    "title": "4.13 Project 2 - subscribe screen",
+                    "id": "6304698fe4b0dfe46c36cc54",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 16.25445
+                },
+                {
+                    "title": "4.14 Project 2 - footer design",
+                    "id": "63046a2ce4b0dfe46c36ccc2",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 16.86305
+                },
+                {
+                    "title": "4.15 Final Project Code",
+                    "id": "63046958e4b075160b33c1e5",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 6.0822167
+                }
+            ]
+        },
+        {
+            "title": "Build Responsive websites",
+            "id": "j2ngdph29w",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "5.1 Responsiveness Introduction",
+                    "id": "630469b4e4b0c7d099fc3106",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 5.4666667
+                },
+                {
+                    "title": "5.2 Learn mobile web design ",
+                    "id": "630469d9e4b0b9f4955f42db",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 14.039166
+                },
+                {
+                    "title": "5.3 Design for different devices ",
+                    "id": "63046a1fe4b075160b33c248",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.024167
+                },
+                {
+                    "title": "5.4 Design project for the mobile + web ",
+                    "id": "630469dde4b008929cdb7296",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 23.9025
+                },
+                {
+                    "title": "5.5 Importance of Responsive designs ",
+                    "id": "63046a45e4b0dfe46c36cccb",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 20.080833
+                }
+            ]
+        },
+        {
+            "title": "Project Resources",
+            "id": "2n2zq65ids",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "amazon login",
+                    "id": "63046b0be4b0bbd9694484fb",
+                    "type": "file",
+                    "time": 0
+                },
+                {
+                    "title": "challenges",
+                    "id": "63046b16e4b0dfe46c36cddb",
+                    "type": "file",
+                    "time": 0
+                },
+                {
+                    "title": "Netflix",
+                    "id": "63046b28e4b075160b33c377",
+                    "type": "file",
+                    "time": 0
+                },
+                {
+                    "title": "Vpn project",
+                    "id": "63046b2fe4b0c7d099fc3277",
+                    "type": "file",
+                    "time": 0
+                }
+            ]
+        },
+        {
+            "title": "Importance of server and cloud",
+            "id": "5ewlyp4msj",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "7.1 Introduction to Project 3",
+                    "id": "630f1bc0e4b032045f5b4285",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 1.2658334
+                },
+                {
+                    "title": "7.2 Learn about Github",
+                    "id": "630f1be8e4b0972a8fec3903",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.4958334
+                },
+                {
+                    "title": "7.3 Inside Github",
+                    "id": "630f1dcae4b022e5c2e84b8a",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 7.2161164
+                },
+                {
+                    "title": "7.4 Working with git tool",
+                    "id": "630f1cd8e4b032045f5b42c5",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.296117
+                },
+                {
+                    "title": "7.5 Push code to Online ",
+                    "id": "630f1c38e4b032045f5b42a0",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.206667
+                },
+                {
+                    "title": "7.6 Properly use git & github",
+                    "id": "630f1c0fe4b042eac2370ee2",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.622783
+                },
+                {
+                    "title": "7.7 More details on the working",
+                    "id": "630f1fede4b0972a8fec3aff",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 7.6516666
+                },
+                {
+                    "title": "7.8 Code Project 3 ",
+                    "id": "630f2096e4b097e97d8c443e",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 11.11555
+                }
+            ]
+        },
+        {
+            "title": "Launch your site in Internet",
+            "id": "w0r2ehce8c",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "How does a Website work in internet ",
+                    "id": "630f2cf8e4b0d0c6725570eb",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 13.166117
+                },
+                {
+                    "title": "8.1 Introduction to deployment",
+                    "id": "630f1f89e4b097e97d8c4314",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.5183334
+                },
+                {
+                    "title": "8.2 Learn about Netlify",
+                    "id": "630f1d6fe4b022e5c2e84b6f",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 7.1277833
+                },
+                {
+                    "title": "8.3 Manual deployment & Updates",
+                    "id": "630f1d6ce4b0e3bd955ebbce",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 7.0811167
+                },
+                {
+                    "title": "8.4 Continues deployment - Efective way",
+                    "id": "630f1e2ce4b097e97d8c42ab",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 9.18
+                },
+                {
+                    "title": "8.5 Custom domain & hosting",
+                    "id": "630f1dfde4b0972a8fec3a32",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 4.189717
+                }
+            ]
+        },
+        {
+            "title": "What to do with the knowledge",
+            "id": "9xaepre3l2",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "Learn about Freelancing",
+                    "id": "630f299fe4b042eac23715ab",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 13.809167
+                },
+                {
+                    "title": "How to Clear Coding Interviews | Complete guide for JOB Preparation",
+                    "id": "630f29fde4b042eac23715bf",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 41.54722
+                }
+            ]
+        },
+        {
+            "title": "Learn JavaScript",
+            "id": "9ftwxo0adf",
+            "type": "label",
+            "time": 0,
+            "items": [
+                {
+                    "title": "Js Introduction",
+                    "id": "6316b6cae4b0f44b8c65e51e",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 10.821116666666667
+                },
+                {
+                    "title": "Js Topic 2",
+                    "id": "6316b75ce4b053921d8205d6",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 22.645283333333335
+                },
+                {
+                    "title": "Js Topic 3",
+                    "id": "6316b73ee4b0ae530203fced",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 13.363616666666667
+                },
+                {
+                    "title": "Js Topic 4",
+                    "id": "6316b731e4b08cb76644a83c",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 13.753883333333333
+                },
+                {
+                    "title": "Js Topic 5",
+                    "id": "6316b6ebe4b01db70d737b5e",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 13.236116666666668
+                },
+                {
+                    "title": "Js Topic 6",
+                    "id": "6316b68fe4b0f44b8c65e4fa",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 0
+                },
+                {
+                    "title": "Js Topic 7",
+                    "id": "6316b74ae4b0ae530203fcee",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 18.411116666666665
+                },
+                {
+                    "title": "Js Topic 8",
+                    "id": "6316b592e4b0ae530203fc95",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 29.254166666666666
+                },
+                {
+                    "title": "Js Topic 9",
+                    "id": "6316b5d9e4b0c7cb5e2e58a0",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 22.3325
+                },
+                {
+                    "title": "Js Topic 10",
+                    "id": "6316b5bbe4b08cb76644a6db",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 9.36945
+                },
+                {
+                    "title": "Js Topic 11",
+                    "id": "6316b6dbe4b009c4c7a18cbd",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 30.43388333333333
+                },
+                {
+                    "title": "Js Topic 12",
+                    "id": "6316b6cfe4b0355a37a103d5",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 8.431666666666667
+                },
+                {
+                    "title": "Js Topic 13",
+                    "id": "6316b646e4b08cb76644a711",
+                    "type": "video",
+                    "videoType": "upload",
+                    "time": 0,
+                    "duration": 3.3066666666666666
+                }
+            ]
+        },
+        {
+            "title": "Q/A Session",
+            "id": "e2c83365ff",
+            "type": "label",
+            "time": 0
+        },
+        {
+            "title": "Assignment session",
+            "id": "fj883cdejvk",
+            "type": "label",
+            "time": 0
+        }
+    ],
+    "sampleSectionIds": [],
+    "curriculumAssetInfo": true,
+    "title": "Learn Web Development in Tamil",
+    "sampleAvailable": false,
+    "courseUrl": "Learn-Web-Development-in-Tamil",
+    "assetInfo": true
+}
