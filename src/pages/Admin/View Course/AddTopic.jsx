@@ -14,6 +14,7 @@ const AddTopic = () => {
 
     const [file, setFile] = useState(null);
     const [courseUrl, setCourseUrl] = useState("")
+    const [duration, setDuration] = useState("")
     const [courseId, setCourseId] = useState("")
     const [syllabus, setSyllabus] = useState([])
 
@@ -54,8 +55,10 @@ let handleUpload = async () =>{ // handle video upload
             })
             if(res.status === 200){
                 toast.success("file upload successfully")
+                console.log(res.data)
                 setCourseUrl(res.data.url)
                 setCourseId(res.data.id)
+                setDuration(res.data.duration)
                }
           }else{
             toast.error("Select file")
@@ -88,7 +91,7 @@ author:Yup.string().required("Role is required"),
 enableReinitialize:true,
 onSubmit: async (values,  { resetForm }) =>{
    try {
-     const res = await AxiosService.post(ApiRoutes.ADD_TOPIC.path, {...values,  topic_video_id: courseId}, {authenticate: ApiRoutes.ADD_TOPIC.authenticate})
+     const res = await AxiosService.post(ApiRoutes.ADD_TOPIC.path, {...values,  topic_video_id: courseId, duration}, {authenticate: ApiRoutes.ADD_TOPIC.authenticate})
      if(res.status === 200){
          toast.success("Topic Added Successufully")
          resetForm(initialValues)

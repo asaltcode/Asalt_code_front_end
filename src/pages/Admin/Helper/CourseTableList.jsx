@@ -4,7 +4,7 @@ import AxiosService from '../../../utils/AxiosService'
 import ApiRoutes from '../../../utils/ApiRoutes'
 import { toast } from 'react-toastify'
 
-const CourseTableList = ({thumbnail, id , course, setCourse, title, category, visibility, createdAt}) => {
+const CourseTableList = ({thumbnail, id , course, price, setCourse, title, category, visibility, createdAt}) => {
   const scrollToElement = id =>  document.getElementById(id) && document.getElementById(id).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}) 
 
   const navigate = useNavigate()
@@ -46,6 +46,7 @@ const handleDelete = async (id) =>{
             <td className='text-center'>
                 <img src={thumbnail} alt="carousel image"  style={{height: "50px", width: "50px", objectFit: "cover", borderRadius: "10px"}} />               
             </td>
+            <td>₹ {price}</td>
             <td>{category}</td>
             <td>{visibility 
               ? <><div className="badge  border rounded-5 text-success" style={{background: "#00D25B1C"}}>approval</div></> 

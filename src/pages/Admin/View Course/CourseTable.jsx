@@ -46,6 +46,7 @@ const CourseTable = () => {
                                     </th>
                                     <th>Title</th>
                                     <th>Thumbnail</th>
+                                    <th>Price</th>
                                     <th>Category</th>
                                     <th>Approval</th>
                                     <th>Visibility</th>
@@ -56,7 +57,7 @@ const CourseTable = () => {
                             <tbody>                           
                                 {
                                     course.map((data, index) =>{
-                                        return <CourseTableList key={index} thumbnail={data.thumbnail} course={course} setCourse={setCourse} title={data.title} category={data.category} visibility={data.visibility}
+                                        return <CourseTableList key={index} thumbnail={data.thumbnail} price={data.price} course={course} setCourse={setCourse} title={data.title} category={data.category} visibility={data.visibility}
                                         id={data._id} createdAt={dateModle(data.createdAt)} />
                                     })
                                 }                               

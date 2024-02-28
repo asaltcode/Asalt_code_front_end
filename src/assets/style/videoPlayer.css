@@ -1,6 +1,6 @@
 .videoPlayer-container{
     padding: 20px;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 video{
@@ -10,12 +10,15 @@ video{
     margin-top: 10px;
     box-shadow: 3px 3px 30px gray;
 }
+iframe{
+    border-radius: 10px;
+}
 .video-box{
+    padding: 0;
     overflow:  hidden;
     border-radius: 10px;
-    margin-top: 10px;
-    
-    box-shadow: 3px 3px 30px gray;
+    margin-top: 10px;    
+    animation: videoShadow 3s infinite linear;
 }
 .card-topic-body{
     margin-left: 40px;
@@ -27,6 +30,47 @@ video{
     background-color: white;
 }
 .card-title-topic{
-    padding: 5px;
-    background-color: antiquewhite;
+    padding: 15px;
+    background-color: #efefef;
+    border-radius: 10px;
+}
+.card-title-topic:hover{
+    background-color: #dcdcdc;
+    border-radius: 10px;
+}
+
+@keyframes videoShadow{
+    0%{
+        box-shadow: 3px 3px 250px #00ffff59;
+    }
+    10%{
+        box-shadow: 3px 3px 250px #22ff0059;
+    }
+    20%{
+        box-shadow: 3px 3px 250px #ff00c859;
+    }
+    30%{
+        box-shadow: 3px 3px 250px #ff000059;
+    }
+    40%{
+        box-shadow: 3px 3px 250px #0008ff59;
+    }
+    50%{
+        box-shadow: 3px 3px 250px #f6ff0059;
+    }
+    60%{
+        box-shadow: 3px 3px 250px #055b0659;
+    }
+    70%{
+        box-shadow: 3px 3px 250px #8700d459;
+    }
+    80%{
+        box-shadow: 3px 3px 250px #ffffff6c;
+    }
+    90%{
+        box-shadow: 3px 3px 250px #00eeff6c;
+    }
+    100%{
+        box-shadow: 3px 3px 250px #720000a3;
+    }
 }

@@ -7,8 +7,8 @@ const CloudinaryVideoPlayer = ({publicId, cloudName}) => {
     height="360" 
     style={{height: "auto", width: "100%", aspectRatio: "640 / 360"}}
     allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-    allowfullscreen
-    frameborder="0"
+    allowFullScreen
+    frameBorder="0"
   ></iframe>
 }
 

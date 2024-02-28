@@ -13,7 +13,6 @@ const Course = () => {
       if(res.status === 200){
          setCourse(res.data.course)
       }
-      console.log(res.data)
     } catch (error) {
       console.log(error)
       toast.error(error.response.data.message || error.message)   
@@ -28,8 +27,7 @@ const Course = () => {
         <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-sm-2 g-4">
           {
             courseData.map((e)=>{
-              console.log(e)
-              return <Cards datas={e} thumbnail={e.thumbnail} title={e.title} id={e._id} key={e._id}/>
+              return <Cards datas={e} price={e.price} thumbnail={e.thumbnail} title={e.title} id={e._id} key={e._id}/>
             })
           }
         </div>

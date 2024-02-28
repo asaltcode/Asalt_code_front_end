@@ -13,6 +13,7 @@ const EditCourse = () => {
         {
             title: "",
             author: "",
+            price: "",
             category: "",
             visibility: "",
             description: "",
@@ -24,8 +25,8 @@ const EditCourse = () => {
         try {
             const res =  await AxiosService.post(`${ApiRoutes.GET_COURSE_BY_ID.path}/${params.id}`,{authenticate: ApiRoutes.GET_COURSE_BY_ID.authenticate})
             if(res.status === 200){
-                const {title, author, category, visibility, description, thumbnail} = res.data.course
-                 setInitialValues({title, author, category, description, visibility, thumbnail})             }
+                const {title, author, price, category, visibility, description, thumbnail} = res.data.course
+                 setInitialValues({title, author, price, category, description, visibility, thumbnail})             }
         } catch (error) {
            console.log(error)
            toast.error(error.response.data.message || error.message)           
@@ -101,7 +102,16 @@ useEffect(()=>{
                         </div>                        
                     </div>
                     <div className="row">
-                    <div className="col-md-6">
+                         <div className="col-md-6">
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label text-light">Price</label>
+                                <div className="col-sm-9">
+                                    <input type="text" name='price' className="form-control text-light" value={formik.values.price} onBlur={formik.handleBlur} onChange={formik.handleChange} />
+                                    {formik.touched.price && formik.errors.price ? (<div className="errorMes">{formik.errors.price}</div>) : null}
+                                </div>
+                            </div>
+                        </div>                       
+                         <div className="col-md-6">
                             <div className="form-group row">
                                 <label className="col-sm-3 col-form-label text-light">Category</label>
                                 <div className="col-sm-9">

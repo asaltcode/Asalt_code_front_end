@@ -2,15 +2,19 @@
   height: 150px;
   object-fit: cover;
   width: 100%;
-  position: absolute;
 }
-.card{
+.course-card{
   transition: 0.5s;
   cursor: pointer;
-  min-height: 240px;
+  min-height: 200px;
 }
-.card:hover{
+.course-card:hover{
   box-shadow: 3px 3px 30px rgba(217, 217, 217, 0.574);
   transform: translateY(-5px);
-  z-index: 99;
+}
+.course-card-title{
+  white-space: nowrap; 
+  width: 100%; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
