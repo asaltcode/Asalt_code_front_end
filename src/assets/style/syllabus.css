@@ -2,7 +2,7 @@
     --themeColor: #317AE7;
     --themeBGColor: #EFF5FE;
     --themeCornerRadius: 25px;
-    --themeGrayColor: #F5F5F5;
+    --themeGrayColor: #e6e4e4;
 }
 
 .accordion-syllabus-header {
@@ -10,7 +10,8 @@
     justify-content: space-between;
     column-gap: 0.2em;
     background: var(--themeGrayColor);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+    /* box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05); */
+    box-shadow:  inset -5px -5px 10px #767676, inset 5px 5px 10px #fff;
     border-radius: var(--themeCornerRadius);
     padding: 1.5rem;
     position: relative;
@@ -50,7 +51,7 @@
 
 .accordian-list__item {
     list-style-type: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.522);
     padding: 20px 0;
 }
 
@@ -88,7 +89,7 @@
 }
 
 .accordion-syllabus-header:hover {
-    box-shadow: 0 0 10px white;
+    box-shadow: inset -5px -5px 10px #767676, inset 5px 5px 10px #fff, 0 0 10px white;
     max-height: 402px; 
 }
 .accordion-syllabus-header__icon{

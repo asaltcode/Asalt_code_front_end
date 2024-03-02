@@ -23,6 +23,7 @@ import UserProductedRoute from "../pages/Auth/UserProductedRoute";
 
 // context components
 import UserEmailContextCoponent from "../context/UserEmailContextCoponent";
+import CartContextComponent from "../context/CartContextComponent";
 
 //Admin Routes
 import Dashboard from "../pages/Admin/Dashboard/Dashboard";
@@ -37,6 +38,10 @@ import AddSyllbus from "../pages/Admin/View Course/AddSyllbus";
 import AddTopic from "../pages/Admin/View Course/AddTopic";
 import VideoPlayer from "../pages/User/VideoPlay/VideoPlayer";
 import CourseDisclosure from "../pages/User/Course/CourseDisclosure";
+import Purchase from "../pages/User/Purchase/Purchase";
+import OrderDetails from "../pages/User/Purchase/Order/OrderDetails";
+import BillingDetails from "../pages/User/Purchase/Billing/BillingDetails";
+import MakePayment from "../pages/User/Purchase/MakePayment/MakePayment";
 
 const AppRouters = [
   {
@@ -159,10 +164,8 @@ const AppRouters = [
     element: (
       <>
         <Progress />
-        <Navication />
-        <UserProductedRoute>
-           <Home /> 
-        </UserProductedRoute>
+        <Navication />       
+           <Home />       
         <Footer />
       </>
     ),
@@ -204,6 +207,33 @@ const AppRouters = [
     ]
   },
   {
+    path: "/purchase",
+    exact: true,
+    element: (
+      <>   
+      <UserProductedRoute>
+          <CartContextComponent>
+             <Purchase /> 
+          </CartContextComponent>     
+      </UserProductedRoute>
+      </>
+    ),
+    children: [      
+     { path: "",
+      exact: true,
+      element: (<OrderDetails/>),
+    },
+     { path: "billing-details",
+      exact: true,
+      element: (<BillingDetails  />),
+    },
+     { path: "make-payment",
+      exact: true,
+      element: (<MakePayment/>),
+    },
+    ]
+  },
+  {
     path: "/buy-course",
     exact: true,
     element: (
@@ -223,7 +253,7 @@ const AppRouters = [
   {
     path: "/*",
     exact: true,
-    element: <Navigate to="home"/>,
+    element: <Navigate to="/home"/>,
   },
 ];
 export default AppRouters;

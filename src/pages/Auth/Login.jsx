@@ -9,6 +9,8 @@ import AxiosService from '../../utils/AxiosService'
 import ApiRoutes from '../../utils/ApiRoutes'
 import { toast } from 'react-toastify'
 import Loading from '../../animation/Loading'
+import { jwtDecode } from 'jwt-decode'
+
 // import useAuth from '../hook/useAuth'
 
 
@@ -53,11 +55,12 @@ const Login = () => {
             let datas = {...values, accessToken, roles}   // setAuth(datas)   
             localStorage.setItem('token', res.data.token)
             localStorage.setItem('name', res.data.name)
+             const decode = jwtDecode(res.data.token)
             
-            if(res?.data?.role === 'admin'){
+            if(res?.data?.role === 'admin' &&  decode.role === "admin"){
                 navigate('/admin')              
             }
-            else if(res?.data?.role === 'user'){
+            else if(res?.data?.role === 'user' && decode.role === "user" ){
                 navigate('/home')
       }
          } catch (error) {

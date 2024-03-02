@@ -1,5 +1,6 @@
 import React from "react";
 const ApiRoutes = {
+  // Auth Routes
   SIGN_UP: {
     path: "/signup",
     authenticate: false,
@@ -32,20 +33,27 @@ const ApiRoutes = {
     path: "/change-password",
     authenticate: false,
   },
+
+  // User And Admin Producte
   USER_PRODUCT_ROUTES: {
     path: "/product",
     authenticate: true,
   },
-  AdMIN_PRODUCT_ROUTES: {
+  ADMIN_PRODUCT_ROUTES: {
     path: "/admin-product",
     authenticate: true,
   },
+
   GET_ALL_USER: {
     path : "/get-all-user",
     authenticate: true,
   },
   GET_USER_BY_ID: {
     path : "/get-user-by-id/",
+    authenticate: true,
+  },
+  GET_USER: {
+    path : "/get-user",
     authenticate: true,
   },
   DEL_USER_BY_ID: {
@@ -56,6 +64,30 @@ const ApiRoutes = {
     path : "/edit-user/",
     authenticate: true,
   },
+
+  // Add To cart related routers
+  ADD_TO_CART: {
+    path : "/add-to-cart",
+    authenticate: true,
+  },
+  GET_ALL_CART: {
+    path : "/get-all-cart",
+    authenticate: true,
+  },
+  DEL_CART: {
+    path : "/del-cart",
+    authenticate: true,
+  },
+  DEL_ALL_CART: {
+    path : "/del-all-cart",
+    authenticate: true,
+  },
+  PAYMENT_PAID_STATUS: {
+    path : "/payment-paid-status",
+    authenticate: true,
+  },
+  
+// Carousle Routers
   ADD_CAROUSEL: {
     path: "/add-carousel",
     authenticate: true,
@@ -72,6 +104,8 @@ const ApiRoutes = {
     path: "/edit-carousel",
     authenticate: true,
   },
+
+  // course Routers
   GET_COURSE: {
     path: "/get-course",
     authenticate: false,
@@ -96,6 +130,8 @@ const ApiRoutes = {
     path: "/del-course",
     authenticate: true,
   },
+
+  // Syllabus Relate Routers
   ADD_SYLLABUS: {
     path: "/add-syllabus",
     authenticate: true,    
@@ -116,18 +152,28 @@ const ApiRoutes = {
     path: "/del-syllabus",
     authenticate: true,
   },
+  GET_SYLLABUS_BY_COURSE_ID: {
+    path: "/get-syllabus-by-course-id",
+    authenticate: true,
+  },
+  GET_SYLLABUS_BY_COURSE_ID_NORMAL: {
+    path: "/get-syllabus-by-course-id-normal",
+    authenticate: false,
+  },
   ADD_TOPIC: {
     path: "/add-topic",
     authenticate: true,
   },
-  GET_SYLLABUS_BY_COURSE_ID: {
-    path: "/get-syllabus-by-course-id",
-    authenticate: false,
-  },
-
+  
   VIDEO_UPLOAD: {
     path: "/upload-video",
     authenticate: false,
+  },
+
+  // Course Access
+  COURSE_ACCESS: {
+    path: "/course-access",
+    authenticate: true
   },
 };
 

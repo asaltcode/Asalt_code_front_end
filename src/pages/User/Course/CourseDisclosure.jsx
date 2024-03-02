@@ -6,12 +6,13 @@ import { toast } from 'react-toastify';
 import '../../../assets/style/syllabus.css'
 import SyllabusCard from './Helper/SyllabusCard';
 import SyllabusTopic from './Helper/SyllabusTopic';
+import { jwtDecode } from 'jwt-decode';
 
 const CourseDisclosure = () => {
-    const navigator = useNavigate()
+    const navigate = useNavigate()
     const [course, setCourse] = useState({});
     const [syllabus, setSyllabus] =useState([])
-    const [show, setShow] = useState(0)
+    const [paid, setPaid] = useState(false)
     const params = useParams()
     const [styles, setStyles] =useState(0)
     const getCourse = async () =>{ // Get course datas
@@ -27,7 +28,7 @@ const CourseDisclosure = () => {
     }
     const getSyllabus = async () =>{  //Get all syllabus and topic by course id
         try {
-            const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID.path}/${params.id}`)
+            const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_NORMAL.path}/${params.id}`, {authenticate: ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_NORMAL.authenticate})
             setSyllabus(res.data.syllabus)         
         } catch (error) {
             console.log(error)
@@ -43,10 +44,6 @@ const CourseDisclosure = () => {
         :`${minutes.toString().padStart(2, '0')} min ${seconds.toString().padStart(2, '0')} sec`;
       }
 
-      const handlDropDown = (i) =>{
-         setShow(100)
-      }
-
     const handleToggleAccordion = ({syllabusId, totalTopics}) => {
        
     setStyles((prevStyles) => ({
@@ -54,8 +51,44 @@ const CourseDisclosure = () => {
         [syllabusId]: prevStyles[syllabusId] ? 0 : 100 * totalTopics
     }));
     };
+
+    const handlePayment = async (courseId) =>{
+        // navigate('/purchase')
+        try {
+            const token = localStorage.getItem('token')
+            const decode = jwtDecode(token)
+            const res = await AxiosService.get(`${ApiRoutes.GET_USER.path}/${decode.id}`,{authenticate: ApiRoutes.GET_USER.authenticate})
+            const cart = await AxiosService.post(`${ApiRoutes.ADD_TO_CART.path}`, {user_id: decode.id, course_id: courseId}, {authenticate: ApiRoutes.ADD_TO_CART.authenticate})
+            if(cart.status === 200){
+               navigate('/purchase')
+            }
+            else if(cart.status === 208){
+                navigate('/purchase')
+            }
+        
+        } catch (error) {
+            console.log(error)
+            toast.error(error.response.data.message || error.message)   
+        }
+
+    }
+
+  const getCourseAccess = async () =>{
+    try {
+        const res = await AxiosService.post(ApiRoutes.COURSE_ACCESS.path, {course_id: params.id}, {authenticate: ApiRoutes.COURSE_ACCESS.authenticate} )
+        if(res.status === 202){
+            setPaid(true)
+        }
+        else if(res.status === 406){
+            setPaid(false)
+       }
+    } catch (error) {
+        console.log(error)
+    }
+    }
      
 useEffect(()=>{
+    getCourseAccess()
     getCourse()
     getSyllabus()
 },[])
@@ -66,9 +99,9 @@ useEffect(()=>{
             <div className='course-title'>
                 <h1 className='course-header'>{course.title}</h1>
                 <div className="buy-btn m-auto">
-                    <button className='btn text-light bg-primary p-3 rounded-pill mb-4'>Buy course for ₹{course.price}</button>
-                    <button className='btn text-light bg-primary p-3 rounded-pill mb-4'
-                        onClick={()=>navigator(`/video/${params.id}`)}>Continue</button>
+                   {paid ? <button className='btn text-light bg-primary p-3 rounded-pill mb-4' onClick={()=>navigate(`/video/${params.id}`)}>Continue</button>
+                   : <button onClick={()=> handlePayment(course._id)} className='btn text-light bg-primary p-3 rounded-pill mb-4'>Buy course for ₹{course.price}</button>
+                   }
                 </div>
                 <h6 className='text-center'>Instructor: {course.author} - Asalt Code Language: TAMIL</h6>
             </div>

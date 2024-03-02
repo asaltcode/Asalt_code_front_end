@@ -3,6 +3,7 @@ import ApiRoutes from "../../utils/ApiRoutes";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import { useLogout } from "../../hook/useLogout";
+import Loading from "../../animation/Loading"
 
 
 const AdminProductedRoute = ({ children }) => {
@@ -14,7 +15,7 @@ const AdminProductedRoute = ({ children }) => {
   useEffect(() => {
     const compareHash = async (data, hash) => {
       try {
-        const res = await AxiosService.post(ApiRoutes.AdMIN_PRODUCT_ROUTES.path, {authenticate: ApiRoutes.AdMIN_PRODUCT_ROUTES.authenticate})
+        const res = await AxiosService.post(ApiRoutes.ADMIN_PRODUCT_ROUTES.path, {authenticate: ApiRoutes.ADMIN_PRODUCT_ROUTES.authenticate})
         if(res.status === 200)
         return true;
       } catch (error) {
@@ -40,7 +41,7 @@ const AdminProductedRoute = ({ children }) => {
   }, [navigate, logout]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (!isAuthorized) {

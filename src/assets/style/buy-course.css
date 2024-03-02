@@ -50,8 +50,6 @@
   /* transform: scaleY(0); */
 }
 .syllabus-content{
-
-
   /* position: absolute; */
   padding: 25px;
   /* top: 0; */
@@ -66,16 +64,6 @@
   z-index: -1 !important;
   height: 100vh !important;
 }
-
-/* body {
-  display: flex; 
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 100vh;
-  background: #000 !important;
-  overflow: hidden;
-} */
 
 .glowing {
   position: relative;
