@@ -122,7 +122,7 @@ useEffect(()=>{
                             syllabus.map((data, index) =>{
                             return (
                             <div key={index}>
-                                <SyllabusCard onClick={()=> console.log("hi")} totalTopics={data.items.length} title={data.title} syllabusId={index} setStyles={handleToggleAccordion}
+                                <SyllabusCard totalTopics={data.items.length} title={data.title} syllabusId={index} setStyles={handleToggleAccordion}
                                     isActive={styles[index]> 0} styles={styles}
                                     duration={formatTime(data.items.reduce((acc, cur)=> acc + cur.duration, 0))} />
                                 <SyllabusTopic syllabusId={index} datas={data.items} styles={styles} />

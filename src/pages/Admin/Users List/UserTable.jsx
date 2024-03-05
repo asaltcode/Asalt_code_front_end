@@ -3,7 +3,7 @@ import AxiosService from "../../../utils/AxiosService"
 import ApiRoutes from '../../../utils/ApiRoutes'
 import UserTableList from '../Helper/UserTableList'
 import ScrollContainer from 'react-indiana-drag-scroll';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 const UserTable = () => {
     const location = useLocation()
@@ -65,6 +65,7 @@ const UserTable = () => {
             </div>
         </div>
     </div>
+    <Outlet/>
 </div>
     </>          
   )

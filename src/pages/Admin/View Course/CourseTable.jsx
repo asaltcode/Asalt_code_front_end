@@ -4,7 +4,7 @@ import AxiosService from '../../../utils/AxiosService';
 import ApiRoutes from '../../../utils/ApiRoutes';
 import CourseTableList from '../Helper/CourseTableList';
 import { toast } from 'react-toastify';
-import { useLocation } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 const CourseTable = () => {
     const location = useLocation()
@@ -68,6 +68,7 @@ const CourseTable = () => {
             </div>
         </div>
     </div>
+    <Outlet/>
 </div>
   )
 }

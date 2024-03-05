@@ -94,6 +94,14 @@ const ApiRoutes = {
   },
   GET_CAROUSEL: {
     path: "/get-carousel",
+    authenticate: false,
+  },
+  GET_ALL_CAROUSEL: {
+    path: "/get-all-carousel",
+    authenticate: true,
+  },
+  GET_CAROUSEL_BY_ID: {
+    path: "/get-carousel-by-id",
     authenticate: true,
   },
   DEL_CAROUSEL: {
@@ -156,14 +164,33 @@ const ApiRoutes = {
     path: "/get-syllabus-by-course-id",
     authenticate: true,
   },
+  GET_SYLLABUS_BY_COURSE_ID_ADMIN: {
+    path: "/get-syllabus-by-course-id-admin",
+    authenticate: true,
+  },
   GET_SYLLABUS_BY_COURSE_ID_NORMAL: {
     path: "/get-syllabus-by-course-id-normal",
     authenticate: false,
   },
+  // Course Topics
   ADD_TOPIC: {
     path: "/add-topic",
     authenticate: true,
   },
+  GET_TOPIC_BY_SYLLABUS_ID: {
+    path: "/get-topic-by-syllabus-id",
+    authenticate: true,
+  },
+  GET_TOPIC_BY_ID: {
+    path: "/get-topic-by-id",
+    authenticate: true,
+  },
+  EDIT_TOPIC: {
+    path: "/edit-topic",
+    authenticate: true,
+  },
+
+
   
   VIDEO_UPLOAD: {
     path: "/upload-video",

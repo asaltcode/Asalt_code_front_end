@@ -6,7 +6,6 @@ const Cards = ({title, thumbnail, id, price}) => {
   const navigate = useNavigate()
  const handleSyllabus = (id) =>{
     navigate(`/course/disclosure/${id}`)
-    console.log(id)
  }
   return (
     <>

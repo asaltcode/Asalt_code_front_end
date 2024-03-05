@@ -114,15 +114,15 @@ const Sidebar = ({activeSideToggle}) => {
               <span className="menu-title">Add Courese</span>
             </a>
           </li>
-          <li className={`nav-item menu-items`}>
-            <a className="nav-link" href="pages/charts/chartjs.html">
+          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname === "/admin/syllabus" ?"active" : ""}`}>
+            <a className="nav-link" onClick={()=> navigate('/admin/syllabus')}>
               <span className="menu-icon">
                 <i className="mdi mdi-chart-bar"></i>
               </span>
-              <span className="menu-title">Charts</span>
+              <span className="menu-title">View Syllabus</span>
             </a>
           </li>
-          <li className={`nav-item menu-items`}>
+          <li style={{cursor: "pointer"}} className={`nav-item menu-items`}>
             <a className="nav-link" href="pages/icons/mdi.html">
               <span className="menu-icon">
                 <i className="mdi mdi-contacts"></i>
@@ -131,14 +131,6 @@ const Sidebar = ({activeSideToggle}) => {
             </a>
           </li>
          
-          <li className={`nav-item menu-items`}>
-            <a className="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
-              <span className="menu-icon">
-                <i className="mdi mdi-file-document-box"></i>
-              </span>
-              <span className="menu-title">Documentation</span>
-            </a>
-          </li>
         </ul>
       </nav>
 

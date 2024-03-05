@@ -43,6 +43,16 @@ import OrderDetails from "../pages/User/Purchase/Order/OrderDetails";
 import BillingDetails from "../pages/User/Purchase/Billing/BillingDetails";
 import MakePayment from "../pages/User/Purchase/MakePayment/MakePayment";
 
+import { jwtDecode } from "jwt-decode";
+import SyllabusTable from "../pages/Admin/View syllabus/SyllabusTable";
+import EditSyllabus from "../pages/Admin/View syllabus/EditSyllabus";
+import TopicTable from "../pages/Admin/View Topics/TopicTable";
+import EditTopic from "../pages/Admin/View Topics/EditTopic";
+import EditCarousel from "../pages/Admin/Carousel/EditCarousel";
+const token = localStorage.getItem('token')
+const decode = jwtDecode(token === null ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciJ9.04wRHoeP0SL7-IWcxX-KFt6fgXT8urkjy8vyEwB0Gbc' : token)
+console.log()
+
 const AppRouters = [
   {
     path: "/admin",
@@ -62,7 +72,6 @@ const AppRouters = [
          <Progress />
         <AllDatas/>
         <UserTable/>
-        <Outlet/>
         </>,
         children: [
           {
@@ -77,14 +86,18 @@ const AppRouters = [
          <Progress />
         <CarouselTable/>
         </>,
-        children: []
+        children: [
+          {
+            path: "edit/:id",
+            element: <EditCarousel/>
+          }
+        ]
       },
       {
         path: "course",
         element: <>
          <Progress />
          <CourseTable/>
-         <Outlet/>
         </>,
         children: [
           {
@@ -102,6 +115,27 @@ const AppRouters = [
         <AddSyllbus/>  
         <AddTopic/>
         </>,
+      },      
+      {
+        path: "syllabus",
+        element: <>
+        <Progress />
+        <SyllabusTable/>
+        </>,
+        children: [
+          {
+            path: "edit/:id",
+            element:<><EditSyllabus/> </>,
+          },
+          {
+            path: "topic/:id",
+            element:<><TopicTable/></>,
+          },
+          {
+            path: "edit-topic/:id",
+            element: <EditTopic/>
+          }
+        ]
       },      
     ]
   },
@@ -253,7 +287,7 @@ const AppRouters = [
   {
     path: "/*",
     exact: true,
-    element: <Navigate to="/home"/>,
+    element: <>{ decode.role === 'user' || token === null ? <Navigate to="/home"/> : <Navigate to="/admin"/>}</>,
   },
 ];
 export default AppRouters;

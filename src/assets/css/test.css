@@ -15420,66 +15420,13 @@
   select::-moz-focus-inner {
     outline: 0; }
   
-  input, .form-control:focus, .asColorPicker-input:focus, .dataTables_wrapper select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=text],
-  .jsgrid .jsgrid-table .jsgrid-filter-row select:focus, .jsgrid .jsgrid-table .jsgrid-filter-row input:focus[type=number], .select2-container--default .select2-selection--single:focus, .select2-container--default .select2-selection--single .select2-search__field:focus, .typeahead:focus,
-  .tt-query:focus,
-  .tt-hint:focus,
-  input:focus,
-  select:focus,
-  textarea:focus,
-  button:focus {
-    outline: none;
-    outline-width: 0;
-    outline-color: transparent;
-    box-shadow: none;
-    outline-style: none; }
+  
   
   textarea {
     resize: none;
     overflow-x: hidden; }
-  
-  .btn, .fc button, .ajax-upload-dragdrop .ajax-file-upload, .swal2-modal .swal2-buttonswrapper .swal2-styled, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-cancel, .wizard > .actions a,
-  .btn-group.open .dropdown-toggle,
-  .fc .open.fc-button-group .dropdown-toggle,
-  .btn:active,
-  .fc button:active,
-  .ajax-upload-dragdrop .ajax-file-upload:active,
-  .swal2-modal .swal2-buttonswrapper .swal2-styled:active,
-  .wizard > .actions a:active, .btn:focus, .fc button:focus, .ajax-upload-dragdrop .ajax-file-upload:focus, .swal2-modal .swal2-buttonswrapper .swal2-styled:focus, .wizard > .actions a:focus, .btn:hover, .fc button:hover, .ajax-upload-dragdrop .ajax-file-upload:hover, .swal2-modal .swal2-buttonswrapper .swal2-styled:hover, .wizard > .actions a:hover,
-  .btn:visited,
-  .fc button:visited,
-  .ajax-upload-dragdrop .ajax-file-upload:visited,
-  .swal2-modal .swal2-buttonswrapper .swal2-styled:visited,
-  .wizard > .actions a:visited,
-  a,
-  a:active,
-  a:checked,
-  a:focus,
-  a:hover,
-  a:visited,
-  body,
-  button,
-  button:active,
-  button:hover,
-  button:visited,
-  div,
-  input,
-  input:active,
-  input:focus,
-  input:hover,
-  input:visited,
-  select,
-  select:active,
-  select:focus,
-  select:visited,
-  textarea,
-  textarea:active,
-  textarea:focus,
-  textarea:hover,
-  textarea:visited {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none; }
+
+
   
   .btn.active.focus, .fc button.active.focus, .ajax-upload-dragdrop .active.focus.ajax-file-upload, .swal2-modal .swal2-buttonswrapper .active.focus.swal2-styled, .wizard > .actions a.active.focus,
   .btn.active:focus,

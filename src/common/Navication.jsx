@@ -15,19 +15,19 @@ const Navication = () => {
     const handleCart = async() =>{
       const token = localStorage.getItem('token')
       const decode = jwtDecode(token)
-      try {
-        const res = await AxiosService.post(`${ApiRoutes.GET_ALL_CART.path}`, {user_id: `${decode.id}`}, {authenticate: ApiRoutes.GET_ALL_CART.authenticate})
-        setCartCount(res.data.cartList.length)
-      } catch (error) {
+      // try {
+      //   const res = await AxiosService.post(`${ApiRoutes.GET_ALL_CART.path}`, {user_id: `${decode.id}`}, {authenticate: ApiRoutes.GET_ALL_CART.authenticate})
+      //   setCartCount(res.data.cartList.length)
+      // } catch (error) {
         
-      }
+      // }
     }
 useEffect(()=>{
   handleCart()
 },[])
   return (
    <>
-   <header>
+   <header className='header-nav '>
    <nav className='user_nav'>                
                <h1 className="titleName">Asalt code</h1>
                <div id="line-box" onClick={()=>{toggle === ""? `${setToggle("navBarToggle")}${setToggleMenu('open')}` : `${setToggle("")} ${setToggleMenu("")}`}}>
@@ -40,7 +40,7 @@ useEffect(()=>{
                     <span></span>
                   </div>
                </div>
-                <div className={`nav-bar ${toggle}`}>
+                <div className={`nav-bar nav-menu-list ${toggle}`}>
                     <div className="item"><Link className={location.pathname === "/home" ? 'link active-tab' : `link`} to="/home">Home</Link></div>
                     <div className="item"><Link className={location.pathname === "/course" ? 'link active-tab' : `link`} to="/course">Courses</Link></div>
                     <div className="item"><Link className={location.pathname === "/buy-course" ? 'link active-tab' : `link`} to="/buy-course">Buy Course  <i className='mdi mdi-cart-outline'></i>{cartCount === 0 ? null : <span style={{background: "white", color: "black", fontSize: "13px", padding: "1px 5px", borderRadius: "50%"}}>{cartCount}</span>}</Link></div>

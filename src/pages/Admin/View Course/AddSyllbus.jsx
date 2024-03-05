@@ -18,7 +18,7 @@ const AddSyllbus = () => {
 let formik = useFormik({ //Formik Validations
 initialValues: initialValues,
 validationSchema: Yup.object({
-    title: Yup.string().required('Title is required').max(30,'Title can not exceed 30 characters').min(5,'Title can not be shorter than 5 leters'),
+    title: Yup.string().required('Title is required').max(60,'Title can not exceed 30 characters').min(5,'Title can not be shorter than 5 leters'),
     visibility: Yup.bool().required("Visibility is required"),
     course_id: Yup.string().required("Course is required"),
 }),

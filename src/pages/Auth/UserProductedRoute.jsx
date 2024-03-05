@@ -3,12 +3,14 @@ import ApiRoutes from '../../utils/ApiRoutes'
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useLogout } from "../../hook/useLogout";
+import Loading from '../../animation/Loading'
 
 const UserProductedRoute = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const navigate = useNavigate();
   const logout = useLogout();
+  
 
   useEffect(() => {
     const compareHash = async (data, hash) => {

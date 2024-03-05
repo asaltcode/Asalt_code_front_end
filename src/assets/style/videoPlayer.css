@@ -2,6 +2,13 @@
     padding: 20px;
     /* height: 100vh; */
 }
+.videoPlayer-main-container{
+    min-height: 100vh;
+    background-color: rgb(25, 25, 25);
+    width: 100%;
+    overflow-y: scroll;
+    padding: 0 10px;
+}
 
 video{
     width: 100%;
@@ -9,16 +16,33 @@ video{
     border-radius: 10px;
     margin-top: 10px;
     box-shadow: 3px 3px 30px gray;
+   
 }
 iframe{
     border-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 0;
+    margin: 0;
+}
+.video-box-wraper{
+    background-color: white;
+    color: black;
+    animation: videoShadow 3s infinite linear;
+    border-radius: 10px;
+    /* overflow: hidden; */
+}
+.video-header{
+  height: 50px;
 }
 .video-box{
-    padding: 0;
     overflow:  hidden;
-    border-radius: 10px;
-    margin-top: 10px;    
-    animation: videoShadow 3s infinite linear;
+    padding: 0;
+    margin-top: 60px;    
+    /* outline: 20px solid rgb(200, 200, 200); */
+}
+.playing{
+    background-color: #dcdcdc !important;
 }
 .card-topic-body{
     margin-left: 40px;
@@ -38,6 +62,54 @@ iframe{
     background-color: #dcdcdc;
     border-radius: 10px;
 }
+
+/* Playing Waves animation start */
+  #play-wave-container{  
+    position:relative;
+    height: 40px;
+  }  
+  
+  #play-wave-container span{  
+    width:5px;  
+    height: 8px;
+    border-radius: 5px;  
+    bottom:0px;
+    position:absolute;  
+    border: 1px solid black;
+    -webkit-animation: bodong 0.5s infinite  ease;  
+  }  
+  
+  #play-wave-container span:first-child{  
+    left:0px;  
+    -webkit-animation-delay:.3s;  
+  }  
+  
+  #play-wave-container span:nth-child(2){  
+    left:7px;  
+    -webkit-animation-delay:.4s;  
+  
+  }  
+  #play-wave-container span:nth-child(3){  
+    left:14px;  
+    -webkit-animation-delay:.6s;  
+  }  
+  #play-wave-container span:nth-child(4){  
+    left:21px;  
+    -webkit-animation-delay:.8s;  
+  }  
+  #play-wave-container span:nth-child(5){  
+    left:28px;  
+    -webkit-animation-delay:1s;  
+  }  
+  
+  @-webkit-keyframes bodong{  
+    0%{height:5px; background:bule;}  
+    30%{height:15px; background:bule;}  
+    60%{height:20px; background:bule;}  
+    80%{height:15px; background:bule;}  
+    100%{height:5px; background:bule;}  
+  }
+/* Playing Waves animation end */
 
 @keyframes videoShadow{
     0%{

@@ -11,24 +11,25 @@ import UploadLoading from '../../../animation/UploadLoading'
 const AddTopic = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(null)
-
     const [file, setFile] = useState(null);
     const [courseUrl, setCourseUrl] = useState("")
     const [duration, setDuration] = useState("")
     const [courseId, setCourseId] = useState("")
     const [syllabus, setSyllabus] = useState([])
+    const [public_id, setPublic_id] = useState("")
+    const [course, setCourse] = useState([])
 
 
-const getSyllabus = async() =>{
-    try {
-      const res = await AxiosService.post(ApiRoutes.GET_ALL_SYLLABUS.path, {authenticate: ApiRoutes.GET_ALL_SYLLABUS.authenticate})
-      if(res.status === 200){
-        setSyllabus(res.data.syllabus)
-      }
-    } catch (error) {
-        console.log(error)
-    }
-    }
+// const getSyllabus = async() =>{
+//     try {
+//       const res = await AxiosService.post(ApiRoutes.GET_ALL_SYLLABUS.path, {authenticate: ApiRoutes.GET_ALL_SYLLABUS.authenticate})
+//       if(res.status === 200){
+//         setSyllabus(res.data.syllabus)
+//       }
+//     } catch (error) {
+//         console.log(error)
+//     }
+//     }
     
 const onChange = (e) => {
 setFile(e.target.files[0]);
@@ -59,6 +60,7 @@ let handleUpload = async () =>{ // handle video upload
                 setCourseUrl(res.data.url)
                 setCourseId(res.data.id)
                 setDuration(res.data.duration)
+                setPublic_id(res.data.public_id)
                }
           }else{
             toast.error("Select file")
@@ -72,6 +74,30 @@ let handleUpload = async () =>{ // handle video upload
   }
 }
 
+const  getCourse = async () =>{
+    try {
+     const res = await AxiosService.post(ApiRoutes.GET_ALL_COURSE.path, {authenticate: ApiRoutes.GET_ALL_COURSE.authenticate})            
+         setCourse(res.data.courses)
+         } catch (error) {
+             console.log(error)
+            toast.error(error.response.data.message || error.message)   
+         }
+ }
+
+const findSyllabus = async (id) =>{
+    console.log(id)
+    try {
+        const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_ADMIN.path}/${id}`, {authenticate: ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_ADMIN.authenticate})
+        console.log(res.data)
+        if(res.status === 200){
+            setSyllabus(res.data.syllabus)
+        }
+    } catch (error) {
+        console.log(error)
+            toast.error(error.response.data.message || error.message)   
+    }
+}
+
 let initialValues ={
     title: "",
     visibility: true,
@@ -82,7 +108,7 @@ let initialValues ={
 let formik = useFormik({ //Formik Validations
 initialValues: initialValues,
 validationSchema: Yup.object({
-    title: Yup.string().required('Title is required').max(30,'Title can not exceed 30 characters').min(5,'Title can not be shorter than 5 leters'),
+    title: Yup.string().required('Title is required').max(60,'Title can not exceed 30 characters').min(5,'Title can not be shorter than 5 leters'),
     visibility: Yup.bool().required("Visibility is required"),
     topic_video: Yup.string().required("File is required")    
 }),
@@ -91,7 +117,7 @@ author:Yup.string().required("Role is required"),
 enableReinitialize:true,
 onSubmit: async (values,  { resetForm }) =>{
    try {
-     const res = await AxiosService.post(ApiRoutes.ADD_TOPIC.path, {...values,  topic_video_id: courseId, duration}, {authenticate: ApiRoutes.ADD_TOPIC.authenticate})
+     const res = await AxiosService.post(ApiRoutes.ADD_TOPIC.path, {...values,  topic_video_id: courseId, duration, public_id}, {authenticate: ApiRoutes.ADD_TOPIC.authenticate})
      if(res.status === 200){
          toast.success("Topic Added Successufully")
          resetForm(initialValues)
@@ -104,7 +130,7 @@ onSubmit: async (values,  { resetForm }) =>{
 })
 
 useEffect(()=>{
-    getSyllabus()
+    getCourse()   
 },[])
   return (
     <>
@@ -138,10 +164,25 @@ useEffect(()=>{
                             </div>
                         </div>                                                
                     </div>
-                    <div className="row">                    
+                    <div className="row">                                      
                         <div className="col-md-6">
                             <div className="form-group row">
-                                <label className="col-sm-3 col-form-label text-light">Visibility</label>
+                                <label className="col-sm-3 col-form-label text-light">Courses</label>
+                                <div className="col-sm-9">
+                                    <select className="form-control text-light" onChange={(e)=>findSyllabus(e.target.value)}>
+                                        <option value="">Select Course</option>   
+                                        {
+                                            course.map((data, index)=>{
+                                                return <option key={index} value={data._id}>{data.title}</option>   
+                                            })
+                                        }                                    
+                                    </select>
+                                </div>
+                            </div>
+                        </div>      
+                        <div className="col-md-6">
+                            <div className="form-group row">
+                                <label className="col-sm-3 col-form-label text-light">Syllabus</label>
                                 <div className="col-sm-9">
                                     <select name='syllabus_id' className="form-control text-light" onChange={formik.handleChange} value={formik.values.syllabus_id}>
                                         <option value="">Select Syllabus</option>   
@@ -154,7 +195,7 @@ useEffect(()=>{
                                     {formik.touched.syllabus_id && formik.errors.syllabus_id ? (<div className="errorMes">{formik.errors.syllabus_id}</div>) : null} 
                                 </div>
                             </div>
-                        </div>      
+                        </div>     
                         <div className="col-md-6">
                             <div className="form-group row">
                                 <label htmlFor="file" className="col-sm-3 col-form-label text-light">File upload</label>
@@ -172,9 +213,7 @@ useEffect(()=>{
                                 </div>
                             </div>
                         </div>
-
-                    </div>                
-                     
+                    </div>
                       <button type="submit" className="btn btn-success mr-2 rounded-3 p-2 text-black">Add Topic</button>
                       <button className="btn btn-primary rounded-3 p-2" onClick={()=> navigate("/admin/course")}>Cancel</button>
                 </form>
