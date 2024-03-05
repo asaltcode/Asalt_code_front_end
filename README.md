@@ -1,6 +1,6 @@
-# Asalt
+# Asalt Code
 
-Asalt is a web application that allows users to upload pre-recorded videos and access them after making a payment.
+Asalt Code is a web application that allows users to upload pre-recorded videos and access them after making a payment.
 
 ## Features
 
