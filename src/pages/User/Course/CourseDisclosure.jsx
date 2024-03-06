@@ -7,15 +7,19 @@ import '../../../assets/style/syllabus.css'
 import SyllabusCard from './Helper/SyllabusCard';
 import SyllabusTopic from './Helper/SyllabusTopic';
 import { jwtDecode } from 'jwt-decode';
+import Loading from '../../../animation/Loading';
+
 
 const CourseDisclosure = () => {
     const navigate = useNavigate()
     const [course, setCourse] = useState({});
     const [syllabus, setSyllabus] =useState([])
     const [paid, setPaid] = useState(false)
-    const params = useParams()
     const [styles, setStyles] =useState(0)
+    const [loading, setLoading] = useState(null)
+    const params = useParams()
     const getCourse = async () =>{ // Get course datas
+        setLoading(true)
         try {
             const res = await AxiosService.post(`${ApiRoutes.GET_COURSE_BY_ID.path}/${params.id}`, {authenticate: ApiRoutes.GET_COURSE_BY_ID.authenticate})
             if(res.status === 200){
@@ -25,14 +29,21 @@ const CourseDisclosure = () => {
             console.log(error)
             toast.error(error.response.data.message || error.message)   
         }
+        finally{
+            setLoading(false)
+        }
     }
     const getSyllabus = async () =>{  //Get all syllabus and topic by course id
+        setLoading(true)
         try {
             const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_NORMAL.path}/${params.id}`, {authenticate: ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_NORMAL.authenticate})
             setSyllabus(res.data.syllabus)         
         } catch (error) {
             console.log(error)
             toast.error(error.response.data.message || error.message)   
+        }
+        finally{
+            setLoading(false)
         }
     }
 
@@ -54,6 +65,7 @@ const CourseDisclosure = () => {
 
     const handlePayment = async (courseId) =>{
         // navigate('/purchase')
+        setLoading(true)
         try {
             const token = localStorage.getItem('token')
             const decode = jwtDecode(token)
@@ -70,10 +82,14 @@ const CourseDisclosure = () => {
             console.log(error)
             toast.error(error.response.data.message || error.message)   
         }
+        finally{
+            setLoading(false)
+        }
 
     }
 
   const getCourseAccess = async () =>{
+    setLoading(true)
     try {
         const res = await AxiosService.post(ApiRoutes.COURSE_ACCESS.path, {course_id: params.id}, {authenticate: ApiRoutes.COURSE_ACCESS.authenticate} )
         if(res.status === 202){
@@ -84,6 +100,8 @@ const CourseDisclosure = () => {
        }
     } catch (error) {
         console.log(error)
+    }finally{
+        setLoading(false)
     }
     }
      
@@ -95,7 +113,32 @@ useEffect(()=>{
    
   return (
     <>
+    {loading && <Loading/>}
     <div className="container">
+        
+    <div className="bg-animate">
+<div className="glowing">    
+    <span style={{"--i":1}}></span>    
+    <span style={{"--i":2}}></span>    
+    <span style={{"--i":3}}></span>    
+</div>
+<div className="glowing">    
+    <span style={{"--i":1}}></span>    
+    <span style={{"--i":2}}></span>    
+    <span style={{"--i":3}}></span>
+</div>
+<div className="glowing">    
+    <span style={{"--i":1}}></span>    
+    <span style={{"--i":2}}></span>    
+    <span style={{"--i":3}}></span>
+</div>
+<div className="glowing">    
+    <span style={{"--i":1}}></span>    
+    <span style={{"--i":2}}></span>    
+    <span style={{"--i":3}}></span>
+</div>
+
+</div>
             <div className='course-title'>
                 <h1 className='course-header'>{course.title}</h1>
                 <div className="buy-btn m-auto">

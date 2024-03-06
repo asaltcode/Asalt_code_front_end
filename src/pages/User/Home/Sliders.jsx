@@ -9,13 +9,22 @@ import 'swiper/css/autoplay';
 import {Autoplay, EffectCoverflow, Pagination,  Navigation } from 'swiper/modules';
 import ApiRoutes from '../../../utils/ApiRoutes';
 import AxiosService from '../../../utils/AxiosService';
+import Loading from '../../../animation/Loading';
 
 const Sliders = () => {
   const [image, setImage] = useState([]);
+  const [loading, setLoading] = useState(null)
   const getCarousel = async () =>{
-      const res = await AxiosService.get(ApiRoutes.GET_CAROUSEL.path, {authenticate: ApiRoutes.GET_CAROUSEL.authenticate})
+    setLoading(true)
+      try {
+        const res = await AxiosService.get(ApiRoutes.GET_CAROUSEL.path, {authenticate: ApiRoutes.GET_CAROUSEL.authenticate})
       if(res.status === 200){
         setImage(res.data.image)
+      }
+      } catch (error) {
+        console.log(error)
+      }finally{
+        setLoading(false)
       }
   }
 
@@ -24,6 +33,7 @@ const Sliders = () => {
   },[])
   return (
     <>
+    {loading && <Loading/>}
     <div className="container-fluid">
         <Swiper effect={'coverflow'} grabCursor={true} centeredSlides={true} loop={true} autoplay={{ delay: 1500, disableOnInteraction: false, }} slidesPerView={'auto'} coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 2.5, }} 
         pagination={{ el: '.swiper-pagination' , clickable: true }} navigation={{nextEl: '.swiper-button-next' , prevEl: '.swiper-button-prev' , clickable: true, }} modules={[EffectCoverflow, Pagination, Navigation, Autoplay]} className="swiper_container"> 

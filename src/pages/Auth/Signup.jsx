@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import AxiosService from '../../utils/AxiosService'
 import ApiRoutes from '../../utils/ApiRoutes'
 import Loading from '../../animation/Loading';
+import { toast } from 'react-toastify';
 
 
 const Signup = () => {
@@ -49,17 +50,18 @@ const Signup = () => {
       try {
         setLoading(true)
         const res = await AxiosService.post(`${ApiRoutes.SIGN_UP.path}`, datas, {authenticate: ApiRoutes.SIGN_UP.authenticate})
+        console.log(res.data)
       if(res.status === 200){
-        // setUserDetails(datas.email)
+        setUserDetails(datas.email)
         sessionStorage.setItem('name', name)
         sessionStorage.setItem('email', email)
         sessionStorage.setItem('password', password)
-        // toast.success(res.data.message)
         navigate('/email-verify')              
+        toast.success(res.data.message)
       }
       } catch (error) {
         toast.error(error.response.data.message || error.message)   
-        // console.log(error.response.data.message || error.message)
+        console.log(error)
       }finally{
         setLoading(false)
       }

@@ -27,7 +27,7 @@ useEffect(()=>{
 },[])
   return (
    <>
-   <header className='header-nav '>
+   <header className='header-nav'>
    <nav className='user_nav'>                
                <h1 className="titleName">Asalt code</h1>
                <div id="line-box" onClick={()=>{toggle === ""? `${setToggle("navBarToggle")}${setToggleMenu('open')}` : `${setToggle("")} ${setToggleMenu("")}`}}>

@@ -58,7 +58,7 @@
   max-height: 0;
 }
 .bg-animate{
-  background-color: #201f1f;
+  /* background-color: #201f1f; */
   width: 100% !important;
   position: fixed !important;
   z-index: -1 !important;

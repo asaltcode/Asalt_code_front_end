@@ -42,7 +42,7 @@ const UserProductedRoute = ({ children }) => {
   }, [navigate, logout]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (!isAuthorized) {
