@@ -52,12 +52,12 @@ const Signup = () => {
         const res = await AxiosService.post(`${ApiRoutes.SIGN_UP.path}`, datas, {authenticate: ApiRoutes.SIGN_UP.authenticate})
         console.log(res.data)
       if(res.status === 200){
-        setUserDetails(datas.email)
+        toast.success(res.data.message)
         sessionStorage.setItem('name', name)
         sessionStorage.setItem('email', email)
         sessionStorage.setItem('password', password)
+        console.log("Hi")
         navigate('/email-verify')              
-        toast.success(res.data.message)
       }
       } catch (error) {
         toast.error(error.response.data.message || error.message)   
