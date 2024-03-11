@@ -49,6 +49,8 @@ import EditSyllabus from "../pages/Admin/View syllabus/EditSyllabus";
 import TopicTable from "../pages/Admin/View Topics/TopicTable";
 import EditTopic from "../pages/Admin/View Topics/EditTopic";
 import EditCarousel from "../pages/Admin/Carousel/EditCarousel";
+import UserDashboard from "../pages/User/UserDashboard";
+import Sliders from "../pages/User/Home/Sliders";
 const token = localStorage.getItem('token')
 const decode = jwtDecode(token === null ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciJ9.04wRHoeP0SL7-IWcxX-KFt6fgXT8urkjy8vyEwB0Gbc' : token)
 console.log()
@@ -139,6 +141,68 @@ const AppRouters = [
       },      
     ]
   },
+
+  {
+    path: "/",
+    exact: true,
+    element: <>
+    <UserDashboard/>
+    </>,
+    children: [
+      {
+        path: "",
+        exact: true,
+        element: <>
+        <Sliders/>
+        <Home/>
+        </>
+      },
+      {
+        path: "course",
+        exact: true,
+        element: (
+          <>
+            <Progress />
+            <UserProductedRoute>
+              <Outlet/>
+            </UserProductedRoute>    
+          </>
+        ),
+        children: [
+          {
+            path: "",
+            exact: true,
+            element: (
+              <>
+                <Progress />            
+                <Course />           
+              </>
+            ),
+          },
+          {
+            path: "disclosure/:id",
+            exact: true,
+            element: (
+              <>
+                <Progress />            
+                <CourseDisclosure/>            
+              </>
+            ),
+          },
+        ]
+      },
+      {
+        path: "buy-course",
+        exact: true,
+        element: (
+          <>
+            <Progress />
+            <Buying />
+          </>
+        ),
+      },
+    ]
+  },
   {
     path: "/signup",
     exact: true,
@@ -192,54 +256,7 @@ const AppRouters = [
     exact: true,
     element: <EmailVerifyAnim />,
   },
-  {
-    path: "/home",
-    exact: true,
-    element: (
-      <>
-        <Progress />
-        <Navication />       
-           <Home />       
-        <Footer />
-      </>
-    ),
-  },
-  {
-    path: "/course",
-    exact: true,
-    element: (
-      <>
-        <Progress />
-        <Navication />
-        <UserProductedRoute>
-          <Outlet/>
-        </UserProductedRoute>
-         <Footer />
-      </>
-    ),
-    children: [
-      {
-        path: "",
-        exact: true,
-        element: (
-          <>
-            <Progress />            
-            <Course />           
-          </>
-        ),
-      },
-      {
-        path: "disclosure/:id",
-        exact: true,
-        element: (
-          <>
-            <Progress />            
-            <CourseDisclosure/>            
-          </>
-        ),
-      },
-    ]
-  },
+ 
   {
     path: "/purchase",
     exact: true,
@@ -267,27 +284,16 @@ const AppRouters = [
     },
     ]
   },
-  {
-    path: "/buy-course",
-    exact: true,
-    element: (
-      <>
-        <Progress />
-        <Navication />
-        <Buying />
-        <Footer />
-      </>
-    ),
-  },
+  
   {
     path: "/video/:id",
     exact: true,
-    element: (<VideoPlayer/>),
+    element: ( <UserProductedRoute> <VideoPlayer/></UserProductedRoute>),
   },
   {
     path: "/*",
     exact: true,
-    element: <>{ decode.role === 'user' || token === null ? <Navigate to="/home"/> : <Navigate to="/admin"/>}</>,
+    element: <>{ decode.role === 'user' || token === null ? <Navigate to="/"/> : <Navigate to="/admin"/>}</>,
   },
 ];
 export default AppRouters;

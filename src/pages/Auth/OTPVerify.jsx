@@ -29,8 +29,9 @@ const OTPVerify = () => {
       navigate('/forget-password')
     }
    } catch (error) {
+    navigate('/forget-password')
     toast.error(error.response.data.message || error.message)   
-    // console.log(error.response.data.message || error.message)
+    console.log(error.response.data.message || error.message)
    }
   }
 
@@ -38,12 +39,12 @@ const OTPVerify = () => {
     <div className="bg-dark text-light otp-container">      
       <div className="otp-input-box">
         <header>
-          <h4>Enter Your OTP</h4>
+          <h4 className="text-center fw-semibold">Enter Your OTP</h4>
         </header>
         <div className="otp-inputs">
           <form className="otp-form" onSubmit={handleSubmit}>
-          <input type="text" className='text-center otp-box' name='otp' onChange={(e)=>e.target.value.length === 6 ? setDisabled(false) : setDisabled(true)} maxLength={6} />
-          <button type="submit"  className={`btn ${disable ?'disabled': ''} text-light bg-primary m-auto`}>Submit</button>
+          <input type="text" className='text-center otp-input otp-box' name='otp' onChange={(e)=>e.target.value.length === 6 ? setDisabled(false) : setDisabled(true)} maxLength={6} />
+          <button type="submit"  className={`btn btn-primary rounded-3 p-2 ${disable ?'disabled': ''} text-light m-auto`}>Submit</button>
           </form>
         </div>
       </div>

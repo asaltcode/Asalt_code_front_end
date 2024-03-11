@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-// import "../style/Login.css"
+import "../../assets/style/Login.css"
 import { useNavigate, Link } from 'react-router-dom'
 import EmailSendLoad from '../../animation/EmailSendLoad'
 import ForgotAnim from '../../animation/ForgotAnim'
@@ -60,14 +60,14 @@ const ForgetPassword = () => {
       <>
       {loading && <EmailSendLoad/>}
         <section>
-        <button className='button' onClick={()=>navigate("/home")} style={{marginTop: '20px', marginLeft: "30px", width: "50px" ,position: 'fixed'} }><i className="fa-solid fa-arrow-left"></i></button>
+        <button className='button' onClick={()=>navigate("/")} style={{marginTop: '20px', marginLeft: "30px", width: "50px" ,position: 'fixed'} }><i className="fa-solid fa-arrow-left"></i></button>
         <div className="form-container">
             <form onSubmit={formik.handleSubmit} className="form-box">
                 <p className="top-head">Forgot Your Password ?</p>
                 <div className="image">
                     <ForgotAnim />   
                 </div>
-                    <div className="form-group">
+                    <div className="form-groups">
                         <input id="email" type="text" placeholder="Enter your email" autoComplete="off" name='email' value={formik.values.email} onFocus={()=> setBeEmailError(null)} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                         {formik.touched.email && formik.errors.email ? (<div className="errorMes">{formik.errors.email}</div>) : (<div className="errorMes">{beEmailError}</div>)}
                     </div>

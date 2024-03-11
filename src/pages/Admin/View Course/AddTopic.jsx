@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import AxiosService from '../../../utils/AxiosService'
 import ApiRoutes from '../../../utils/ApiRoutes'
 import { useNavigate } from 'react-router-dom'
@@ -13,12 +13,19 @@ const AddTopic = () => {
     const [loading, setLoading] = useState(null)
     const [file, setFile] = useState(null);
     const [courseUrl, setCourseUrl] = useState("")
-    const [duration, setDuration] = useState("")
-    const [courseId, setCourseId] = useState("")
+    // const [duration, setDuration] = useState("")
+    // const [courseId, setCourseId] = useState("")
+    // const [public_id, setPublic_id] = useState("")
     const [syllabus, setSyllabus] = useState([])
-    const [public_id, setPublic_id] = useState("")
     const [course, setCourse] = useState([])
+    const urlRef = useRef({duration: "", topic_video_id: "", public_id: "", video_url: ""})
 
+    let initialValues ={
+        title: "",
+        visibility: true,
+        syllabus_id: "",
+        topic_video: "",
+      }
 
 // const getSyllabus = async() =>{
 //     try {
@@ -45,11 +52,13 @@ const config = {
     };
 
 
-let handleUpload = async () =>{ // handle video upload
+let handleUpload = async (e) =>{ // handle video upload
     setLoading(true)
   try {
+    const file = e.target.files[0]
     const formData = new FormData();
           formData.append('topic', file);
+          console.log(formData)
           if(file){
             const res = await AxiosService.post(ApiRoutes.VIDEO_UPLOAD.path, formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
@@ -57,10 +66,14 @@ let handleUpload = async () =>{ // handle video upload
             if(res.status === 200){
                 toast.success("file upload successfully")
                 console.log(res.data)
-                setCourseUrl(res.data.url)
-                setCourseId(res.data.id)
-                setDuration(res.data.duration)
-                setPublic_id(res.data.public_id)
+                // setCourseUrl(res.data.url)
+                urlRef.current = {
+                     duration: res.data.duration,
+                     topic_video_id: res.data.id,
+                     public_id: res.data.public_id}
+                // setCourseId(res.data.id)
+                // setDuration(res.data.duration)
+                // setPublic_id(res.data.public_id)
                }
           }else{
             toast.error("Select file")
@@ -98,12 +111,7 @@ const findSyllabus = async (id) =>{
     }
 }
 
-let initialValues ={
-    title: "",
-    visibility: true,
-    syllabus_id: "",
-    topic_video: courseUrl,
-  }
+
 
 let formik = useFormik({ //Formik Validations
 initialValues: initialValues,
@@ -117,6 +125,7 @@ author:Yup.string().required("Role is required"),
 enableReinitialize:true,
 onSubmit: async (values,  { resetForm }) =>{
    try {
+     values.topic_video = urlRef.current.video_url
      const res = await AxiosService.post(ApiRoutes.ADD_TOPIC.path, {...values,  topic_video_id: courseId, duration, public_id}, {authenticate: ApiRoutes.ADD_TOPIC.authenticate})
      if(res.status === 200){
          toast.success("Topic Added Successufully")
@@ -135,6 +144,8 @@ useEffect(()=>{
   return (
     <>
      {loading && <UploadLoading/>}
+     {`hit ${urlRef.current}`}
+     {console.log(urlRef.current)}
     <div id='edit' className="col-12 grid-margin">
         <div  className="card">
             <div className="card-body">
@@ -207,8 +218,8 @@ useEffect(()=>{
                                         <button className="btn btn-primary" type="button">Upload</button>
                                     </div> */}
 
-                               <input id="file" name="topic_video" type="file" accept="video/mp4" onChange={onChange} className="form-control" />
-                               <button className='btn btn-warning text-dark rounded-3 p-2' type='button' onClick={handleUpload}>Upload</button>
+                               <input id="file" name="topic_video" type="file" accept="video/mp4" onChange={handleUpload} className="form-control" />
+                               {/* <button className='btn btn-warning text-dark rounded-3 p-2' type='button' onClick={handleUpload}>Upload</button> */}
                                {courseUrl !== "" || formik.errors.topic_video ? (<div className="errorMes">{formik.errors.topic_video}</div>) : null} 
                                 </div>
                             </div>

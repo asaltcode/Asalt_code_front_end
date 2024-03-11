@@ -7,8 +7,7 @@ const Home = () => {
   console.log()
   return (
     <>
-     <div className="containers">   
-     <Sliders/>
+     {/* <div className="containers">    */}
       <div className="container">
         <section style={{marginTop: "20px", color: 'white'}}>
          <div className="homeContent">
@@ -19,7 +18,7 @@ const Home = () => {
          </div>
         </section>
       </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

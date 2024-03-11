@@ -93,7 +93,7 @@ const options = {
           paymentId,
           signature: response.razorpay_signature,
         });
-        navigate('/home')
+        navigate('/')
       } else {
         handlePayment('failed', {
           orderId,

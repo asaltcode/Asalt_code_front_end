@@ -146,6 +146,7 @@ header:hover ~ .accordion-content{
     -webkit-transition-delay: 0s, 0s, 0s;
 }
 
+
 #demo .content:hover ~ .parent {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;

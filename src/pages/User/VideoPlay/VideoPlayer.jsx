@@ -15,23 +15,44 @@ const VideoPlayer = () => {
    const [videoTitle, setVideoTitle] = useState("")
    const [syllabus, setSyllabus] = useState([])
    const params = useParams()
+   const [playList, setPlayList] = useState([])
    
    const getSyllabus = async () =>{
     try {
-        const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID.path}/${params.id}`)
-        await setSyllabus(res.data.syllabus)
-        setVideo(res.data.syllabus[0].items[0].public_id)
-        setVideoTitle(res.data.syllabus[0].items[0].title)
+        const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID.path}/${params.id}`);
+        setSyllabus(res.data.syllabus);
+        const playlist = res.data.syllabus.reduce((acc, curr) => {
+          curr.items.forEach(item => {
+            acc.push({ public_id: item.public_id, title: item.title });
+          });
+          return acc;
+        }, []);
+        setPlayList(playlist);
+        setVideo(playlist[0].public_id);
+        setVideoTitle(playlist[0].title);
     } catch (error) {
         console.log(error)
         toast.error(error.response.data.message || error.message)   
     }
 }
 
+const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+
+const handleVideoEnded = () => {
+  if (currentVideoIndex < playList.length - 1) {
+      setCurrentVideoIndex(currentVideoIndex + 1);
+      console.log(currentVideoIndex)
+  } else {
+    // End of playlist, reset to first video
+    setCurrentVideoIndex(0);
+  }
+};
+
    const handleVideoClick = (public_id, title) => {
     setVideo(public_id);
     setVideoTitle(title)
 };
+
 
    useEffect(()=>{
     getSyllabus()
@@ -50,7 +71,8 @@ const VideoPlayer = () => {
                     <div className="col-12"> 
                        <div className="video-box-wraper">
                        <div className="video-box">                          
-                            <CloudinaryVideoPlayer publicId={video} cloudName={"dgnysns9a"} />                   
+                            {console.log(playList[currentVideoIndex])}
+                            <CloudinaryVideoPlayer publicId={video} cloudName={"dgnysns9a"} onEnded={handleVideoEnded} />                   
                         </div>
                           <div className="video-header">
                              <h1>{videoTitle}</h1>
@@ -74,7 +96,7 @@ const VideoPlayer = () => {
                                                 </div>
                                                 <div className="card-topic-body">                                               
                                                     {
-                                                        data.items.map((topicVideo, i)=>{
+                                                        data.items.map((topicVideo, i)=>{                                                            
                                                             return (
                                                                 <div key={i} className='d-flex justify-content-between '>
                                                                     <div className="syllabus-topic-header col-11">

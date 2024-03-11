@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import '../assets/style/navBar.css'
 import AxiosService from '../utils/AxiosService'
 import ApiRoutes from '../utils/ApiRoutes'
@@ -8,10 +8,13 @@ import { jwtDecode } from 'jwt-decode'
 
 const Navication = () => {
   const logout = useLogout()
+  const navigate = useNavigate()
   const location = useLocation()
     let [toggle, setToggle] = useState("")
     let [toggleMenu, setToggleMenu] = useState("")
     const [cartCount, setCartCount] = useState(0)
+    const [profileShow, setProfileShow] = useState("")
+    const PofileView = () => profileShow === "" ? setProfileShow('show') : setProfileShow("")
     const handleCart = async() =>{
       const token = localStorage.getItem('token')
       const decode = jwtDecode(token)
@@ -41,11 +44,47 @@ useEffect(()=>{
                   </div>
                </div>
                 <div className={`nav-bar nav-menu-list ${toggle}`}>
-                    <div className="item"><Link className={location.pathname === "/home" ? 'link active-tab' : `link`} to="/home">Home</Link></div>
+                    <div className="item"><a className={location.pathname === "/" ? 'link active-tab' : `link`} onClick={()=>navigate("/")}>Home</a></div>
                     <div className="item"><Link className={location.pathname === "/course" ? 'link active-tab' : `link`} to="/course">Courses</Link></div>
-                    <div className="item"><Link className={location.pathname === "/buy-course" ? 'link active-tab' : `link`} to="/buy-course">Buy Course  <i className='mdi mdi-cart-outline'></i>{cartCount === 0 ? null : <span style={{background: "white", color: "black", fontSize: "13px", padding: "1px 5px", borderRadius: "50%"}}>{cartCount}</span>}</Link></div>
-                    {localStorage.getItem('token') ? 
-                    <div className="item"><Link className= 'link' onClick={()=> logout()} to="/login">Logout</Link></div>:
+                    <div className="item"><Link className={location.pathname === "/buy-course" ? 'link active-tab' : `link`} to="/buy-course">Buy Course  <i className={`mdi mdi-cart-outline ${location.pathname === "/buy-course" ? 'text-light' : ``} `}></i>{cartCount === 0 ? null : <span style={{background: "white", color: "black", fontSize: "13px", padding: "1px 5px", borderRadius: "50%"}}>{cartCount}</span>}</Link></div>
+
+
+                    {localStorage.getItem('token') ?         
+                      <div className={`nav-item dropdown  ${profileShow}`}  onClick={PofileView} >
+                        <a className="nav-link" id="profileDropdown" aria-expanded={"profileShow" === 'show'? true : false} data-toggle="dropdown">
+                          <div className="navbar-profile">
+                            <img className="img-xs user-profile-image rounded-circle" src={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'} alt=""/>            
+                          </div>
+                        </a>
+                        <div className={`dropdown-menu dropdown-menu-right bg-dark text-light navbar-dropdown preview-list ${profileShow}`} aria-labelledby="profileDropdown">
+                          <h6 className="p-2">Profile</h6>
+                          <div className="dropdown-divider bg-secondary"></div>
+                          <a className="dropdown-item preview-item bg-dark text-light list-group-item list-group-item-action ">
+                            <div className="preview-thumbnail">
+                              <div className="preview-icon bg-dark rounded-circle">
+                                <i className="mdi mdi-settings text-success"></i>
+                              </div>
+                            </div>
+                            <div className="preview-item-content">
+                              <p className="preview-subject mt-2">Settings</p>
+                            </div>
+                          </a>
+                          <div className="dropdown-divider bg-secondary"></div>
+                          <a onClick={useLogout()} className="dropdown-item preview-item bg-dark text-light list-group-item list-group-item-action">
+                            <div className="preview-thumbnail">
+                              <div className="preview-icon bg-dark rounded-circle">
+                                <i className="mdi mdi-logout text-danger"></i>
+                              </div>
+                            </div>
+                            <div className="preview-item-content ">
+                              <p className="preview-subject mt-2">Log out</p>
+                            </div>
+                          </a>
+                          <div className="dropdown-divider bg-secondary"></div>
+                          <p className="p-2 mb-0 text-center">Advanced settings</p>
+                        </div>
+                      </div>                    
+                   :
                     <div className="item"><Link className={location.pathname === "/login" ? 'link active-tab' : `link`} to="/login">Log in</Link></div>
                   }
                 </div>

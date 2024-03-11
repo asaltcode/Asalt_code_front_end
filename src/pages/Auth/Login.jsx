@@ -61,7 +61,7 @@ const Login = () => {
                 navigate('/admin')              
             }
             else if(res?.data?.role === 'user' && decode.role === "user" ){
-                navigate('/home')
+                navigate('/')
       }
          } catch (error) {
             console.log(error)
@@ -76,7 +76,7 @@ const Login = () => {
   return (<>
   {loading && <Loading/>}
   <section>
-        <button className='button' onClick={()=>navigate("/home")} style={{marginTop: '20px', marginLeft: "30px", width: "50px" ,position: 'fixed'} }>
+        <button className='button' onClick={()=>navigate("/")} style={{marginTop: '20px', marginLeft: "30px", width: "50px" ,position: 'fixed'} }>
             <i className="fa-solid fa-arrow-left"></i>
         </button>
         <div className="form-container">
