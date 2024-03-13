@@ -4,19 +4,17 @@ import Logo_mini from '../../../assets/images/logo-mini.svg';
 import Profile from '../../../assets/images/profile.jpg'
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Sidebar = ({activeSideToggle}) => {
+const Sidebar = ({activeSideToggle, profileDropDown, setProfileDropDown}) => {
   const location = useLocation()
   const navigate = useNavigate()
   const UserName = localStorage.getItem('name');
-  const [profileDropDown, setProfileDropDown] = useState("");
   const [profileStyle, setProfileStyle] = useState({});
   const styles = {position: "absolute", transform: "translate3d(53px, 43px, 0px)", top: "0px", left: "0px", willChange: "transform"}
   const handleProfileDropDown = () =>{
        profileDropDown === "" ? (setProfileDropDown("show"), setProfileStyle(styles)) : (setProfileDropDown(""), setProfileStyle({}))
-       console.log("clik")
   }
   return (
-	<nav className={`sidebar sidebar-offcanvas ${activeSideToggle}`} onClick={()=>profileDropDown === "show" ? setProfileDropDown("") : null} id="sidebar">
+	<nav className={`sidebar sidebar-offcanvas ${activeSideToggle}`} id="sidebar">
         <div  onClick={()=>navigate("/admin")} className="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
           <a style={{cursor: "pointer"}} className="sidebar-brand brand-logo" ><img src={Logo} alt="logo" /></a>
           <a style={{cursor: "pointer"}} className="sidebar-brand brand-logo-mini" ><img src={Logo_mini} alt="logo" /></a>
@@ -90,7 +88,7 @@ const Sidebar = ({activeSideToggle}) => {
               <span className="menu-title">User Pages</span>
             </a>
           </li>
-          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname === "/admin/carousel" ?"active" : ""}`}>
+          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname.includes('/admin/carousel') ?"active" : ""}`}>
             <a  className="nav-link" data-toggle="collapse" onClick={()=>navigate('/admin/carousel')} aria-expanded="false" aria-controls="ui-basic">
               <span className="menu-icon">
                 <i className="mdi mdi-cards"></i>
@@ -98,7 +96,7 @@ const Sidebar = ({activeSideToggle}) => {
               <span className="menu-title">Carousel</span>
             </a>
           </li>
-          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname === "/admin/course" ?"active" : ""}`}>
+          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname.includes("/admin/course") ?"active" : ""}`}>
             <a className="nav-link" onClick={()=> navigate('/admin/course')}>
               <span className="menu-icon">
                 <i className="mdi mdi-book-open-page-variant"></i>
@@ -106,7 +104,7 @@ const Sidebar = ({activeSideToggle}) => {
               <span className="menu-title">Course</span>
             </a>
           </li>
-          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname === "/admin/add-course" ?"active" : ""}`}>
+          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname.includes("/admin/add-course") ?"active" : ""}`}>
             <a  className="nav-link"  onClick={()=> navigate('/admin/add-course')}>
               <span className="menu-icon">
                 <i className="mdi mdi-table-large"></i>
@@ -114,7 +112,7 @@ const Sidebar = ({activeSideToggle}) => {
               <span className="menu-title">Add Courese</span>
             </a>
           </li>
-          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname === "/admin/syllabus" ?"active" : ""}`}>
+          <li style={{cursor: "pointer"}} className={`nav-item menu-items ${location.pathname.includes("/admin/syllabus") ?"active" : ""}`}>
             <a className="nav-link" onClick={()=> navigate('/admin/syllabus')}>
               <span className="menu-icon">
                 <i className="mdi mdi-chart-bar"></i>

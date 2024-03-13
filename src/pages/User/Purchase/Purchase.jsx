@@ -13,7 +13,7 @@ import RenderRazorpay from '../Payment/RenderRazorpay'
 
 
 const Purchase = () => {
-  const { cart, setCart } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [progress, setProgress] = useState(() => {
@@ -125,7 +125,7 @@ const Purchase = () => {
                       <div className="purchase_buttons">
                           {location.pathname === "/purchase" ? null : <button onClick={handleBack} className='btn btn-warning rounded-5' type="button">Back</button>}
                           {location.pathname === "/purchase/make-payment" ? <button onClick={()=> handleCreateOrder(cart.reduce((acc, curr) => acc + curr.price, 0), cart.map(id => id.course_id), cart[0].user_id)} className='btn btn-primary rounded-5' type="button">Make Payment</button> :
-                              cart.length === 0 ? <button onClick={() => navigate('/home')} className='btn btn-primary rounded-5'>Go To Home</button> :
+                              cart.length === 0 ? <button onClick={() => navigate('/')} className='btn btn-primary rounded-5'>Go To Home</button> :
                             <button onClick={handleNavigate} className='btn btn-primary rounded-5' type="button">Next</button>}
                       </div>
                   </div>

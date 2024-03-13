@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AxiosService from '../../../../utils/AxiosService'
 import ApiRoutes from '../../../../utils/ApiRoutes'
-import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 import { CartContext } from '../../../../context/CartContextComponent';
 

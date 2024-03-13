@@ -1,28 +1,30 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import '../assets/style/navBar.css'
 import AxiosService from '../utils/AxiosService'
 import ApiRoutes from '../utils/ApiRoutes'
 import { useLogout } from '../hook/useLogout'
 import { jwtDecode } from 'jwt-decode'
+import { CartContext } from '../context/CartContextComponent'
 
 const Navication = () => {
-  const logout = useLogout()
-  const navigate = useNavigate()
+  const {cart, setCart} = useContext(CartContext) 
+  // console.log(cart)
   const location = useLocation()
     let [toggle, setToggle] = useState("")
     let [toggleMenu, setToggleMenu] = useState("")
-    const [cartCount, setCartCount] = useState(0)
+    const [cartCount, setCartCount] = useState(1)
     const [profileShow, setProfileShow] = useState("")
     const PofileView = () => profileShow === "" ? setProfileShow('show') : setProfileShow("")
     const handleCart = async() =>{
       const token = localStorage.getItem('token')
       const decode = jwtDecode(token)
       // try {
-      //   const res = await AxiosService.post(`${ApiRoutes.GET_ALL_CART.path}`, {user_id: `${decode.id}`}, {authenticate: ApiRoutes.GET_ALL_CART.authenticate})
+      //   const {data} = await AxiosService.post(`${ApiRoutes.GET_ALL_CART.path}`, {user_id: `${decode.id}`}, {authenticate: ApiRoutes.GET_ALL_CART.authenticate})
       //   setCartCount(res.data.cartList.length)
+      //   console.log(data.cartList.length)
       // } catch (error) {
-        
+      //   console.error(error)
       // }
     }
 useEffect(()=>{
@@ -44,9 +46,9 @@ useEffect(()=>{
                   </div>
                </div>
                 <div className={`nav-bar nav-menu-list ${toggle}`}>
-                    <div className="item"><a className={location.pathname === "/" ? 'link active-tab' : `link`} onClick={()=>navigate("/")}>Home</a></div>
-                    <div className="item"><Link className={location.pathname === "/course" ? 'link active-tab' : `link`} to="/course">Courses</Link></div>
-                    <div className="item"><Link className={location.pathname === "/buy-course" ? 'link active-tab' : `link`} to="/buy-course">Buy Course  <i className={`mdi mdi-cart-outline ${location.pathname === "/buy-course" ? 'text-light' : ``} `}></i>{cartCount === 0 ? null : <span style={{background: "white", color: "black", fontSize: "13px", padding: "1px 5px", borderRadius: "50%"}}>{cartCount}</span>}</Link></div>
+                    <div className="item"><Link className={location.pathname === "/" ? 'link active-tab' : `link`} to="/" >Home</Link></div>
+                    <div className="item"><Link className={location.pathname.includes('/course') ? 'link active-tab' : `link`} to="/course">Courses</Link></div>
+                    <div className="item"><Link className={location.pathname.includes("/buy-course") ? 'link active-tab' : `link`} to="/buy-course">Buy Course  <i className={`mdi mdi-cart-outline ${location.pathname === "/buy-course" ? 'text-light' : ``} `}></i>{cartCount === 0 ? null : <span style={{background: "white", color: "black", fontSize: "13px", padding: "1px 5px", borderRadius: "50%"}}>{cartCount}</span>}</Link></div>
 
 
                     {localStorage.getItem('token') ?         

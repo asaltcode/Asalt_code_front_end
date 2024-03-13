@@ -10,9 +10,6 @@
 .course-about{
   color: white;
 }
-.about-box{
-
-}
 
 .c-description{
   font-size: 16px;
@@ -32,9 +29,6 @@
 
 .syllabus-cart{
   padding: 25px;
-
-  /* position: relative; */
-  /* position: absolute; */
 }
 .syllabus-cart:hover ~ .syllabus-content-container{
    /* display: block; */

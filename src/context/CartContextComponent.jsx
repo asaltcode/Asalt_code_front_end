@@ -20,13 +20,13 @@ const CartContextComponent = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message || error.message);
+      // toast.error(error.response.data.message || error.message);
     }
   };
 
   useEffect(() => {
     updateCart();
-  }, []);
+  },[]);
 
   return (
     <CartContext.Provider value={{ cart, setCart}}>

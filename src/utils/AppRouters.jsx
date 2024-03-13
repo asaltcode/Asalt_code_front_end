@@ -146,7 +146,10 @@ const AppRouters = [
     path: "/",
     exact: true,
     element: <>
+      {/* <CartContextComponent> */}
+
     <UserDashboard/>
+    {/* </CartContextComponent> */}
     </>,
     children: [
       {
@@ -154,6 +157,7 @@ const AppRouters = [
         exact: true,
         element: <>
         <Sliders/>
+
         <Home/>
         </>
       },
@@ -201,6 +205,34 @@ const AppRouters = [
           </>
         ),
       },
+      {
+        path: "purchase",
+        exact: true,
+        element: (
+          <>   
+          <UserProductedRoute>
+              <CartContextComponent>
+                 <Purchase /> 
+              </CartContextComponent>     
+          </UserProductedRoute>
+          </>
+        ),
+        children: [      
+         { path: "",
+          exact: true,
+          element: (<OrderDetails/>),
+        },
+         { path: "billing-details",
+          exact: true,
+          element: (<BillingDetails  />),
+        },
+         { path: "make-payment",
+          exact: true,
+          element: (<MakePayment/>),
+        },
+        ]
+      },
+      
     ]
   },
   {
@@ -257,33 +289,6 @@ const AppRouters = [
     element: <EmailVerifyAnim />,
   },
  
-  {
-    path: "/purchase",
-    exact: true,
-    element: (
-      <>   
-      <UserProductedRoute>
-          <CartContextComponent>
-             <Purchase /> 
-          </CartContextComponent>     
-      </UserProductedRoute>
-      </>
-    ),
-    children: [      
-     { path: "",
-      exact: true,
-      element: (<OrderDetails/>),
-    },
-     { path: "billing-details",
-      exact: true,
-      element: (<BillingDetails  />),
-    },
-     { path: "make-payment",
-      exact: true,
-      element: (<MakePayment/>),
-    },
-    ]
-  },
   
   {
     path: "/video/:id",

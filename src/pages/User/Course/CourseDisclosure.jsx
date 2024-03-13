@@ -8,9 +8,15 @@ import SyllabusCard from './Helper/SyllabusCard';
 import SyllabusTopic from './Helper/SyllabusTopic';
 import { jwtDecode } from 'jwt-decode';
 import Loading from '../../../animation/Loading';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../../Redux/CartSlicer';
 
 
 const CourseDisclosure = () => {
+    const dispatch = useDispatch()
+    const cartList = useSelector(state => state.Cart)
+
+
     const navigate = useNavigate()
     const [course, setCourse] = useState({});
     const [syllabus, setSyllabus] =useState([])
@@ -23,7 +29,7 @@ const CourseDisclosure = () => {
         try {
             const res = await AxiosService.post(`${ApiRoutes.GET_COURSE_BY_ID.path}/${params.id}`, {authenticate: ApiRoutes.GET_COURSE_BY_ID.authenticate})
             if(res.status === 200){
-                setCourse(res.data.course)
+                setCourse(res.data.course)                
             }
         } catch (error) {
             console.log(error)
@@ -73,8 +79,10 @@ const CourseDisclosure = () => {
             const cart = await AxiosService.post(`${ApiRoutes.ADD_TO_CART.path}`, {user_id: decode.id, course_id: courseId}, {authenticate: ApiRoutes.ADD_TO_CART.authenticate})
             if(cart.status === 200){
                navigate('/purchase')
+               dispatch(addToCart(['Elangovan']))
             }
             else if(cart.status === 208){
+                dispatch(addToCart(['Elangovan']))
                 navigate('/purchase')
             }
         

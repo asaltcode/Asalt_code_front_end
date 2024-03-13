@@ -11,8 +11,6 @@ const Topbar = ({sideToggle, setSideToggle, activeSideToggle, setActiveSideToggl
   const UserName = localStorage.getItem('name')
   const [profileShow, setProfileShow] = useState("")
   const PofileView = () => profileShow === "" ? setProfileShow('show') : setProfileShow("")
-  const logout = useLogout()
-
 
   return (
    
