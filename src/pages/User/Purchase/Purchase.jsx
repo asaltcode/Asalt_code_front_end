@@ -5,15 +5,16 @@ import BillingDetails from './Billing/BillingDetails'
 import OrderDetails from './Order/OrderDetails'
 import SadIcon from '../../../assets/images/sad.svg'
 import { toast } from 'react-toastify'
-import { jwtDecode } from 'jwt-decode'
 import AxiosService from '../../../utils/AxiosService'
 import ApiRoutes from '../../../utils/ApiRoutes'
-import { CartContext } from '../../../context/CartContextComponent'
 import RenderRazorpay from '../Payment/RenderRazorpay'
+import { useDispatch, useSelector } from 'react-redux'
+import { saveAllCart } from '../../../Redux/CartSlicer'
 
 
 const Purchase = () => {
-  const { cart } = useContext(CartContext);
+  const dispatch = useDispatch()
+  const cart = useSelector(state => state.Cart)
   const navigate = useNavigate();
   const location = useLocation();
   const [progress, setProgress] = useState(() => {
@@ -69,7 +70,8 @@ const Purchase = () => {
       amount: amount, //convert amount into lowest unit. here, Dollar->Cents    
       course_id,
       user_id   
-      }
+      },
+      {authenticate: true}
       );
       console.log(res.data)
       console.log(user_id)
@@ -86,8 +88,19 @@ const Purchase = () => {
   };
   }
 
+  const getAllCart = async () =>{
+    try {
+        const res = await AxiosService.get(ApiRoutes.GET_ALL_CART.path, { authenticate: ApiRoutes.GET_ALL_CART.authenticate });
+            if (res.status === 200) {
+                dispatch(saveAllCart(res.data.cartList));
+            }
+    } catch (error) {
+        console.log(error)
+    }
+  }
   useEffect(() => {
       handleProgress();
+      getAllCart()
   }, []);
 
 

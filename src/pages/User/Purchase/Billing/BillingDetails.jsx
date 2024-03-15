@@ -4,10 +4,13 @@ import AxiosService from '../../../../utils/AxiosService'
 import ApiRoutes from '../../../../utils/ApiRoutes'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useDispatch } from 'react-redux'
+import { endLoading, onLoading } from '../../../../Redux/loaderSlicer'
 
 const BillingDetails = () => {
+    const dispatch = useDispatch()
     const cap = text => text.trim()[0].toUpperCase() + text.slice(1).toLowerCase()
-   
+    
 const [initialValues, setInitialValues] =  useState({
     name: "",
     email: ""
@@ -26,9 +29,8 @@ const [initialValues, setInitialValues] =  useState({
 
     const getUser = async () =>{
         try {
-            const token = localStorage.getItem('token')
-            const decode = jwtDecode(token)
-            const res = await AxiosService.get(`${ApiRoutes.GET_USER.path}/${decode.id}`, {authenticate: ApiRoutes.GET_USER.authenticate})
+            dispatch(onLoading())
+            const res = await AxiosService.get(`${ApiRoutes.GET_USER.path}`, {authenticate: ApiRoutes.GET_USER.authenticate})
             if(res.status === 200){
                 setInitialValues({
                     name: cap(res.data.user.name),
@@ -38,6 +40,8 @@ const [initialValues, setInitialValues] =  useState({
         } catch (error) {
             console.log(error)
             toast.error(error.response.data.message || error.message)   
+        }finally{
+            dispatch(endLoading())
         }
     }
 

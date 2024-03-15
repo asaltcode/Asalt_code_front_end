@@ -48,6 +48,13 @@
   padding: 25px;
   /* top: 0; */
 }
+
+.SadImage{
+  transform: scale(5);
+  filter: hue-rotate(300deg);
+}
+
+
 .topic-main-container{
   max-height: 0;
 }

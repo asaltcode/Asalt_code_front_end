@@ -7,9 +7,11 @@ import AxiosService from '../../utils/AxiosService'
 import ApiRoutes from '../../utils/ApiRoutes'
 import Loading from '../../animation/Loading';
 import { toast } from 'react-toastify';
-
+import { useDispatch } from 'react-redux';
+import { onLoading, endLoading } from '../../Redux/loaderSlicer';
 
 const Signup = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [toggleEye, setToggleEye] = useState("fa-eye-slash");
   const [passwordType, setPasswordType] = useState("password");
@@ -48,7 +50,7 @@ const Signup = () => {
       const {name, email, password} = values
       const datas = {name, email, password}
       try {
-        setLoading(true)
+        dispatch(onLoading())
         const res = await AxiosService.post(`${ApiRoutes.SIGN_UP.path}`, datas, {authenticate: ApiRoutes.SIGN_UP.authenticate})
         console.log(res.data)
       if(res.status === 200){
@@ -63,14 +65,13 @@ const Signup = () => {
         toast.error(error.response.data.message || error.message)   
         console.log(error)
       }finally{
-        setLoading(false)
+        dispatch(endLoading())
       }
     }
   })
 
   return (
     <>
-     {loading && <><Loading/></>} 
     <div className="form-container">
         <form onSubmit={formik.handleSubmit} className="signup-form" id="forms">
             <h1 className="top-head">Create Account</h1>

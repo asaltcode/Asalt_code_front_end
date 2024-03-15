@@ -12,10 +12,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../../Redux/CartSlicer';
 
 
+
+
 const CourseDisclosure = () => {
     const dispatch = useDispatch()
     const cartList = useSelector(state => state.Cart)
-
+    const courses = useSelector(state => state.Course)
 
     const navigate = useNavigate()
     const [course, setCourse] = useState({});
@@ -69,20 +71,25 @@ const CourseDisclosure = () => {
     }));
     };
 
-    const handlePayment = async (courseId) =>{
+    const handlePayment = async (course_id) =>{
         // navigate('/purchase')
         setLoading(true)
         try {
             const token = localStorage.getItem('token')
             const decode = jwtDecode(token)
-            const res = await AxiosService.get(`${ApiRoutes.GET_USER.path}/${decode.id}`,{authenticate: ApiRoutes.GET_USER.authenticate})
-            const cart = await AxiosService.post(`${ApiRoutes.ADD_TO_CART.path}`, {user_id: decode.id, course_id: courseId}, {authenticate: ApiRoutes.ADD_TO_CART.authenticate})
+            const cart = await AxiosService.post(`${ApiRoutes.ADD_TO_CART.path}`, {course_id}, {authenticate: ApiRoutes.ADD_TO_CART.authenticate})
             if(cart.status === 200){
                navigate('/purchase')
+               console.log(courses)
+               
                dispatch(addToCart(['Elangovan']))
             }
             else if(cart.status === 208){
-                dispatch(addToCart(['Elangovan']))
+
+            //    const {course_id, createdAt, price ,thumbnail, title, user_id, _id} = {...courses.filter(data => data._id === course_id)}
+
+                dispatch(addToCart(courses.filter(data => data._id === course_id)))
+                console.log(...courses.filter(data => data._id === course_id))
                 navigate('/purchase')
             }
         

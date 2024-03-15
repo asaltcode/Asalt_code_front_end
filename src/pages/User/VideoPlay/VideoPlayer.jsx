@@ -6,12 +6,14 @@ import AxiosService from '../../../utils/AxiosService';
 import ApiRoutes from '../../../utils/ApiRoutes';
 import { toast } from 'react-toastify';
 import Progress from '../../../common/ScrollProgress';
+import { useDispatch } from 'react-redux';
+import { endLoading, onLoading } from '../../../Redux/loaderSlicer';
 
 const VideoPlayer = () => {
     let count = true
    const navigate = useNavigate()
+   const dispatch = useDispatch()
    const [video, setVideo] = useState("")    
-   const [playing, setPlaying] = useState("")
    const [videoTitle, setVideoTitle] = useState("")
    const [syllabus, setSyllabus] = useState([])
    const params = useParams()
@@ -19,6 +21,7 @@ const VideoPlayer = () => {
    
    const getSyllabus = async () =>{
     try {
+        dispatch(onLoading())
         const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID.path}/${params.id}`);
         setSyllabus(res.data.syllabus);
         const playlist = res.data.syllabus.reduce((acc, curr) => {
@@ -33,6 +36,8 @@ const VideoPlayer = () => {
     } catch (error) {
         console.log(error)
         toast.error(error.response.data.message || error.message)   
+    }finally{
+        dispatch(endLoading())
     }
 }
 

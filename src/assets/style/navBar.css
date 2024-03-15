@@ -4,7 +4,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    z-index: 100 !important;
+    z-index: 99 !important;
 }
 .titleName{
     color: #ffffff;

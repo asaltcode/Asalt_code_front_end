@@ -3,15 +3,20 @@ import AxiosService from '../../../../utils/AxiosService'
 import ApiRoutes from '../../../../utils/ApiRoutes'
 import { toast } from 'react-toastify';
 import { CartContext } from '../../../../context/CartContextComponent';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeFromCart, saveAllCart } from '../../../../Redux/CartSlicer';
 
 const OrderDetails = () => {
     const {cart, setCart} = useContext(CartContext)   
-      const handleDelete = async (index, course_id, user_id) =>{
+    const dispatch = useDispatch()
+    const carts = useSelector(state => state.Cart)
+      const handleDelete = async (index, course_id) =>{
         try {
-            let newArray = [...cart];
-            newArray.splice(index, 1);
-            setCart(newArray); // Update the cart state with the new array
-            const data = {user_id, course_id}
+            // let newArray = [...cart];
+            // newArray.splice(index, 1);
+          // setCart(newArray); // Update the cart state with the new array
+            dispatch(removeFromCart({id: course_id}))
+            const data = {course_id}
             await AxiosService.delete(ApiRoutes.DEL_CART.path, {data}, {authenticate: ApiRoutes.DEL_CART.authenticate})
             // Perform any other operations related to deletion            
         } catch (error) {
@@ -19,6 +24,20 @@ const OrderDetails = () => {
             toast.error(error.response.data.message || error.message);   
         }
     }
+    const getAllCart = async () =>{
+        try {
+            const res = await AxiosService.get(ApiRoutes.GET_ALL_CART.path, {authenticate: ApiRoutes.GET_ALL_CART.authenticate});
+            if (res.status === 200) {
+            //   setCart(res.data.cartList)
+            dispatch(saveAllCart(res.data.cartList))
+            }
+          } catch (error) {
+            console.log(error);
+          }
+    }
+    useEffect(()=>{
+       getAllCart()
+    },[])
    
   return (    
     <div className="mt-4">
@@ -31,7 +50,7 @@ const OrderDetails = () => {
             <hr className='bg-light' />
             {/* Card Start */}
             {
-            cart.map((data, index) =>{
+            carts.map((data, index) =>{
             return <div key={index}>
                 <div className="row">
                     <div className="col-3 fw-light">
