@@ -146,10 +146,7 @@ const AppRouters = [
     path: "/",
     exact: true,
     element: <>
-      {/* <CartContextComponent> */}
-
     <UserDashboard/>
-    {/* </CartContextComponent> */}
     </>,
     children: [
       {
@@ -157,7 +154,6 @@ const AppRouters = [
         exact: true,
         element: <>
         <Sliders/>
-
         <Home/>
         </>
       },
@@ -211,9 +207,7 @@ const AppRouters = [
         element: (
           <>   
           <UserProductedRoute>
-              <CartContextComponent>
                  <Purchase /> 
-              </CartContextComponent>     
           </UserProductedRoute>
           </>
         ),

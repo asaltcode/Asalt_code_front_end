@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react'
 import crypto from 'crypto-js';
-import PropTypes from 'prop-types'
 import AxiosService from '../../../utils/AxiosService';
 import ApiRoutes from '../../../utils/ApiRoutes';
-import Logo from '../../../assets/images/logo.svg'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { saveAllCart } from '../../../Redux/CartSlicer';
 // import evn from '../../../../dotenv'
 
 // Function to load script and append in DOM tree.
@@ -24,6 +24,7 @@ const loadScript = src => new Promise((resolve) => {
 
 const RenderRazorpay = ({orderId, keyId, keySecret, currency, amount, user_email, user_name}) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const paymentId = useRef(null);
   const paymentMethod = useRef(null);
   // To load razorpay checkout modal script.
@@ -93,6 +94,7 @@ const options = {
           paymentId,
           signature: response.razorpay_signature,
         });
+        dispatch(saveAllCart([]))
         navigate('/')
       } else {
         handlePayment('failed', {

@@ -7,31 +7,9 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import {Autoplay, EffectCoverflow, Pagination,  Navigation } from 'swiper/modules';
-import ApiRoutes from '../../../utils/ApiRoutes';
-import AxiosService from '../../../utils/AxiosService';
-import { useDispatch, useSelector } from 'react-redux';
-import { saveCrousel } from '../../../Redux/CrouselSlicer';
-import { onLoading, endLoading } from '../../../Redux/loaderSlicer';
+import {useSelector } from 'react-redux';
 const Sliders = () => {
-  const dispatch = useDispatch()
   const crousel = useSelector(state => state.Crousel)
-  const getCarousel = async () =>{
-      dispatch(onLoading())
-      try {
-        const res = await AxiosService.get(ApiRoutes.GET_CAROUSEL.path, {authenticate: ApiRoutes.GET_CAROUSEL.authenticate})
-      if(res.status === 200){
-        dispatch(saveCrousel(res.data.image))
-      }
-      } catch (error) {
-        console.log(error)
-      }finally{
-        dispatch(endLoading())
-      }
-  }
-
-  useEffect( ()=>{
-    getCarousel()
-  },[])
   return (
     <>
     <div className="container-fluid">

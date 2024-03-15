@@ -9,8 +9,12 @@ export const cartSlice = createSlice({
            return action.payload
         },
         addToCart: (state, action) =>{
-           return [...state, action.payload]
-        },
+            const { course_id } = action.payload;
+            if (state.some(item => item.course_id === course_id)) {
+                return state; // Item already exists in cart, do not add
+            }
+            return [...state, action.payload];
+         },
         removeFromCart: (state, action) =>{
             return state.filter(item => item.course_id !== action.payload.id);
         }

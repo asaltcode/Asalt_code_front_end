@@ -10,6 +10,7 @@ import ApiRoutes from '../../utils/ApiRoutes'
 import { toast } from 'react-toastify'
 import Loading from '../../animation/Loading'
 import { jwtDecode } from 'jwt-decode'
+import { useSelector } from 'react-redux'
 
 // import useAuth from '../hook/useAuth'
 
@@ -25,6 +26,7 @@ const Login = () => {
     const [loading, setLoading] = useState(null)
     const [beEmailError, setBeEmailError] = useState(null)
     const [bePasswordError, setBePasswordError] = useState(null)
+    const user = useSelector(state => state.user)
 
     //Log in button clicking effect
     const handleMouseDown = () => setScale(0.9);
@@ -50,17 +52,14 @@ const Login = () => {
          try {
             setLoading(true)
             const res = await AxiosService.post(ApiRoutes.LOG_IN.path, values, {authenticate: ApiRoutes.LOG_IN.authenticate})
-            const accessToken = res?.data?.token
-            const roles = res?.data?.role
-            let datas = {...values, accessToken, roles}   // setAuth(datas)   
             localStorage.setItem('token', res.data.token)
             localStorage.setItem('name', res.data.name)
-             const decode = jwtDecode(res.data.token)
-            
-            if(res?.data?.role === 'admin' &&  decode.role === "admin"){
+           
+            const user = await AxiosService.get(ApiRoutes.GET_USER.path, {authenticate : ApiRoutes.GET_USER.authenticate })
+            if(res?.data?.role === 'admin' &&  user?.data?.user?.role === "admin"){
                 navigate('/admin')              
             }
-            else if(res?.data?.role === 'user' && decode.role === "user" ){
+            else if(res?.data?.role === 'user' && user?.data?.user?.role === "user" ){
                 navigate('/')
       }
          } catch (error) {

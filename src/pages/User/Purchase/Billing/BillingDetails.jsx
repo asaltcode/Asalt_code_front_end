@@ -1,14 +1,10 @@
-import { jwtDecode } from 'jwt-decode'
 import React, {useEffect, useState} from 'react'
-import AxiosService from '../../../../utils/AxiosService'
-import ApiRoutes from '../../../../utils/ApiRoutes'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useDispatch } from 'react-redux'
-import { endLoading, onLoading } from '../../../../Redux/loaderSlicer'
+import { useSelector } from 'react-redux'
 
 const BillingDetails = () => {
-    const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
     const cap = text => text.trim()[0].toUpperCase() + text.slice(1).toLowerCase()
     
 const [initialValues, setInitialValues] =  useState({
@@ -16,7 +12,7 @@ const [initialValues, setInitialValues] =  useState({
     email: ""
 })
 
-    let formik = useFormik({ //Formik Validations
+    const formik = useFormik({ //Formik Validations
         initialValues: initialValues,
         validationSchema: Yup.object({
           name:Yup.string().required('Name is required').max(20,'Name can not exceed 20 characters').min(3,'Name can not be shorter than 3 leters'),
@@ -27,26 +23,8 @@ const [initialValues, setInitialValues] =  useState({
       },
       )
 
-    const getUser = async () =>{
-        try {
-            dispatch(onLoading())
-            const res = await AxiosService.get(`${ApiRoutes.GET_USER.path}`, {authenticate: ApiRoutes.GET_USER.authenticate})
-            if(res.status === 200){
-                setInitialValues({
-                    name: cap(res.data.user.name),
-                    email: res.data.user.email
-                })
-            }
-        } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.message || error.message)   
-        }finally{
-            dispatch(endLoading())
-        }
-    }
-
     useEffect(()=>{
-       getUser()
+       setInitialValues({name: cap(user.name), email: user.email})
     },[])
   return (
     <div className="mt-5">

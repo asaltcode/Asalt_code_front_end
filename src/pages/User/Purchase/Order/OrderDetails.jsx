@@ -2,43 +2,22 @@ import React, { useContext, useEffect, useState } from 'react'
 import AxiosService from '../../../../utils/AxiosService'
 import ApiRoutes from '../../../../utils/ApiRoutes'
 import { toast } from 'react-toastify';
-import { CartContext } from '../../../../context/CartContextComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart, saveAllCart } from '../../../../Redux/CartSlicer';
+import { removeFromCart} from '../../../../Redux/CartSlicer';
 
 const OrderDetails = () => {
-    const {cart, setCart} = useContext(CartContext)   
     const dispatch = useDispatch()
     const carts = useSelector(state => state.Cart)
-      const handleDelete = async (index, course_id) =>{
+      const handleDelete = async (course_id) =>{
         try {
-            // let newArray = [...cart];
-            // newArray.splice(index, 1);
-          // setCart(newArray); // Update the cart state with the new array
             dispatch(removeFromCart({id: course_id}))
             const data = {course_id}
             await AxiosService.delete(ApiRoutes.DEL_CART.path, {data}, {authenticate: ApiRoutes.DEL_CART.authenticate})
-            // Perform any other operations related to deletion            
         } catch (error) {
             console.log(error);
             toast.error(error.response.data.message || error.message);   
         }
-    }
-    const getAllCart = async () =>{
-        try {
-            const res = await AxiosService.get(ApiRoutes.GET_ALL_CART.path, {authenticate: ApiRoutes.GET_ALL_CART.authenticate});
-            if (res.status === 200) {
-            //   setCart(res.data.cartList)
-            dispatch(saveAllCart(res.data.cartList))
-            }
-          } catch (error) {
-            console.log(error);
-          }
-    }
-    useEffect(()=>{
-       getAllCart()
-    },[])
-   
+    }   
   return (    
     <div className="mt-4">
     <div className="row">
@@ -63,7 +42,7 @@ const OrderDetails = () => {
                     </div>
                     <div className="col-2 fw-light text-end">
                         <p> ₹ {data.price}</p>
-                        <p><i onClick={()=> handleDelete(index, data.course_id, data.user_id)} style={{cursor:
+                        <p><i onClick={()=> handleDelete(data.course_id)} style={{cursor:
                                 "pointer"}} className='mdi mdi-delete-forever fs-6 text-danger'></i></p>
                     </div>
                 </div>

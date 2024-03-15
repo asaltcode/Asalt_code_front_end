@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useContext} from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useLocation} from 'react-router-dom'
 import '../assets/style/navBar.css'
 import { useLogout } from '../hook/useLogout'
 import { useSelector } from 'react-redux'

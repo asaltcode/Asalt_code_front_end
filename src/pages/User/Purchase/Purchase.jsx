@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import '../../../assets/style/purchase.css'
-import BillingDetails from './Billing/BillingDetails'
-import OrderDetails from './Order/OrderDetails'
 import SadIcon from '../../../assets/images/sad.svg'
 import { toast } from 'react-toastify'
 import AxiosService from '../../../utils/AxiosService'
@@ -10,11 +7,13 @@ import ApiRoutes from '../../../utils/ApiRoutes'
 import RenderRazorpay from '../Payment/RenderRazorpay'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveAllCart } from '../../../Redux/CartSlicer'
+import '../../../assets/style/purchase.css'
 
 
 const Purchase = () => {
   const dispatch = useDispatch()
   const cart = useSelector(state => state.Cart)
+  const user = useSelector(state => state.user)
   const navigate = useNavigate();
   const location = useLocation();
   const [progress, setProgress] = useState(() => {
@@ -64,17 +63,18 @@ const Purchase = () => {
     currency: null,
     amount: null,
    });
-   const handleCreateOrder = async (amount, course_id, user_id) => {
+   const handleCreateOrder = async (amount, course_id) => {
+   console.log(user._id)
       const res = await AxiosService.post('/order',
       {
-      amount: amount, //convert amount into lowest unit. here, Dollar->Cents    
+      amount: 100, //convert amount into lowest unit. here, Dollar->Cents    
       course_id,
-      user_id   
+      user_id : user._id   
       },
       {authenticate: true}
       );
       console.log(res.data)
-      console.log(user_id)
+   
   
       if(res.data && res.data.order_id){
       setOrderDetails({
@@ -98,6 +98,11 @@ const Purchase = () => {
         console.log(error)
     }
   }
+  const handleClear = () =>{ //This function prevents wrong navigation
+    localStorage.setItem('progress', '0')
+    setTimeout(()=> navigate("/"),3500)
+  }
+
   useEffect(() => {
       handleProgress();
       getAllCart()
@@ -137,8 +142,9 @@ const Purchase = () => {
                       {/* <RenderRazorpay/>          */}
                       <div className="purchase_buttons">
                           {location.pathname === "/purchase" ? null : <button onClick={handleBack} className='btn btn-warning rounded-5' type="button">Back</button>}
-                          {location.pathname === "/purchase/make-payment" ? <button onClick={()=> handleCreateOrder(cart.reduce((acc, curr) => acc + curr.price, 0), cart.map(id => id.course_id), cart[0].user_id)} className='btn btn-primary rounded-5' type="button">Make Payment</button> :
-                              cart.length === 0 ? <button onClick={() => navigate('/')} className='btn btn-primary rounded-5'>Go To Home</button> :
+                          {location.pathname === "/purchase/make-payment" && cart.length > 0
+                          ? <button onClick={()=> handleCreateOrder(cart.reduce((acc, curr) => acc + curr.price, 0), cart.map(id => id.course_id))} className='btn btn-primary rounded-5' type="button">Make Payment</button> 
+                          : cart.length === 0 ? (<><button onClick={() => navigate('/')} className='btn btn-primary rounded-5'>Go To Home</button>{handleClear()}</>) :
                             <button onClick={handleNavigate} className='btn btn-primary rounded-5' type="button">Next</button>}
                       </div>
                   </div>
