@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 //Auth
 import Signup from "../pages/Auth/Signup";
@@ -10,12 +10,10 @@ import OTPVerify from "../pages/Auth/OTPVerify";
 import ChangePassword from "../pages/Auth/ChangePassword";
 
 //User Pages
-import Navication from "../common/Navication";
 import Home from "../pages/User/Home/Home";
 import Course from "../pages/User/Course/Course";
 import Progress from "../common/ScrollProgress";
 import Buying from "../pages/User/BuyCourse/Buying";
-import Footer from "../common/Footer";
 
 //Producted Routers
 import AdminProductedRoute from "../pages/Auth/AdminProductedRoute";
@@ -43,7 +41,6 @@ import OrderDetails from "../pages/User/Purchase/Order/OrderDetails";
 import BillingDetails from "../pages/User/Purchase/Billing/BillingDetails";
 import MakePayment from "../pages/User/Purchase/MakePayment/MakePayment";
 
-import { jwtDecode } from "jwt-decode";
 import SyllabusTable from "../pages/Admin/View syllabus/SyllabusTable";
 import EditSyllabus from "../pages/Admin/View syllabus/EditSyllabus";
 import TopicTable from "../pages/Admin/View Topics/TopicTable";
@@ -51,9 +48,6 @@ import EditTopic from "../pages/Admin/View Topics/EditTopic";
 import EditCarousel from "../pages/Admin/Carousel/EditCarousel";
 import UserDashboard from "../pages/User/UserDashboard";
 import Sliders from "../pages/User/Home/Sliders";
-const token = localStorage.getItem('token')
-const decode = jwtDecode(token === null ? 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoidXNlciJ9.04wRHoeP0SL7-IWcxX-KFt6fgXT8urkjy8vyEwB0Gbc' : token)
-console.log()
 
 const AppRouters = [
   {
@@ -292,7 +286,7 @@ const AppRouters = [
   {
     path: "/*",
     exact: true,
-    element: <>{ decode.role === 'user' || token === null ? <Navigate to="/"/> : <Navigate to="/admin"/>}</>,
+    element: <Navigate to="/"/>
   },
 ];
 export default AppRouters;

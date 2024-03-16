@@ -6,7 +6,7 @@
     overflow: hidden;
   }
   
-  .progress-bar {   
+  .progress-bars {   
     height: 100%;
     background-color: #09ff00;
     transition: width 0.8s ease; /* Transition for width change */

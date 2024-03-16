@@ -5,7 +5,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AxiosService from '../../utils/AxiosService'
 import ApiRoutes from '../../utils/ApiRoutes'
-import Loading from '../../animation/Loading';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { onLoading, endLoading } from '../../Redux/loaderSlicer';
@@ -15,8 +14,8 @@ const Signup = () => {
   const navigate = useNavigate()
   const [toggleEye, setToggleEye] = useState("fa-eye-slash");
   const [passwordType, setPasswordType] = useState("password");
-  const [loading, setLoading] = useState(null)
   const [scale, setScale] = useState(1);
+  const cap = text => text.trim()[0].toUpperCase() + text.slice(1).toLowerCase()
 
   //Sign up button clicking effect
   const handleMouseDown = () => setScale(0.9);
@@ -48,9 +47,9 @@ const Signup = () => {
     }),
     onSubmit: async (values)=>{
       const {name, email, password} = values
-      const datas = {name, email, password}
+      const datas = {name : cap(name), email, password}
       try {
-        dispatch(onLoading())
+        // dispatch(onLoading())
         const res = await AxiosService.post(`${ApiRoutes.SIGN_UP.path}`, datas, {authenticate: ApiRoutes.SIGN_UP.authenticate})
         console.log(res.data)
       if(res.status === 200){
@@ -65,7 +64,7 @@ const Signup = () => {
         toast.error(error.response.data.message || error.message)   
         console.log(error)
       }finally{
-        dispatch(endLoading())
+        // dispatch(endLoading())
       }
     }
   })

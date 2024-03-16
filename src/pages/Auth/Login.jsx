@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState} from 'react'
 import "../../assets/style/Login.css"
 // import "../style/signup.css"
 import { useNavigate, Link } from 'react-router-dom'
@@ -9,12 +9,9 @@ import AxiosService from '../../utils/AxiosService'
 import ApiRoutes from '../../utils/ApiRoutes'
 import { toast } from 'react-toastify'
 import Loading from '../../animation/Loading'
-import { jwtDecode } from 'jwt-decode'
-import { useSelector } from 'react-redux'
+
 
 // import useAuth from '../hook/useAuth'
-
-
 
 const Login = () => {
     // const {setAuth} = useAuth()
@@ -26,7 +23,6 @@ const Login = () => {
     const [loading, setLoading] = useState(null)
     const [beEmailError, setBeEmailError] = useState(null)
     const [bePasswordError, setBePasswordError] = useState(null)
-    const user = useSelector(state => state.user)
 
     //Log in button clicking effect
     const handleMouseDown = () => setScale(0.9);
@@ -54,14 +50,20 @@ const Login = () => {
             const res = await AxiosService.post(ApiRoutes.LOG_IN.path, values, {authenticate: ApiRoutes.LOG_IN.authenticate})
             localStorage.setItem('token', res.data.token)
             localStorage.setItem('name', res.data.name)
-           
-            const user = await AxiosService.get(ApiRoutes.GET_USER.path, {authenticate : ApiRoutes.GET_USER.authenticate })
-            if(res?.data?.role === 'admin' &&  user?.data?.user?.role === "admin"){
-                navigate('/admin')              
+            console.log(res)
+            if(res.status === 200){
+                const user = await AxiosService.get(ApiRoutes.GET_USER.path, {authenticate : ApiRoutes.GET_USER.authenticate })
+                if(res?.data?.role === 'admin' &&  user?.data?.user?.role === "admin"){
+                    navigate('/admin')              
+                }
+                else if(res?.data?.role === 'user' && user?.data?.user?.role === "user" ){
+                    navigate('/')
+                }
             }
-            else if(res?.data?.role === 'user' && user?.data?.user?.role === "user" ){
-                navigate('/')
-      }
+            else if(res.status === 202){
+                toast.info(res.data.message)   
+            }
+           
          } catch (error) {
             console.log(error)
            toast.error(error.response.data.message || error.message)   

@@ -10,6 +10,7 @@ import Loading from '../../../animation/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../../Redux/CartSlicer';
 import BgAnimaiton from '../../../components/BgAnimaiton';
+import {endLoading, onLoading} from "../../../Redux/loaderSlicer"
 
 const CourseDisclosure = () => {
     const params = useParams()
@@ -52,7 +53,7 @@ const CourseDisclosure = () => {
     }));
     };
 
-    const handlePayment = async (course_id) =>{
+    const handleAddToCart = async (course_id) =>{
         const course = courses.filter(data => data._id === course_id)
         const {_id, title, price, thumbnail} = course[0]
         dispatch(addToCart({         
@@ -62,11 +63,13 @@ const CourseDisclosure = () => {
             course_id : _id,
             user_id: user._id,
         }))
-        setLoading(true)
+        // setLoading(true)
         try {
+            dispatch(onLoading)
             const cart = await AxiosService.post(`${ApiRoutes.ADD_TO_CART.path}`, {course_id}, {authenticate: ApiRoutes.ADD_TO_CART.authenticate})
             if(cart.status === 200){
-               navigate('/purchase')
+            //    navigate('/purchase')
+            toast.success('Add To Cart')
             }
             else if(cart.status === 208){
                 navigate('/purchase')
@@ -76,7 +79,8 @@ const CourseDisclosure = () => {
             toast.error(error.response.data.message || error.message)   
         }
         finally{
-            setLoading(false)
+            // setLoading(false)
+            dispatch(endLoading)
         }
 
     }
@@ -116,7 +120,7 @@ useEffect(()=>{
                             {paid ? (
                                 <button className='btn text-light bg-primary p-3 rounded-pill mb-4' onClick={() => navigate(`/video/${params.id}`)}>Continue</button>
                             ) : (
-                                <button onClick={() => handlePayment(course._id)} className='btn text-light bg-primary p-3 rounded-pill mb-4'>Buy course for ₹{course.price}</button>
+                                <button onClick={() => handleAddToCart(course._id)} className='btn btn-primary p-3 rounded-pill mb-4'>Buy course for ₹{course.price}</button>
                             )}
                         </div>
                         <h6 className='text-center'>Instructor: {course.author} - Asalt Code Language: TAMIL</h6>

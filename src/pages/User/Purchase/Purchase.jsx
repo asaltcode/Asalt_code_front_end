@@ -64,28 +64,30 @@ const Purchase = () => {
     amount: null,
    });
    const handleCreateOrder = async (amount, course_id) => {
-   console.log(user._id)
-      const res = await AxiosService.post('/order',
-      {
-      amount: 100, //convert amount into lowest unit. here, Dollar->Cents    
-      course_id,
-      user_id : user._id   
-      },
-      {authenticate: true}
-      );
-      console.log(res.data)
-   
-  
-      if(res.data && res.data.order_id){
-      setOrderDetails({
-          orderId: res.data.order_id,
-          currency: res.data.currency,
-          amount: res.data.amount,
-          user_email: res.data.user_email,
-          user_name: res.data.user_name
-      });
-      setDisplayRazorpay(true);
-  };
+    try {
+        const res = await AxiosService.post('/order',
+        {
+        amount: amount, //convert amount into lowest unit. here, Dollar->Cents    
+        course_id,
+        user_id : user._id   
+        },
+        {authenticate: true}
+        );     
+    
+        if(res.data && res.data.order_id){
+        setOrderDetails({
+            orderId: res.data.order_id,
+            currency: res.data.currency,
+            amount: res.data.amount,
+            user_email: res.data.user_email,
+            user_name: res.data.user_name
+        });
+        setDisplayRazorpay(true);
+    };
+    } catch (error) {
+        console.log(error)
+        toast.error(error.response.data.message || error.message)   
+    }
   }
 
   const getAllCart = async () =>{
@@ -117,7 +119,7 @@ const Purchase = () => {
                       <div className="progress_content">
                           <div className="progress_box  mt-5">
                               <div className="progress-outer">
-                                  <div className="progress-bar" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                  <div className="progress-bars" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
                               <div className="progress_status_text ">
                                   <div className='user_status_text'>Order Details</div>

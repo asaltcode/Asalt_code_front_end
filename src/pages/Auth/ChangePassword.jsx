@@ -39,7 +39,7 @@ const ChangePassword = () => {
           navigate('/forget-password')
         }
       } catch (error) {
-        
+        console.log(error)
       }
     }
   })
