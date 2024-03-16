@@ -16,9 +16,8 @@ const Footer = () => {
                 <div className="fbox">
                     <h5 className='footerTitle'>Copyright</h5>
                     <div className='footer-ul'>
-                        <div className='footer-li text-light'>
-                            <i className="fa-regular fa-copyright"></i>
-                            Asalt code {new Date().getFullYear()}
+                        <div className='footer-li'>
+                            <i className="fa-regular fa-copyright"></i> Asalt code {new Date().getFullYear()}
                         </div>
                     </div>
                 </div>
