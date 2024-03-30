@@ -14,6 +14,7 @@ export default defineConfig({
       '/api': {
         target: 'https://asalt-code-back-end-d9ge.vercel.app',
         changeOrigin: true,
+        secure: true
       },
     },
   },
