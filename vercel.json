@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "https://asalt-code-back-end-d9ge.vercel.app"
+            "destination": "https://asalt-code-back-end-d9ge.vercel.app/api/*"
           },
         {
             "source": "/(.*)",
