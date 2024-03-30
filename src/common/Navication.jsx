@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate} from 'react-router-dom'
 import '../assets/style/navBar.css'
-import { useLogout } from '../hook/useLogout'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Redux/Actions/UserActions'
 
@@ -68,9 +67,7 @@ const Navication = () => {
                     <a className="nav-link" id="profileDropdown" aria-expanded={"profileShow"==='show' ? true :
                         false} data-toggle="dropdown">
                         <div className="navbar-profile">
-                            <img className="img-xs user-profile-image rounded-circle"
-                                src={user.avatar??"../../public/defaultProfile.png"}
-                                alt="" />
+                        <img className="img-xs user-profile-image rounded-circle" src={user && user.avatar ? user.avatar : "../../public/defaultProfile.png"} alt="" />
                         </div>
                     </a>
                     <div  className={`dropdown-menu dropdown-menu-right bg-dark text-light navbar-dropdown preview-list ${profileShow}`} aria-labelledby="profileDropdown">
