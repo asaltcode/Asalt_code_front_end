@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "https://asalt-code-back-end-d9ge.vercel.app/api/"
+            "source": "/api/:path(.*)",
+            "destination": "https://asalt-code-back-end-d9ge.vercel.app/:path*"
         },
         {
             "source": "/health",
