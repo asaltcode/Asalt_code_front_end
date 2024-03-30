@@ -1,7 +1,7 @@
 {
     "rewrites": [
         {
-            "source": "/api/:path(.*)",
+            "source": "/:path(.*)",
             "destination": "https://asalt-code-back-end-d9ge.vercel.app/:path*"
         },
         {
