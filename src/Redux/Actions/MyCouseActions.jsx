@@ -6,7 +6,7 @@ import AxiosService from "../../utils/AxiosService";
 export const getMyCourses = async (dispatch) => {
     try {
         dispatch(paidCoursesRequest());
-        const { data } = await AxiosService.get("/api/my-courses");
+        const { data } = await AxiosService.get("/my-courses");
         dispatch(paidCoursesSuccess(data));
     } catch (error) {
         dispatch(paidCoursesFail(error.message));
