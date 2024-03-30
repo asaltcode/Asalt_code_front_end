@@ -1,17 +1,29 @@
-import React, { useState } from 'react'
-import { Link, useLocation} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate} from 'react-router-dom'
 import '../assets/style/navBar.css'
 import { useLogout } from '../hook/useLogout'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../Redux/Actions/UserActions'
+
 
 const Navication = () => {
-  const cart = useSelector((state) => state.Cart);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {loading, isAuthenticated, error, user} = useSelector((state) => state.authState);
+  const {carts} = useSelector(state => state.cartsState)
   const location = useLocation();
   const [toggle, setToggle] = useState("");
   const [toggleMenu, setToggleMenu] = useState("");
   const [profileShow, setProfileShow] = useState("");
   const PofileView = () => profileShow === "" ? setProfileShow("show") : setProfileShow("");
 
+  const handleLogout = async () =>{
+    await dispatch(logout)
+    navigate("/login")
+  }
+  const handleAdmin = () =>{
+    navigate("/admin")
+  }
   return (
    <>
       <header className='header-nav'>
@@ -36,60 +48,79 @@ const Navication = () => {
                     <Link className={location.pathname.includes('/course') ? 'link active-tab' : `link`}
                         to="/course">Courses</Link>
                 </div>
+                {isAuthenticated && isAuthenticated ?
+                <div className="item">
+                    <Link className={location.pathname.includes('/my-courses') ? 'link active-tab' : `link`}
+                        to="/my-courses">My <i className="mdi mdi-laptop"></i></Link>
+                </div>
+                :null}
                 <div className="item">
                     <Link className={location.pathname.includes("/buy-course") ? 'link active-tab' : `link`}
                         to="/buy-course">Buy <i className={`mdi mdi-cart-outline
-                        ${location.pathname==="/buy-course" ? 'text-light' : ``} `}></i>{cart.length === 0 ? null :
+                        ${location.pathname==="/buy-course" ? 'text-light' : ``} `}></i>{carts && carts.length === 0 ? null :
                     <span style={{background: "white" , color: "black" , fontSize: "13px" , padding: "1px 5px" ,
-                        borderRadius: "50%" }}>{cart.length}</span>}</Link>
+                        borderRadius: "50%" }}>{carts && carts.length}</span>}</Link>
                 </div>
 
 
-                {localStorage.getItem('token') ?
+                {isAuthenticated && isAuthenticated ?
                 <div className={`nav-item dropdown ${profileShow}`} onClick={PofileView}>
                     <a className="nav-link" id="profileDropdown" aria-expanded={"profileShow"==='show' ? true :
                         false} data-toggle="dropdown">
                         <div className="navbar-profile">
                             <img className="img-xs user-profile-image rounded-circle"
-                                src={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
+                                src={user.avatar??"../../public/defaultProfile.png"}
                                 alt="" />
                         </div>
                     </a>
-                    <div className={`dropdown-menu dropdown-menu-right bg-dark text-light navbar-dropdown
-                        preview-list ${profileShow}`} aria-labelledby="profileDropdown">
+                    <div  className={`dropdown-menu dropdown-menu-right bg-dark text-light navbar-dropdown preview-list ${profileShow}`} aria-labelledby="profileDropdown">
                         <h6 className="p-2">Profile</h6>
                         <div className="dropdown-divider bg-secondary"></div>
-                        <a
-                            className="dropdown-item preview-item bg-dark text-light list-group-item list-group-item-action ">
-                            <div className="preview-thumbnail">
-                                <div className="preview-icon bg-dark rounded-circle">
-                                    <i className="mdi mdi-settings text-success"></i>
+                            <a onClick={()=>navigate("/profile/edit")} className="dropdown-item Cpointer preview-item bg-dark text-light list-group-item list-group-item-action ">
+                                <div className="preview-thumbnail">
+                                    <div className="preview-icon bg-dark rounded-circle">
+                                        <i className="mdi mdi-account-circle text-success"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="preview-item-content">
-                                <p className="preview-subject mt-2">Settings</p>
-                            </div>
-                        </a>
-                        <div className="dropdown-divider bg-secondary"></div>
-                        <a onClick={useLogout()}
-                            className="dropdown-item preview-item bg-dark text-light list-group-item list-group-item-action">
-                            <div className="preview-thumbnail">
-                                <div className="preview-icon bg-dark rounded-circle">
-                                    <i className="mdi mdi-logout text-danger"></i>
+                                <div className="preview-item-content">
+                                    <p className="preview-subject mt-2">Profile</p>
                                 </div>
-                            </div>
-                            <div className="preview-item-content ">
-                                <p className="preview-subject mt-2">Log out</p>
-                            </div>
-                        </a>
+                            </a>
                         <div className="dropdown-divider bg-secondary"></div>
+                            <a onClick={handleLogout}
+                                className="dropdown-item preview-item Cpointer bg-dark text-light list-group-item list-group-item-action">
+                                <div className="preview-thumbnail">
+                                    <div className="preview-icon bg-dark rounded-circle">
+                                        <i className="mdi mdi-logout text-danger"></i>
+                                    </div>
+                                </div>
+                                <div className="preview-item-content ">
+                                    <p className="preview-subject mt-2">Log out</p>
+                                </div>
+                            </a>
+                        <div className="dropdown-divider bg-secondary"></div>
+                            {
+                                user && user.role !== "admin" ? <></> : <>
+                                    <a onClick={handleAdmin} className="dropdown-item Cpointer preview-item bg-dark text-light list-group-item list-group-item-action">
+                                        <div className="preview-thumbnail">
+                                            <div className="preview-icon bg-dark rounded-circle">
+                                                <i className="mdi mdi-view-dashboard text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div className="preview-item-content ">
+                                            <p className="preview-subject mt-2">DashBoard</p>
+                                        </div>
+                                    </a>
+                                <div className="dropdown-divider bg-secondary"></div>
+                             </>
+                                
+                            }
                         <p className="p-2 mb-0 text-center">Advanced settings</p>
                     </div>
                 </div>
                 :
                 <div className="item">
-                    <Link className={location.pathname==="/login" ? 'link active-tab' : `link`} to="/login">Log in
-                    </Link>
+                    <Link className={location.pathname==="/login" ? 'link active-tab' : `link`} to="/login">Log in</Link>
                 </div>
                 }
             </div>

@@ -23,7 +23,7 @@ const EditCourse = () => {
    
     const getUser = async () =>{
         try {
-            const res =  await AxiosService.post(`${ApiRoutes.GET_COURSE_BY_ID.path}/${params.id}`,{authenticate: ApiRoutes.GET_COURSE_BY_ID.authenticate})
+            const res =  await AxiosService.get(`${ApiRoutes.GET_COURSE_BY_ID.path}/${params.id}`,{authenticate: ApiRoutes.GET_COURSE_BY_ID.authenticate})
             if(res.status === 200){
                 const {title, author, price, category, visibility, description, thumbnail} = res.data.course
                  setInitialValues({title, author, price, category, description, visibility, thumbnail})             }

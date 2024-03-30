@@ -48,24 +48,27 @@ const Signup = () => {
     onSubmit: async (values)=>{
       const {name, email, password} = values
       const datas = {name : cap(name), email, password}
-      try {
-        // dispatch(onLoading())
-        const res = await AxiosService.post(`${ApiRoutes.SIGN_UP.path}`, datas, {authenticate: ApiRoutes.SIGN_UP.authenticate})
-        console.log(res.data)
-      if(res.status === 200){
-        toast.success(res.data.message)
-        sessionStorage.setItem('name', name)
-        sessionStorage.setItem('email', email)
-        sessionStorage.setItem('password', password)
-        console.log("Hi")
-        navigate('/email-verify')              
-      }
-      } catch (error) {
-        toast.error(error.response.data.message || error.message)   
-        console.log(error)
-      }finally{
-        // dispatch(endLoading())
-      }
+
+
+      
+      // try {
+      //   // dispatch(onLoading())
+      //   const res = await AxiosService.post(`${ApiRoutes.SIGN_UP.path}`, datas, {authenticate: ApiRoutes.SIGN_UP.authenticate})
+      //   console.log(res.data)
+      // if(res.status === 200){
+      //   toast.success(res.data.message)
+      //   sessionStorage.setItem('name', name)
+      //   sessionStorage.setItem('email', email)
+      //   sessionStorage.setItem('password', password)
+      //   console.log("Hi")
+      //   navigate('/email-verify')              
+      // }
+      // } catch (error) {
+      //   toast.error(error.response.data.message || error.message)   
+      //   console.log(error)
+      // }finally{
+      //   // dispatch(endLoading())
+      // }
     }
   })
 

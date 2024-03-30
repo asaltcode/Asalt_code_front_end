@@ -21,7 +21,6 @@ import UserProductedRoute from "../pages/Auth/UserProductedRoute";
 
 // context components
 import UserEmailContextCoponent from "../context/UserEmailContextCoponent";
-import CartContextComponent from "../context/CartContextComponent";
 
 //Admin Routes
 import Dashboard from "../pages/Admin/Dashboard/Dashboard";
@@ -49,6 +48,10 @@ import EditCarousel from "../pages/Admin/Carousel/EditCarousel";
 import UserDashboard from "../pages/User/UserDashboard";
 import Sliders from "../pages/User/Home/Sliders";
 
+import ProtectedRoute from "../components/Router/ProtectedRoute";
+import EditProfile from "../components/EditProfile";
+import MyCourses from "../pages/User/MyCourses/MyCourses";
+
 const AppRouters = [
   {
     path: "/admin",
@@ -56,9 +59,11 @@ const AppRouters = [
     element: (
       <>
        <Progress />
-        <AdminProductedRoute>
+        {/* <AdminProductedRoute> */}
+        <ProtectedRoute isAdmin={true} >
           <Dashboard />
-        </AdminProductedRoute>
+        </ProtectedRoute>
+        {/* </AdminProductedRoute> */}
       </>
     ),
     children: [
@@ -66,8 +71,10 @@ const AppRouters = [
         path: "",
         element: <>
          <Progress />
-        <AllDatas/>
-        <UserTable/>
+         {/* <ProtectedRoute isAdmin={true} >  */}
+            <AllDatas/> 
+            <UserTable/>
+         {/* </ProtectedRoute > */}
         </>,
         children: [
           {
@@ -157,9 +164,7 @@ const AppRouters = [
         element: (
           <>
             <Progress />
-            <UserProductedRoute>
-              <Outlet/>
-            </UserProductedRoute>    
+              <Outlet/>          
           </>
         ),
         children: [
@@ -186,6 +191,16 @@ const AppRouters = [
         ]
       },
       {
+        path: "my-courses",
+        exact: true,
+        element: <MyCourses/>
+      },
+      {
+        path: "/profile/edit",
+        exact: true,
+        element: <EditProfile />,
+      },
+      {
         path: "buy-course",
         exact: true,
         element: (
@@ -200,9 +215,12 @@ const AppRouters = [
         exact: true,
         element: (
           <>   
-          <UserProductedRoute>
+          {/* <UserProductedRoute> */}
+                <ProtectedRoute>
                  <Purchase /> 
-          </UserProductedRoute>
+                </ProtectedRoute>
+        
+          {/* </UserProductedRoute> */}
           </>
         ),
         children: [      
@@ -261,27 +279,23 @@ const AppRouters = [
     )
   },
   {
-    path: "/change-password",
+    path: "/password/reset/:token",
     exact: true,
-    element: (
-      <>
-        <UserEmailContextCoponent>
-          <ChangePassword />
-        </UserEmailContextCoponent>
-      </>
-    ),
+    element: <ChangePassword />
   },
   {
     path: "/email-verify",
     exact: true,
     element: <EmailVerifyAnim />,
-  },
- 
-  
+  },  
   {
     path: "/video/:id",
     exact: true,
-    element: ( <UserProductedRoute> <VideoPlayer/></UserProductedRoute>),
+    element: ( 
+    // <UserProductedRoute> 
+      <VideoPlayer/>
+      // </UserProductedRoute>
+      ),
   },
   {
     path: "/*",

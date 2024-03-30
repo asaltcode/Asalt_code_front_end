@@ -32,7 +32,7 @@
 }
 .swiper-slide-active img {
   transition: 0.7s;
-  filter: drop-shadow(0 0 9px rgba(0, 255, 255, 0.685));
+  filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.511));
 }
 
 .swiper-slide-shadow-left,

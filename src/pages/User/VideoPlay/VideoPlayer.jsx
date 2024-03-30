@@ -6,13 +6,15 @@ import AxiosService from '../../../utils/AxiosService';
 import ApiRoutes from '../../../utils/ApiRoutes';
 import { toast } from 'react-toastify';
 import Progress from '../../../common/ScrollProgress';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { endLoading, onLoading } from '../../../Redux/loaderSlicer';
+import { getPaidSyllabus } from '../../../Redux/Actions/SyllabusActions';
 
 const VideoPlayer = () => {
     let count = true
    const navigate = useNavigate()
    const dispatch = useDispatch()
+   const {paidSyllabus, error} = useSelector(state => state.syllabusState)
    const [video, setVideo] = useState("")    
    const [videoTitle, setVideoTitle] = useState("")
    const [syllabus, setSyllabus] = useState([])
@@ -22,7 +24,7 @@ const VideoPlayer = () => {
    const getSyllabus = async () =>{
     try {
         dispatch(onLoading())
-        const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID.path}/${params.id}`);
+        const res = await AxiosService.get(`${ApiRoutes.GET_PAID_SYLLABUS_BY_COURSE_ID.path}/${params.id}`);
         setSyllabus(res.data.syllabus);
         const playlist = res.data.syllabus.reduce((acc, curr) => {
           curr.items.forEach(item => {
@@ -60,8 +62,14 @@ const handleVideoEnded = () => {
 
 
    useEffect(()=>{
-    getSyllabus()
+    dispatch(getPaidSyllabus(params.id))
+    // getSyllabus()
    },[])
+   useEffect(()=>{
+      if(error){
+        toast.error(error)
+      }
+   },[error])
   return (
     
     <div className="videoPlayer-main-container">
@@ -76,7 +84,6 @@ const handleVideoEnded = () => {
                     <div className="col-12"> 
                        <div className="video-box-wraper">
                        <div className="video-box">                          
-                            {console.log(playList[currentVideoIndex])}
                             <CloudinaryVideoPlayer publicId={video} cloudName={"dgnysns9a"} onEnded={handleVideoEnded} />                   
                         </div>
                           <div className="video-header">
@@ -93,7 +100,7 @@ const handleVideoEnded = () => {
                         <div className="syllabus-container">
                             <div className="card rounded-3 syllabus-card">
                                 {
-                                    syllabus.map((data, index)=>{
+                                  paidSyllabus &&  paidSyllabus.map((data, index)=>{
                                         return (
                                             <div key={index} className="all_syllabus_topic">
                                                 <div className="card-header">

@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { useSelector } from 'react-redux'
 
 const BillingDetails = () => {
-    const user = useSelector(state => state.user)
+    const {user} = useSelector(state => state.authState)
     const cap = text => text.trim()[0].toUpperCase() + text.slice(1).toLowerCase()
     
 const [initialValues, setInitialValues] =  useState({

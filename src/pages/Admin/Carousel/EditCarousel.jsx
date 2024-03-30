@@ -5,8 +5,12 @@ import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCarousel } from '../../../Redux/Actions/CarouselActions'
 
 const EditCarousel = () => {
+    const dispatch = useDispatch()
+    const {carousel} = useSelector(state => state.carouselState)
     const navigate = useNavigate()
     const params = useParams()
     const [syllabus_id, setSyllabusId] = useState("")
@@ -18,18 +22,6 @@ const EditCarousel = () => {
             description: ""
         }
     )
-   
-const getTopic = async () =>{
-    try {
-        const res =  await AxiosService.post(`${ApiRoutes.GET_CAROUSEL_BY_ID.path}/${params.id}`,{authenticate: ApiRoutes.GET_CAROUSEL_BY_ID.authenticate})
-        if(res.status === 200){
-            setInitialValues(res.data.carousel)
-            }
-    } catch (error) {
-        console.log(error)
-        toast.error(error.response.data.message || error.message)           
-    }
-}
   
   
   let formik = useFormik({ //Formik Validations
@@ -58,9 +50,14 @@ const getTopic = async () =>{
   }
   })
   useEffect(()=>{
-    getTopic()
-  },[])
-  
+    dispatch(getCarousel(params.id))
+   
+  },[params.id])
+  useEffect(() => {
+      if (carousel) {
+      setInitialValues(carousel);
+    }
+}, [carousel]);
   return (
     <>
         <div id='edit' className="col-12 grid-margin">

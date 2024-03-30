@@ -5,9 +5,13 @@ import ApiRoutes from '../../../utils/ApiRoutes';
 import { Outlet, useLocation, useParams} from 'react-router-dom';
 import TopicTableList from '../Helper/TopicTableList';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTopicsBySyllabus } from '../../../Redux/AdminActions/AdminTopicActions';
 
 const TopicTable = ({id}) => {
     const params = useParams()
+    const dispatch = useDispatch()
+    const {topics} = useSelector(state => state.topicsState)
     const [topic, setTopic] = useState([])
     const location = useLocation()
     const formatTime = (duration) => {  //Video duration converter
@@ -24,7 +28,7 @@ const TopicTable = ({id}) => {
         }
     const getAllTopics = async () =>{
         try {
-            const res = await AxiosService.post(`${ApiRoutes.GET_TOPIC_BY_SYLLABUS_ID.path}/${params.id}`, {authenticate : ApiRoutes.GET_TOPIC_BY_SYLLABUS_ID.authenticate})
+            const res = await AxiosService.post(`${ApiRoutes.GET_TOPIC_BY_SYLLABUS_ID.path}/${params.id}`)
             if(res.status === 200){
                 setTopic(res.data.topic)
             }
@@ -34,8 +38,9 @@ const TopicTable = ({id}) => {
         }
     }
     useEffect(()=>{
-        getAllTopics()
-    },[params])
+        // getAllTopics()
+        dispatch(getTopicsBySyllabus(params.id))
+    },[params.id])
     return (
         <>
         {/* <div  className="row"> */}
@@ -65,7 +70,7 @@ const TopicTable = ({id}) => {
                                     {/* <SyllabusTableList/> */}
                                    
                                     {
-                                        topic.map((data, index) =>{
+                                      topics &&  topics.map((data, index) =>{
                                             return  <TopicTableList key={index} topic={topic} setTopic={setTopic} id={data._id} title={data.title} visibility={data.visibility} createdAt={dateModle(data.createdAt)} duration={formatTime(data.duration)} />
                                         })
                                     }

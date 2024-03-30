@@ -1,33 +1,19 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { deleteCarousel } from '../../../Redux/Actions/CarouselActions'
+import { useDispatch } from 'react-redux'
 
-const CarouselTableList = ({imgUrl, imgCreate, id , carousel, setCarousel, visibility}) => {
+const CarouselTableList = ({imgUrl, imgCreate, id, visibility}) => {
+    const dispatch = useDispatch()
     const scrollToElement = id =>  document.getElementById(id) && document.getElementById(id).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}) 
-
     const navigate = useNavigate()
-    const findIndex = (array, id) =>{
-        for(let i in array){
-            if(array[i]._id === id)
-            return i
-        }
-    }
+
     const handleEdit = async (id) =>{
        await navigate(`/admin/carousel/edit/${id}`)
        scrollToElement('edit')
     }
-    const handleDelete = async (id) =>{
-        try {
-            const index = findIndex(carousel, id)
-            let newArray = [...carousel];
-            newArray.splice(index, 1)
-            setCarousel(newArray)
-            
-        } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.message || error.message)    
-        }
-    }
+    const handleDelete = (id) => dispatch(deleteCarousel(id))
 
   return (
    <>

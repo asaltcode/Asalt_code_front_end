@@ -17,7 +17,7 @@ const ForgotAnim = () => {
   return (
 
 <div className="d-flex">
-<div id='animation-container' className='overflow-hidden' style={{height: '250px', width: '250px', position: 'absolute', bottom: '-40px', right: "-50px", zIndex: "-1", transition : 'none'}}></div>
+<div id='animation-container' className='overflow-hidden forgot-anim' ></div>
 </div>
     //  style={{height: "90px", borderRadius: "50%", width: '90px', objectFit: "cover"}}
 

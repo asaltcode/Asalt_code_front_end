@@ -1,20 +1,26 @@
-import React,{useState ,useContext} from 'react'
-import { UserEmailContext } from '../../context/UserEmailContextCoponent'
+import React,{useState} from 'react'
 import { useFormik } from 'formik'
 import ApiRoutes from '../../utils/ApiRoutes'
 import AxiosService from '../../utils/AxiosService'
-// import '../style/change_password.css'
+import '../../assets/style/change_password.css'
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {toast} from 'react-toastify'
+import EmailSendLoad from '../../animation/EmailSendLoad'
+import { useDispatch } from 'react-redux'
+import MetaData from '../../common/MetaData'
+import { loadUser } from '../../Redux/Actions/UserActions'
 const ChangePassword = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const param = useParams()
   const [disable, setDisabled] = useState(true)
-  const { userEmail } = useContext(UserEmailContext)
+  const [loading, setLoading] = useState(null)
+  // const { userEmail } = useContext(UserEmailContext)
   let formik = useFormik({ //Formik Validations
     initialValues: {
       password: "",
-      confirm_password: ""
+      confirmPassword: ""
     },
     validationSchema: Yup.object({
       password: Yup.string()
@@ -24,44 +30,56 @@ const ChangePassword = () => {
           .matches(/^(?=.*[!@#$%^&*()_+])/, { message: 'Password must contain at least one special character' })
           .min(6, 'Password must be at least 6 characters long')
           .required('Password is required'),
-      confirm_password: Yup.string()
+      confirmPassword: Yup.string()
           .oneOf([Yup.ref('password'), null], 'Passwords must match')
           .required('Confirm password is required'),    
     }),
     onSubmit: async(values)=>{
-      const data = {...values, email: userEmail}
+      const token = param.token  
       try {
-        if(userEmail){
-          const res = await AxiosService.post(ApiRoutes.CHANGE_PASSWORD.path, data, {authenticate: ApiRoutes.CHANGE_PASSWORD.authenticate})
-          res.status === 200 && userEmail !== "" ? (navigate('/login'), toast.success(res.data.message)) : navigate('/forget-password');
-        } else{
-          toast.error(`What you are trying is the wrong way`)
-          navigate('/forget-password')
-        }
+        setLoading(true)
+          const res = await AxiosService.post(`${ApiRoutes.RESET_PASSWORD.path}/${token}`, values)
+          if(res.status === 201){
+            toast.success("Password Changed Successfully!", {position: "top-center"})
+            await dispatch(loadUser)
+            navigate('/')
+          }else{
+            navigate('/forget-password');
+          }
       } catch (error) {
-        console.log(error)
+        toast.error(error.response.data.message || error.message, {position: "bottom-center"})   
+        navigate('/forget-password');
+      }finally{
+        setLoading(false)
       }
     }
   })
-  return (
-    <div className="bg-dark text-light otp-container">      
-    <div className="otp-input-box">
-      <header>
-        <h4>Change your password</h4>
-      </header>
-      <div className="otp-inputs">
-        <form className="otp-form" onSubmit={formik.handleSubmit}>
-          <label className='cp_label' style={{alignSelf: "self-start"}}>New password :</label>
-        {formik.touched.confirm_password && formik.errors.password ? (<div className="errorMes">{formik.errors.password}</div>) : null}
-        <input type="text" className='text-center change_password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-        <label className='cp_label' style={{alignSelf: "self-start"}}>Confirm password :</label>
-        {formik.touched.confirm_password && formik.errors.confirm_password ? (<div className="errorMes">{formik.errors.confirm_password}</div>) : null}
-        <input type="text" className='text-center change_password' name='confirm_password' value={formik.values.confirm_password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
-        <button type="submit"  className={`btn text-light bg-primary m-auto`}>Change</button>
-        </form>
-      </div>
+  return (<>
+      {loading && <EmailSendLoad/>}
+      <MetaData title={"Password Reset"}/>
+    <div className="bg-dark text-light otp-container">
+        <div className="otp-input-box">
+            <header>
+                <h4>Change your password</h4>
+            </header>
+            <div className="otp-inputs">
+                <form className="otp-form" onSubmit={formik.handleSubmit}>
+                    <label className='cp_label' style={{alignSelf: "self-start" }}>New password :</label>
+                    {formik.touched.password && formik.errors.password ? (<div className="errorMes"> {formik.errors.password}</div>) : null}
+                        <div className="input-box">
+                           <input type="text" className='text-center change_password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                        </div>
+                    <label className='cp_label' style={{alignSelf: "self-start" }}>Confirm password :</label>
+                    {formik.touched.confirmPassword && formik.errors.confirmPassword ? (<div className="errorMes"> {formik.errors.confirmPassword}</div>) : null}
+                        <div className="input-box">
+                            <input type="text" className='text-center change_password' name='confirmPassword' value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                        </div>
+                    <button type="submit" className={`btn text-light bg-primary m-auto`}>Change</button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
+    </>
   )
 }
 

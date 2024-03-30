@@ -5,10 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAdminCourses } from '../../../Redux/AdminActions/AdminCourseActions'
 
 const AddSyllbus = () => {
     const navigate = useNavigate()
-    const [course, setCourse] = useState([])
+    const dispatch = useDispatch()
+    const {courses, error} = useSelector(state => state.adminCoursesState)
     let initialValues ={
             title: "",
             visibility: true,
@@ -41,19 +44,9 @@ onSubmit: async (values,  { resetForm }) =>{
 })
 
 
-const  getCourse = async () =>{
-   try {
-    const res = await AxiosService.post(ApiRoutes.GET_ALL_COURSE.path, {authenticate: ApiRoutes.GET_ALL_COURSE.authenticate})            
-        setCourse(res.data.courses)
-        console.log(res.data.courses)
-        } catch (error) {
-            console.log(error)
-           toast.error(error.response.data.message || error.message)   
-        }
-}
 
 useEffect(()=>{
-    getCourse()
+    dispatch(getAdminCourses)
 },[])
   return (
     <>
@@ -77,10 +70,10 @@ useEffect(()=>{
                            <div className="form-group row">
                                 <label className="col-sm-3 col-form-label text-light">Course</label>
                                 <div className="col-sm-9">
-                                    <select name='course_id' className="form-control text-light" onChange={formik.handleChange} value={formik.values.course_id}>
+                                    <select name='course_id' title="By default, it will choose the first one" className="form-control text-light" onChange={formik.handleChange} value={formik.values.course_id}>
                                         <option value="">Select course</option>
                                         {
-                                            course.map((data, index) =>{
+                                           courses && courses.map((data, index) =>{
                                                return <option key={index} value={data._id}>{data.title}</option>
                                             })
                                         }
@@ -95,7 +88,7 @@ useEffect(()=>{
                             <div className="form-group row">
                                 <label className="col-sm-3 col-form-label text-light">Visibility</label>
                                 <div className="col-sm-9">
-                                    <select name='visibility' className="form-control text-light" onChange={formik.handleChange} value={formik.values.visibility}>
+                                    <select name='visibility' title="By default, it will choose the first one" className="form-control text-light" onChange={formik.handleChange} value={formik.values.visibility}>
                                         <option value={true}>Public</option>
                                         <option value={false}>Private</option>
                                     </select>

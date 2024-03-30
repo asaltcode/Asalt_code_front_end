@@ -5,8 +5,12 @@ import ApiRoutes from '../../../utils/ApiRoutes';
 import CourseTableList from '../Helper/CourseTableList';
 import { toast } from 'react-toastify';
 import { Outlet, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdminCourses } from '../../../Redux/AdminActions/AdminCourseActions';
 
 const CourseTable = () => {
+    const  dispatch = useDispatch()
+    const {courses, error} = useSelector(state => state.adminCoursesState)
     const location = useLocation()
     const dateModle = (dateString) =>{
       const dateConvert = new Date(dateString);
@@ -14,19 +18,14 @@ const CourseTable = () => {
       return `${d[2]} ${d[1]} ${d[3]}`
       }
     const [course, setCourse] = useState([])
-    const getAllCourse = async ()=>{
-        try {
-            const res = await AxiosService.post(ApiRoutes.GET_ALL_COURSE.path, {authenticate: ApiRoutes.GET_ALL_COURSE.authenticate})
-            
-            setCourse(res.data.courses)
-        } catch (error) {
-            console.log(error)
-           toast.error(error.response.data.message || error.message)   
-        }
-    }
 
     useEffect(()=>{
-        getAllCourse()
+        if(error){
+            toast.error(error) 
+        }  
+    }, [error])
+    useEffect(()=>{
+        dispatch(getAdminCourses)
     },[location.pathname === "/admin/course"])
   return (
     <div className="row">
@@ -56,7 +55,7 @@ const CourseTable = () => {
                             </thead>
                             <tbody>                           
                                 {
-                                    course.map((data, index) =>{
+                                   courses && courses.map((data, index) =>{
                                         return <CourseTableList key={index} thumbnail={data.thumbnail} price={data.price} course={course} setCourse={setCourse} title={data.title} category={data.category} visibility={data.visibility}
                                         id={data._id} createdAt={dateModle(data.createdAt)} />
                                     })

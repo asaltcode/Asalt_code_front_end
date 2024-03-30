@@ -4,14 +4,19 @@ import Logo from '../../../assets/images/logo.svg'
 import Profile from "../../../assets/images/profile.jpg"
 import {useLogout} from '../../../hook/useLogout'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../../Redux/Actions/UserActions'
 // import '../assets/css/style.css'
 
 const Topbar = ({sideToggle, setSideToggle, activeSideToggle, setActiveSideToggle}) => {
+  const dispatch = useDispatch()
+  const {user} = useSelector(state => state.authState)
   const navigate = useNavigate()
   const UserName = localStorage.getItem('name')
   const [profileShow, setProfileShow] = useState("")
   const PofileView = () => profileShow === "" ? setProfileShow('show') : setProfileShow("")
-
+  const handleLogout = () =>{dispatch(logout)}
+  const handleHome = () =>{navigate("/")}
   return (
    
     <nav className="navbar p-0 fixed-top d-flex flex-row">
@@ -167,7 +172,7 @@ const Topbar = ({sideToggle, setSideToggle, activeSideToggle, setActiveSideToggl
               <li className={`nav-item dropdown  ${profileShow}`} onClick={PofileView} >
                 <a className="nav-link" id="profileDropdown" href="#" aria-expanded={profileShow === 'show'? true : false} data-toggle="dropdown">
                   <div className="navbar-profile">
-                    <img className="img-xs rounded-circle" src={Profile} alt=""/>
+                    <img className="img-xs rounded-circle" src={user && user.avatar} alt=""/>
                     <p className="mb-0 d-none text-light d-sm-block navbar-profile-name">{UserName}</p>
                     <i className="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
@@ -186,7 +191,7 @@ const Topbar = ({sideToggle, setSideToggle, activeSideToggle, setActiveSideToggl
                     </div>
                   </a>
                   <div className="dropdown-divider bg-secondary"></div>
-                  <a onClick={useLogout()} className="dropdown-item preview-item bg-dark text-light list-group-item list-group-item-action list-group-item-dark ">
+                  <a onClick={handleLogout} className="dropdown-item preview-item bg-dark text-light list-group-item list-group-item-action list-group-item-dark ">
                     <div className="preview-thumbnail">
                       <div className="preview-icon bg-dark rounded-circle">
                         <i className="mdi mdi-logout text-danger"></i>
@@ -194,6 +199,17 @@ const Topbar = ({sideToggle, setSideToggle, activeSideToggle, setActiveSideToggl
                     </div>
                     <div className="preview-item-content ">
                       <p className="preview-subject mb-1">Log out</p>
+                    </div>
+                  </a>
+                  <div className="dropdown-divider bg-secondary"></div>
+                  <a onClick={handleHome} className="dropdown-item preview-item bg-dark text-light list-group-item list-group-item-action list-group-item-dark ">
+                    <div className="preview-thumbnail">
+                      <div className="preview-icon bg-dark rounded-circle">
+                        <i className="mdi mdi-home text-primary"></i>
+                      </div>
+                    </div>
+                    <div className="preview-item-content ">
+                      <p className="preview-subject mb-1">Home</p>
                     </div>
                   </a>
                   <div className="dropdown-divider bg-secondary"></div>

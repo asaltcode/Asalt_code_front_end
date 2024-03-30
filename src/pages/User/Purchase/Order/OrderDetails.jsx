@@ -1,23 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
-import AxiosService from '../../../../utils/AxiosService'
-import ApiRoutes from '../../../../utils/ApiRoutes'
-import { toast } from 'react-toastify';
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart} from '../../../../Redux/CartSlicer';
+import { getCarts, removeCart } from '../../../../Redux/Actions/CartsActions';
 
 const OrderDetails = () => {
     const dispatch = useDispatch()
-    const carts = useSelector(state => state.Cart)
-      const handleDelete = async (course_id) =>{
-        try {
-            dispatch(removeFromCart({id: course_id}))
-            const data = {course_id}
-            await AxiosService.delete(ApiRoutes.DEL_CART.path, {data}, {authenticate: ApiRoutes.DEL_CART.authenticate})
-        } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message || error.message);   
-        }
-    }   
+    const {carts} = useSelector(state => state.cartsState)
+    const handleDelete = (id) =>{  
+        dispatch(removeCart(id))
+    }
+
   return (    
     <div className="mt-4">
     <div className="row">
@@ -28,8 +19,7 @@ const OrderDetails = () => {
             </div>
             <hr className='bg-light' />
             {/* Card Start */}
-            {
-            carts.map((data, index) =>{
+            {carts && carts.map((data, index) =>{
             return <div key={index}>
                 <div className="row">
                     <div className="col-3 fw-light">

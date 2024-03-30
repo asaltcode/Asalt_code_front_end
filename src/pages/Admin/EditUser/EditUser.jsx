@@ -5,8 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser } from '../../../Redux/AdminActions/AdminActions'
+import AdminApi from '../../../utils/ApiRouters/AdminApis'
 
 const EditUser = () => {
+    const dispatch = useDispatch()
+    const {user} = useSelector(state => state.userState)
     const navigate = useNavigate()
     const params = useParams()
     let [initialValues, setInitialValues] = useState(
@@ -20,22 +25,6 @@ const EditUser = () => {
           }
     )
    
-    const getUser = async () =>{
-        try {
-            const res =  await AxiosService.get(`${ApiRoutes.GET_USER_BY_ID.path}${params.id}`,{authenticate: ApiRoutes.GET_USER_BY_ID.authenticate})
-            let {name, lastName, email, gender, dob, role} = res.data.user;
-            dob == null || undefined ? dob = 'dd-mm-yyyy' : dob
-            setInitialValues({name, lastName, email, gender, dob, role}); 
-            console.log(res.data.user)  
-        } catch (error) {
-           console.log(error)
-           toast.error(error.response.data.message || error.message)           
-        }
-    }
-
-
-
-
 let formik = useFormik({ //Formik Validations
 initialValues: initialValues,
 validationSchema: Yup.object({
@@ -45,18 +34,6 @@ validationSchema: Yup.object({
     'Email must be from Gmail, Outlook, Yahoo Mail, or Zoho Mail').required('Email is required'),
     gender: Yup.string().max(20,'Name can not exceed 20 characters').min(4,'Name can not be shorter than 3 leters'),
     role: Yup.string().required("Role is required"),
-//   dob: Yup.date()
-// .max(new Date(), 'Date of birth must be in the past')
-// .test('is-adult', 'You must be at least 18 years old', function (value) {
-//     const today = new Date();
-//     const birthDate = new Date(value);
-//     const age = today.getFullYear() - birthDate.getFullYear();
-//     const monthDiff = today.getMonth() - birthDate.getMonth();
-//     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-//         age--;
-//     }
-//     return age >= 18;
-// }),
 }),
 
 role:Yup.string().required("Role is required"),
@@ -65,8 +42,8 @@ onSubmit: async (values) =>{
     const {id} = params;
     try {
         
-        const res = await AxiosService.put(`${ApiRoutes.EDIT_USER.path}${id}`,values, {authenticate: ApiRoutes.EDIT_USER.authenticate})
-        if(res.status === 200){
+        const res = await AxiosService.put(`${AdminApi.USER_BY_ID.path}/${id}`,values)
+        if(res.status === 201){
            toast.success(res.data.message)
            navigate('/admin')
         }
@@ -77,11 +54,15 @@ onSubmit: async (values) =>{
 }
 })
 
-
+useEffect(()=>{
+    dispatch(getUser(params.id))
+},[params.id])
 
 useEffect(()=>{
-    getUser()
-},[params.id])
+    if(user){
+        setInitialValues(user)
+    }
+}, [user])
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useEffect, useState} from 'react'
 import "../../assets/style/Login.css"
 import { useNavigate, Link } from 'react-router-dom'
 import EmailSendLoad from '../../animation/EmailSendLoad'
@@ -8,10 +8,10 @@ import * as Yup from 'yup'
 import AxiosService from '../../utils/AxiosService'
 import ApiRoutes from '../../utils/ApiRoutes'
 import { toast } from 'react-toastify'
-import { UserEmailContext } from '../../context/UserEmailContextCoponent'
+import { useSelector } from 'react-redux'
 
 const ForgetPassword = () => {
-    const {setUserEmail} = useContext(UserEmailContext)
+    const {isAuthenticated} = useSelector(state => state.authState)
     const navigate = useNavigate();   
     const [scale, setScale] = useState(1);
     const [loading, setLoading] = useState(null)
@@ -39,23 +39,25 @@ const ForgetPassword = () => {
         onSubmit : async (values) =>{
             try {
                 setLoading(true)                
-                const res = await AxiosService.post(`${ApiRoutes.FOR_GOT.path}`, values, {authenticate: ApiRoutes.FOR_GOT.authenticate})
+                const res = await AxiosService.post(`${ApiRoutes.FOR_GOT.path}`, values)
                   if(res.status === 200){
-                    setUserEmail(values.email)
-                    // setOtp(res.data.OTP)
-                    navigate(`/otp-verify`)
-                    toast.success(res.data.message)
+                    // navigate(`/otp-verify`)
+                    toast.success(res.data.message, {position: "top-center"})
                   }
             } catch (error) {
-                toast.error(error.response.data.message || error.message)   
-                setBeEmailError(error.response.data.message)
+                toast.error(error.response.data.message || error.message, {position: "bottom-center", theme: "colored"})   
             }finally{
                 setLoading(false)
             }
         }
     })
 
-
+    useEffect(()=>{
+        if(isAuthenticated){
+            navigate("/")
+            return () =>{}
+        }
+    },[isAuthenticated])
   return (
       <>
       {loading && <EmailSendLoad/>}
@@ -67,12 +69,12 @@ const ForgetPassword = () => {
                 <div className="image">
                     <ForgotAnim />   
                 </div>
-                    <div className="form-groups">
+                    <div className="input-box">
                         <input id="email" type="text" placeholder="Enter your email" autoComplete="off" name='email' value={formik.values.email} onFocus={()=> setBeEmailError(null)} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                         {formik.touched.email && formik.errors.email ? (<div className="errorMes">{formik.errors.email}</div>) : (<div className="errorMes">{beEmailError}</div>)}
                     </div>
-                <div className="form-group">
-                <button className='button' type='submit' style={{ width: '100%', transform : `scale(${scale})` }} id="logIn" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onTouchStart={handleTouchStart}>Send</button>
+                <div className="form-groups">
+                <button className='button mt-1' type='submit' style={{ width: '100%', transform : `scale(${scale})` }} id="logIn" onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onTouchStart={handleTouchStart}>Send</button>
                 <div className="signUpPage">
                     <p>Don't have an account? <span>
                             <Link className='links' to="/signup">Sign up and get started!</Link>

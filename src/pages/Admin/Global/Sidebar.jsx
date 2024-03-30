@@ -3,8 +3,10 @@ import Logo from '../../../assets/images/logo.svg';
 import Logo_mini from '../../../assets/images/logo-mini.svg';
 import Profile from '../../../assets/images/profile.jpg'
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Sidebar = ({activeSideToggle, profileDropDown, setProfileDropDown}) => {
+  const {user} = useSelector(state => state.authState)
   const location = useLocation()
   const navigate = useNavigate()
   const UserName = localStorage.getItem('name');
@@ -24,7 +26,7 @@ const Sidebar = ({activeSideToggle, profileDropDown, setProfileDropDown}) => {
             <div className={`profile-desc ${profileDropDown}`}>
               <div className="profile-pic">
                 <div className="count-indicator">
-                  <img className="img-xs rounded-circle " src={Profile} alt=""/>
+                  <img className="img-xs rounded-circle " src={user && user.avatar} alt=""/>
                   <span className="count bg-success"></span>
                 </div>
                 <div className="profile-name">

@@ -1,50 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import ScrollContainer from 'react-indiana-drag-scroll';
 import AxiosService from '../../../utils/AxiosService';
-import ApiRoutes from '../../../utils/ApiRoutes';
+import AdminApi from '../../../utils/ApiRouters/AdminApis';
 import SyllabusTableList from '../Helper/SyllabusTableList';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdminCourses } from '../../../Redux/AdminActions/AdminCourseActions';
 
 const SyllabusTable = () => {
-    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const {courses} = useSelector(state => state.adminCoursesState)
     const location = useLocation()
-    const [course, setCourse] = useState([])
-    const [courseId, setCourseId] = useState("")
+    const [syllabus, setSyllabus] = useState([])
     const dateModle = (dateString) =>{
         const dateConvert = new Date(dateString);
         let d = dateConvert.toDateString().split(" ")
         return `${d[2]} ${d[1]} ${d[3]}`
         }
-    const [syllabus, setSyllabus] = useState([])
 
-    const findSyllabus = async (id) =>{
+    const findSyllabus = async (id) =>{    
         try {
-            const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_ADMIN.path}/${id}`, {authenticate: ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_ADMIN.authenticate})
-            if(res.status === 200){
-                setSyllabus(res.data.syllabus)
-                // navigate('/admin/syllabus')                
+           if(id === ""){
+            findSyllabus(courses[0]._id)
+            return
+           }
+            const {data} = await AxiosService.get(`${AdminApi.SYLLABUS_WITH_TOPIC.path}/${id}`)
+            if(data){
+                setSyllabus(data.syllabus)
             }
         } catch (error) {
             console.log(error)
                 toast.error(error.response.data.message || error.message)   
         }
     }
-   
-    const getAllCourse = async () =>{
-        try {
-            const res = await AxiosService.post(ApiRoutes.GET_ALL_COURSE.path, {authenticate: ApiRoutes.GET_ALL_COURSE.authenticate})
-            setCourse(res.data.courses)
-            findSyllabus(res.data.courses[0]._id)            
-        } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.message || error.message)   
-        }
-    }
 
     useEffect(()=>{
-        getAllCourse()
+        dispatch(getAdminCourses)
     },[location.pathname === "/admin/syllabus"])
+    useEffect(()=>{
+        if(courses){
+          findSyllabus(courses[0]._id)
+        }
+    },[courses])
   return (
     <>
     <div className="row">
@@ -54,10 +52,10 @@ const SyllabusTable = () => {
                 <div className="d-flex justify-content-between">
                     <div className="card-title">Syllabus</div>
                     <div className="card-title d-flex">
-                    <select name='course_id' className="form-control text-light" onChange={(e)=> findSyllabus(e.target.value)}>                       
-                           <option>Select Couse</option>
+                    <select name='course_id' className="form-control text-light" title="By default, it will choose the first one" onChange={(e)=> findSyllabus(e.target.value)}>                       
+                           <option value="">Select Couse</option>
                         {
-                            course.map((data, index) =>{
+                            courses && courses.map((data, index) =>{
                                 return <option key={index} value={data._id}>{data.title}</option>
                             })
                         }

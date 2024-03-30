@@ -4,18 +4,23 @@ import ApiRoutes from '../../../utils/ApiRoutes'
 import UserTableList from '../Helper/UserTableList'
 import ScrollContainer from 'react-indiana-drag-scroll';
 import { Outlet, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllUsers } from '../../../Redux/AdminActions/AdminActions';
+import Loading from "../../../animation/Loading"
 
 const UserTable = () => {
+    const dispatch = useDispatch()
+    const {users, loading} = useSelector(state => state.usersState)
     const location = useLocation()
     const dateModle = (dateString) =>{
       const dateConvert = new Date(dateString);
       let d = dateConvert.toDateString().split(" ")
       return `${d[2]} ${d[1]} ${d[3]}`
       }
-    const [users, setUsers] = useState([])
+    const [user, setUsers] = useState([])
     const getAllUser = async ()=>{
         try {
-            const res = await AxiosService.get(ApiRoutes.GET_ALL_USER.path, {authenticate: ApiRoutes.GET_ALL_USER.authenticate})
+            const res = await AxiosService.get(ApiRoutes.USER_BY_ID.path)
             setUsers(res.data.users)
         } catch (error) {
             console.log(error)
@@ -24,10 +29,12 @@ const UserTable = () => {
     }
 
     useEffect(()=>{
-        getAllUser()
+        dispatch(getAllUsers)
+        // getAllUser()
     },[location.pathname === "/admin"])
   return (
     <>    
+    {loading && <Loading/>}
 <div className="row">
     <div className="col grid-margin">
         <div className="card" style={{background : "#212529"}}>
@@ -54,7 +61,7 @@ const UserTable = () => {
                             </thead>
                             <tbody>                           
                                 {
-                                    users.map((data, index)=>{
+                                  users &&  users.map((data, index)=>{
                                         return <UserTableList key={index}  users={users} setUsers={setUsers} id={data._id} userName={data.name} userLastName={data.lastName} userEmail={data.email} userRole={data.role} userVerify={data.verified} createdAt={dateModle(data.createdAt)} />
                                     })
                                 }

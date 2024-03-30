@@ -2,7 +2,11 @@ import React from "react";
 const ApiRoutes = {
   // Auth Routes
   SIGN_UP: {
-    path: "/signup",
+    path: "/auth/signup",
+    authenticate: false,
+  },
+  LOG_IN: {
+    path: "/auth/login",
     authenticate: false,
   },
   RE_SEND: {
@@ -17,22 +21,23 @@ const ApiRoutes = {
     path: "/trigger",
     authenticate: false,
   },
-  LOG_IN: {
-    path: "/login",
-    authenticate: false,
-  },
   FOR_GOT: {
-    path: "/forgot",
+    path: "/auth/password/forgot",
     authenticate: false,
   },
   VERIFY_OTP: {
     path: "/otp-verify",
     authenticate: false,
   },
-  CHANGE_PASSWORD: {
-    path: "/change-password",
+  RESET_PASSWORD: {
+    path: "/auth/password/reset",
     authenticate: false,
   },
+  PROFIL_UPDATE: {
+    path: "/profile/update",
+    authenticate: false,
+  },
+
 
   // User And Admin Producte
   USER_PRODUCT_ROUTES: {
@@ -52,8 +57,9 @@ const ApiRoutes = {
     path : "/get-user-by-id/",
     authenticate: true,
   },
+
   GET_USER: {
-    path : "/get-user",
+    path : "/user",
     authenticate: true,
   },
   DEL_USER_BY_ID: {
@@ -82,8 +88,8 @@ const ApiRoutes = {
     path : "/del-all-cart",
     authenticate: true,
   },
-  PAYMENT_PAID_STATUS: {
-    path : "/payment-paid-status",
+  PAYMENT_CAPTURE: {
+    path : "/payment-capture",
     authenticate: true,
   },
   
@@ -115,27 +121,27 @@ const ApiRoutes = {
 
   // course Routers
   GET_COURSE: {
-    path: "/get-course",
+    path: "/courses",
     authenticate: false,
   },
   ADD_COURSE: {
-    path: "/add-course",
+    path: "/course/new",
     authenticate: true,
   },
   GET_ALL_COURSE: {
-    path: "/get-all-course",
+    path: "/admin/courses",
     authenticate: true,
   },
   GET_COURSE_BY_ID: {
-    path: "/get-course-by-id",
+    path: "/course",
     authenticate: true,
   },
   EDIT_COURSE_BY_ID: {
-    path: "/edit-course",
+    path: "/course",
     authenticate: true,
   },
   DEL_COURSE: {
-    path: "/del-course",
+    path: "/course",
     authenticate: true,
   },
 
@@ -161,7 +167,11 @@ const ApiRoutes = {
     authenticate: true,
   },
   GET_SYLLABUS_BY_COURSE_ID: {
-    path: "/get-syllabus-by-course-id",
+    path: "/syllabus/course",
+    authenticate: true,
+  },
+  GET_PAID_SYLLABUS_BY_COURSE_ID: {
+    path: "/paid/syllabus/course",
     authenticate: true,
   },
   GET_SYLLABUS_BY_COURSE_ID_ADMIN: {

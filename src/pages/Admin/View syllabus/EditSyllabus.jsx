@@ -1,34 +1,24 @@
 import React, {useState, useEffect} from 'react'
 import AxiosService from '../../../utils/AxiosService'
-import ApiRoutes from '../../../utils/ApiRoutes'
 import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { getSyllabusById } from '../../../Redux/Actions/SyllabusActions'
+import { useDispatch, useSelector } from 'react-redux'
+import AdminApi from '../../../utils/ApiRouters/AdminApis'
 
 const EditSyllabus = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const {syllabusById} = useSelector(state => state.syllabusState)
   const params = useParams()
   let [initialValues, setInitialValues] = useState(
       {
           title: "",
           visibility: "",
-        }
-  )
- 
-  const getAllSyllbus = async () =>{
-      try {
-          const res =  await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_ID.path}/${params.id}`,{authenticate: ApiRoutes.GET_SYLLABUS_BY_ID.authenticate})
-          console.log(res.data)
-          if(res.status === 200){
-            const {title, visibility} = res.data.syllabus
-            setInitialValues({title, visibility})
-             }
-      } catch (error) {
-         console.log(error)
-         toast.error(error.response.data.message || error.message)           
       }
-  }
+  )
 
 
 let formik = useFormik({ //Formik Validations
@@ -42,8 +32,8 @@ enableReinitialize:true,
 onSubmit: async (values) =>{
   const {id} = params;
   try {        
-      const res = await AxiosService.put(`${ApiRoutes.EDIT_SYLLABUS_BY_ID.path}/${id}`,values, {authenticate: ApiRoutes.EDIT_SYLLABUS_BY_ID.authenticate})
-      if(res.status === 200){
+      const res = await AxiosService.put(`${AdminApi.SYLLABUS_BY_ID.path}/${id}`,values)
+      if(res.status === 201){
          toast.success(res.data.message)
          navigate('/admin/syllabus')
       }
@@ -54,8 +44,14 @@ onSubmit: async (values) =>{
 }
 })
 useEffect(()=>{
-  getAllSyllbus()
+  dispatch(getSyllabusById(params.id))
 },[params.id])
+
+useEffect(()=>{
+  if(syllabusById){
+    setInitialValues(syllabusById)
+  }
+}, [syllabusById])
 
 return (
   <>

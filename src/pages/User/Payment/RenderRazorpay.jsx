@@ -1,102 +1,77 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react';
 import crypto from 'crypto-js';
 import AxiosService from '../../../utils/AxiosService';
 import ApiRoutes from '../../../utils/ApiRoutes';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { saveAllCart } from '../../../Redux/CartSlicer';
-// import evn from '../../../../dotenv'
+import { paymentClear } from '../../../Redux/Actions/PaymentActions';
+import { paymentSuccessCartClear } from '../../../Redux/Actions/CartsActions';
 
-// Function to load script and append in DOM tree.
+// Function to load script and append it to the DOM
 const loadScript = src => new Promise((resolve) => {
   const script = document.createElement('script');
   script.src = src;
-  script.onload = () => {
-    console.log('razorpay loaded successfully');
-    resolve(true);
-  };
-  script.onerror = () => {
-    console.log('error in loading razorpay');
-    resolve(false);
-  };
+  script.onload = () => resolve(true);
+  script.onerror = () => resolve(false);
   document.body.appendChild(script);
 });
 
-const RenderRazorpay = ({orderId, keyId, keySecret, currency, amount, user_email, user_name}) => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+const RenderRazorpay = ({ orderId, currency, user_email, user_name }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const paymentId = useRef(null);
   const paymentMethod = useRef(null);
-  // To load razorpay checkout modal script.
-  const displayRazorpay = async (options) => {
-    const res = await loadScript(
-      'https://checkout.razorpay.com/v1/checkout.js',
-    );
 
+  // Function to display the Razorpay checkout modal
+  const displayRazorpay = async (options) => {
+    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
     if (!res) {
       console.log('Razorpay SDK failed to load. Are you online?');
       return;
     }
-    // All information is loaded in options which we will discuss later.
+
     const rzp1 = new window.Razorpay(options);
 
-    // If you want to retreive the chosen payment method.
     rzp1.on('payment.submit', (response) => {
       paymentMethod.current = response.method;
     });
 
-    // To get payment id in case of failed transaction.
     rzp1.on('payment.failed', (response) => {
       paymentId.current = response.error.metadata.payment_id;
     });
 
-    // to open razorpay checkout modal.
     rzp1.open();
   };
 
-
-  // informing server about payment
+  // Function to handle payment success or failure
   const handlePayment = async (status, orderDetails = {}) => {
-    console.log('Status', orderDetails)
-    await AxiosService.post(ApiRoutes.PAYMENT_PAID_STATUS.path, {status, orderDetails}, {authenticate: ApiRoutes.PAYMENT_PAID_STATUS.authenticate})
-    // await AxiosService.post(`/payment-capture`,
-    //   {
-    //     status,
-    //     orderDetails,
-    //   });
+    // Informing the server about the payment
+    // await AxiosService.post(ApiRoutes.PAYMENT_PAID_STATUS.path, {status, orderDetails})
   };
 
-
-  // we will be filling this object in next step.
-//   const options = {},
-
-const options = {
-    key: keyId, // key id from props
-    amount, // Amount in lowest denomination from props
-    currency, // Currency from props.
-    // name: <><a style={{cursor: "pointer"}}className="sidebar-brand brand-logo" ><img src={Logo} alt="logo" /></a></>, // Title for your organization to display in checkout modal
+  // Options for the Razorpay checkout modal
+  const options = {
+    currency: "INR",
     name: "Asalt Code",
     image: "https://avatars.githubusercontent.com/u/112842382?s=96&v=4",
-    // image, // custom logo  url
-    order_id: orderId, // order id from props
-    // This handler menthod is always executed in case of succeeded payment
-    handler: (response) => {
+    order_id: orderId,
+    handler: async (response) => {
       console.log('succeeded');
       console.log(response);
       paymentId.current = response.razorpay_payment_id;
-      console.log(orderId)
-      // Most important step to capture and authorize the payment. This can be done of Backend server.
-      const succeeded = crypto.HmacSHA256(`${orderId}|${response.razorpay_payment_id}`, 'Y3HnqMN7pT2otFj9XtVL8w0D').toString() === response.razorpay_signature;
-      // If successfully authorized. Then we can consider the payment as successful.
+
+      const succeeded = await AxiosService.post(ApiRoutes.PAYMENT_CAPTURE.path, response);
       if (succeeded) {
         handlePayment('succeeded', {
           orderId,
           paymentId,
           signature: response.razorpay_signature,
         });
-        dispatch(saveAllCart([]))
-        navigate('/')
+        dispatch(paymentClear);
+        dispatch(paymentSuccessCartClear);
+        navigate('/');
       } else {
+        dispatch(paymentClear);
         handlePayment('failed', {
           orderId,
           paymentId: response.razorpay_payment_id,
@@ -104,25 +79,18 @@ const options = {
       }
     },
     modal: {
-      confirm_close: true, // this is set to true, if we want confirmation when clicked on cross button.
-      // This function is executed when checkout modal is closed
-      // There can be 3 reasons when this modal is closed.
+      confirm_close: true,
       ondismiss: async (reason) => {
         const {
           reason: paymentReason, field, step, code,
         } = reason && reason.error ? reason.error : {};
-        // Reason 1 - when payment is cancelled. It can happend when we click cross icon or cancel any payment explicitly. 
         if (reason === undefined) {
           console.log('cancelled');
           handlePayment('Cancelled');
-        } 
-        // Reason 2 - When modal is auto closed because of time out
-        else if (reason === 'timeout') {
+        } else if (reason === 'timeout') {
           console.log('timedout');
           handlePayment('timedout');
-        } 
-        // Reason 3 - When payment gets failed.
-        else {
+        } else {
           console.log('failed');
           handlePayment('failed', {
             paymentReason, field, step, code,
@@ -134,22 +102,22 @@ const options = {
       name: user_name,
       email: user_email
     },
-    // This property allows to enble/disable retries.
-    // This is enabled true by default. 
     retry: {
       enabled: false,
     },
-    timeout: 900, // Time limit in Seconds
+    timeout: 900,
     theme: {
-      color: '', // Custom color for your checkout modal.
+      color: '',
     },
   };
 
+  // Load the Razorpay checkout modal on component mount
   useEffect(() => {
-    console.log('in razorpay');
     displayRazorpay(options);
   }, []);
-  return null
+
+  // The component doesn't render anything visible
+  return null;
 }
 
-export default RenderRazorpay
+export default RenderRazorpay;

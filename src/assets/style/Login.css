@@ -221,4 +221,14 @@ i{
   overflow: hidden;
 }
 
+.forgot-anim{
+  height: 230px;
+  width: 230px;
+  position: absolute;
+  bottom: -60px;
+  right: -50px;
+  transition : none;
+  z-index: -1;
+}
+
   

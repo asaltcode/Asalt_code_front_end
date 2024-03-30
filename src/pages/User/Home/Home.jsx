@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../../../index.css";
-import Sliders from "./Sliders";
+import MetaData from "../../../common/MetaData";
+import { useDispatch } from "react-redux";
+
 
 const Home = () => {
-  // let date = 
-  console.log()
+
   return (
     <>
+    <MetaData title={"Welcome to"}/>
      {/* <div className="containers">    */}
       <div className="container">
+      
         <section style={{marginTop: "20px", color: 'white'}}>
          <div className="homeContent">
           <h3 className="text-center ">

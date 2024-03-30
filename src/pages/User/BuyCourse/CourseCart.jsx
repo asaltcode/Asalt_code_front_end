@@ -1,19 +1,14 @@
 import React from 'react'
-import { removeFromCart } from '../../../Redux/CartSlicer'
+// import { removeFromCart } from '../../../Redux/Slices/CartsSlicer'
 import { useDispatch } from 'react-redux'
 import AxiosService from '../../../utils/AxiosService'
 import ApiRoutes from '../../../utils/ApiRoutes'
+import { getCarts, removeCart } from '../../../Redux/Actions/CartsActions'
 
-const CourseCart = ({thumbnail, title, price, course_id}) => {
+const CourseCart = ({thumbnail, title, price, course_id, id}) => {
     const dispatch = useDispatch()
     const handleDelete = async (id) =>{  
-        try {
-            dispatch(removeFromCart({id: id}))     
-            const data = {course_id : id}
-            await AxiosService.delete(ApiRoutes.DEL_CART.path, {data}, {authenticate: ApiRoutes.DEL_CART.authenticate})       
-        } catch (error) {
-           console.error(error)
-        }      
+        dispatch(removeCart(id))
     }
   return (
     <div>

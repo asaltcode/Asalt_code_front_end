@@ -1,45 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import CarouselTableList from '../Helper/CarouselTableList';
-import AxiosService from '../../../utils/AxiosService';
-import ApiRoutes from '../../../utils/ApiRoutes';
 import { Outlet, useLocation } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllCarousels } from '../../../Redux/Actions/CarouselActions';
+import Loading from '../../../animation/Loading';
 
 const CarouselTable = () => {
+    const  dispatch = useDispatch()
+    const {adminCarousels, loading} = useSelector(state => state.carouselsState)
     const location = useLocation();
-    const [carousel, setCarousel] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [itemsPerPage, setItemsPerPage] = useState(3);
 
     const dateModle = (dateString) => {
         const dateConvert = new Date(dateString);
         let d = dateConvert.toDateString().split(" ");
         return `${d[2]} ${d[1]} ${d[3]}`;
     }
-
-    const getCarouse = async () => {
-        try {
-            const res = await AxiosService.post(ApiRoutes.GET_ALL_CAROUSEL.path, { authenticate: ApiRoutes.GET_ALL_CAROUSEL.authenticate });
-            setCarousel(res.data.image);
-        } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message || error.message);
-        }
-    }
-
     useEffect(() => {
-        getCarouse();
+        dispatch(getAllCarousels)
     }, [location.pathname === "/admin/carousel"]);
 
     // Pagenation Functions
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = carousel.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = adminCarousels && adminCarousels.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = (pageNumber) => {
-        if (pageNumber < 1 || pageNumber > Math.ceil(carousel.length / itemsPerPage)) {
+        if (pageNumber < 1 || pageNumber > Math.ceil(adminCarousels.length / itemsPerPage)) {
             return;
         }
         setCurrentPage(pageNumber);
@@ -54,7 +44,7 @@ const CarouselTable = () => {
     }
 
     return (
-        <>
+        <> {loading && <Loading/>}
             <div className="row">
                 <div className="col grid-margin">
                     <div className="card" style={{ background: "#212529" }}>
@@ -80,8 +70,8 @@ const CarouselTable = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                currentItems.map((data, i) => {
-                                                    return <CarouselTableList key={i} carousel={carousel} visibility={data.visibility} setCarousel={setCarousel} imgUrl={data.imageUrl} id={data._id} imgCreate={dateModle(data.createdAt)} />
+                                              adminCarousels &&  currentItems.map((data, i) => {
+                                                    return <CarouselTableList key={i} visibility={data.visibility} imgUrl={data.imageUrl} id={data._id} imgCreate={dateModle(data.createdAt)} />
                                                 })
                                             }
                                         </tbody>
@@ -94,13 +84,13 @@ const CarouselTable = () => {
                                         <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
                                             <button onClick={prevPage} className="page-link"><i className={`mdi mdi-arrow-left-bold-circle-outline  ${currentPage === 1 ? 'text-dark' : ''}`}></i></button>
                                         </li>
-                                        {Array.from({ length: Math.ceil(carousel.length / itemsPerPage) }, (_, i) => (
+                                        {Array.from({ length: Math.ceil(adminCarousels && adminCarousels.length / itemsPerPage) }, (_, i) => (
                                             <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
                                                 <button onClick={() => paginate(i + 1)} className="page-link">{i + 1}</button>
                                             </li>
                                         ))}
-                                        <li className={`page-item ${currentPage === Math.ceil(carousel.length / itemsPerPage) ? 'disabled' : ''}`}>
-                                            <button onClick={nextPage} className={`page-link`}><i className={`mdi mdi-arrow-right-bold-circle-outline ${currentPage === Math.ceil(carousel.length / itemsPerPage) ? 'text-dark' : ''}`}></i></button>
+                                        <li className={`page-item ${currentPage === Math.ceil( adminCarousels && adminCarousels.length / itemsPerPage) ? 'disabled' : ''}`}>
+                                            <button onClick={nextPage} className={`page-link`}><i className={`mdi mdi-arrow-right-bold-circle-outline ${currentPage === Math.ceil(adminCarousels && adminCarousels.length / itemsPerPage) ? 'text-dark' : ''}`}></i></button>
                                         </li>
                                     </ul>
                                 </nav>

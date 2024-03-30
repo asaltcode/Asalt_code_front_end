@@ -8,34 +8,77 @@ import SyllabusCard from './Helper/SyllabusCard';
 import SyllabusTopic from './Helper/SyllabusTopic';
 import Loading from '../../../animation/Loading';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../../Redux/CartSlicer';
+// import { addToCart } from '../../../Redux/Slices/CartsSlicer';
 import BgAnimaiton from '../../../components/BgAnimaiton';
 import {endLoading, onLoading} from "../../../Redux/loaderSlicer"
+import { getCourse } from '../../../Redux/Actions/CourseActions';
+import NotFound from '../../../animation/NotFound';
+import { addCart } from '../../../Redux/Actions/CartsActions';
+import MetaData from '../../../common/MetaData';
+import { getSyllabus } from '../../../Redux/Actions/SyllabusActions';
 
 const CourseDisclosure = () => {
+    
     const params = useParams()
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const courses = useSelector(state => state.Course).filter(course => course._id === params.id)
-    const course = courses[0];
-    const user = useSelector(state => state.user)
-    const [syllabus, setSyllabus] =useState([])
+    const {loading, error, course} = useSelector(state => state.courseState)
+    const {syllabus} = useSelector(state => state.syllabusState)
+    const {myCourses} = useSelector(state => state.paidState)
+    const {carts} = useSelector(state => state.cartsState)
     const [paid, setPaid] = useState(false)
-    const [styles, setStyles] =useState(0)
-    const [loading, setLoading] = useState(null)
-    const getSyllabus = async () =>{  //Get all syllabus and topic by course id
-        setLoading(true)
-        try {
-            const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_NORMAL.path}/${params.id}`, {authenticate: ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_NORMAL.authenticate})
-            setSyllabus(res.data.syllabus)         
-        } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.message || error.message)   
-        }
-        finally{
-            setLoading(false)
-        }
+
+    const handleAddToCart = () =>{
+        dispatch(addCart(params.id, carts))
+       navigate("/purchase")
     }
+//     const courses = useSelector(state => state.Course).filter(course => course._id === params.id)
+
+//     const course = courses[0];
+//     const user = useSelector(state => state.user)
+    // const [syllabus, setSyllabus] =useState([{
+    //     "_id": "65dd8384cfd089b46f341836",
+    //     "title": "03). Xss bug",
+    //     "course_id": "65d5c47f15c827cd3e062b91",
+    //     "visibility": true,
+    //     "createdAt": "2024-02-27T05:29:06.182Z",
+    //     "items": [
+    //         {
+    //             "title": "1.) ( URL ) Uniform Resous Lo",
+    //             "syllabus_id": "65dd8384cfd089b46f341836",
+    //             "duration": 148.236133,
+    //             "public_id": "courseVideo/topic-1709483317823"
+    //         },
+    //         {
+    //             "title": "Https Interceapt",
+    //             "syllabus_id": "65dd8384cfd089b46f341836",
+    //             "duration": 763.239909,
+    //             "public_id": "courseVideo/topic-1709553861859"
+    //         },
+    //         {
+    //             "title": "Motivation",
+    //             "syllabus_id": "65dd8384cfd089b46f341836",
+    //             "duration": 17.966667,
+    //             "public_id": "courseVideo/topic-1709554522946"
+    //         }
+    //     ]
+    // }])
+//     const [paid, setPaid] = useState(false)
+    const [styles, setStyles] =useState(0)
+//     const [loading, setLoading] = useState(null)
+//     const getSyllabus = async () =>{  //Get all syllabus and topic by course id
+//         setLoading(true)
+//         try {
+//             const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_NORMAL.path}/${params.id}`, {authenticate: ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_NORMAL.authenticate})
+//             setSyllabus(res.data.syllabus)         
+//         } catch (error) {
+//             console.log(error)
+//             toast.error(error.response.data.message || error.message)   
+//         }
+//         finally{
+//             setLoading(false)
+//         }
+//     }
 
     const formatTime = (duration) => {  //Video duration converter
         const hours = Math.floor(duration / 3600);
@@ -53,74 +96,43 @@ const CourseDisclosure = () => {
     }));
     };
 
-    const handleAddToCart = async (course_id) =>{
-        const course = courses.filter(data => data._id === course_id)
-        const {_id, title, price, thumbnail} = course[0]
-        dispatch(addToCart({         
-            thumbnail,
-            price,
-            title,
-            course_id : _id,
-            user_id: user._id,
-        }))
-        // setLoading(true)
-        try {
-            dispatch(onLoading)
-            const cart = await AxiosService.post(`${ApiRoutes.ADD_TO_CART.path}`, {course_id}, {authenticate: ApiRoutes.ADD_TO_CART.authenticate})
-            if(cart.status === 200){
-            //    navigate('/purchase')
-            toast.success('Add To Cart')
-            }
-            else if(cart.status === 208){
-                navigate('/purchase')
-            }        
-        } catch (error) {
-            console.log(error)
-            toast.error(error.response.data.message || error.message)   
-        }
-        finally{
-            // setLoading(false)
-            dispatch(endLoading)
-        }
 
-    }
 
-  const getCourseAccess = async () =>{
-    setLoading(true)
-    try {
-        const res = await AxiosService.post(ApiRoutes.COURSE_ACCESS.path, {course_id: params.id}, {authenticate: ApiRoutes.COURSE_ACCESS.authenticate} )
-        if(res.status === 202){
-            setPaid(true)
-        }
-        else if(res.status === 406){
-            setPaid(false)
-       }
-    } catch (error) {
-        console.log(error)
-    }finally{
-        setLoading(false)
-    }
-    }
-   
+const handlePaidStatus = (id) => {
+   let status = myCourses &&  myCourses.filter(data => data._id === id)
+   if( myCourses && status.length !== 0){
+       setPaid(true)
+    return
+   }
+   setPaid(false)
+}
+
 useEffect(()=>{
-    getCourseAccess()
-    getSyllabus()
+    dispatch(getCourse(params.id))
+    dispatch(getSyllabus(params.id))
+    handlePaidStatus(params.id)
 },[])
+
+useEffect(()=>{
+   console.log()
+},[error])
    
   return (
     <>
     {loading && <Loading/>}
     <div className="container">        
     <BgAnimaiton/>
-    {course && (
-                <div>
+   
+    {!error ? <>
+    {course &&   <div>
+        <MetaData title={course.title}/>
                     <div className='course-title'>
                         <h1 className='course-header'>{course.title}</h1>
                         <div className="buy-btn m-auto">
                             {paid ? (
                                 <button className='btn text-light bg-primary p-3 rounded-pill mb-4' onClick={() => navigate(`/video/${params.id}`)}>Continue</button>
                             ) : (
-                                <button onClick={() => handleAddToCart(course._id)} className='btn btn-primary p-3 rounded-pill mb-4'>Buy course for ₹{course.price}</button>
+                                <button onClick={() => handleAddToCart("course._id")} className='btn btn-primary p-3 rounded-pill mb-4'>Buy course for ₹{course.price}</button>
                             )}
                         </div>
                         <h6 className='text-center'>Instructor: {course.author} - Asalt Code Language: TAMIL</h6>
@@ -133,7 +145,7 @@ useEffect(()=>{
                         </div>
                     </div>
                 </div>
-            )}
+            }
             <hr className='text-light' />
             <div className='syllabus'>
                 <h1 className='py-4'>Syllabus</h1>
@@ -141,7 +153,7 @@ useEffect(()=>{
                     <div className="syllabus container " id="container">
                         <div className="accordion-syllabus-item ">
                             {
-                            syllabus.map((data, index) =>{
+                           syllabus && syllabus.map((data, index) =>{
                             return (
                             <div key={index}>
                                 <SyllabusCard totalTopics={data.items.length} title={data.title} syllabusId={index} setStyles={handleToggleAccordion}
@@ -153,6 +165,7 @@ useEffect(()=>{
                     </div>
                 </div>
             </div>
+            </> : <NotFound/>}
         </div>
     </>
   )

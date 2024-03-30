@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import AxiosService from '../../../utils/AxiosService'
 import ApiRoutes from '../../../utils/ApiRoutes'
 import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { delCourse } from '../../../Redux/AdminActions/AdminCourseActions'
 
 const CourseTableList = ({thumbnail, id , course, price, setCourse, title, category, visibility, createdAt}) => {
   const scrollToElement = id =>  document.getElementById(id) && document.getElementById(id).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}) 
-
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const findIndex = (array, id) =>{
     for(let i in array){
@@ -19,27 +21,18 @@ const handleEdit = async (id) =>{
    scrollToElement('edit')
 }
 const handleDelete = async (id) =>{
-    try {
-        const index = findIndex(course, id)
-        let newArray = [...course];
-        newArray.splice(index, 1)
-        const result = confirm(`Are you sure you want to delete this '${title}' course?`);  
-        if(result){
-        setCourse(newArray)  
-        const res = await AxiosService.delete(`${ApiRoutes.DEL_COURSE.path}/${id}`,{authenticate: ApiRoutes.DEL_COURSE.authenticate})
-        if(res.status === 200)
-          toast.error("User Delete successfully")      
-        }
-    } catch (error) {
-        console.log(error)
-    }
+  const result = confirm(`Are you sure you want to delete this '${title}' course?`);  
+  if(result){
+    dispatch(delCourse(id))
+  }
 }
   return (
     <>
     <tr>
             <td>
                 <div className="form-check form-check-muted m-0">
-                    <input className="form-check-input" type="checkbox" />
+                    <input className=
+                    "form-check-input" type="checkbox" />
                 </div>
             </td>
             <td>{title}</td>

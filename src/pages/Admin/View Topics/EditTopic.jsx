@@ -5,11 +5,16 @@ import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useDispatch, useSelector } from 'react-redux'
+import { getTopicById } from '../../../Redux/AdminActions/AdminTopicActions'
+import AdminApi from '../../../utils/ApiRouters/AdminApis'
 
 const EditTopic = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const {topic} = useSelector(state => state.topicsState)
     const params = useParams()
-    const [syllabus_id, setSyllabusId] = useState("")
+
     let [initialValues, setInitialValues] = useState(
         {
             title: "",
@@ -18,20 +23,6 @@ const EditTopic = () => {
         }
     )
    
-const getTopic = async () =>{
-    try {
-        const res =  await AxiosService.post(`${ApiRoutes.GET_TOPIC_BY_ID.path}/${params.id}`,{authenticate: ApiRoutes.GET_TOPIC_BY_ID.authenticate})
-        if(res.status === 200){
-            const {title, visibility, public_id, syllabus_id} = res.data.topic
-            setInitialValues({title, visibility, public_id})
-            setSyllabusId(syllabus_id)
-            }
-    } catch (error) {
-        console.log(error)
-        toast.error(error.response.data.message || error.message)           
-    }
-}
-  
   
   let formik = useFormik({ //Formik Validations
   initialValues: initialValues,
@@ -45,11 +36,11 @@ const getTopic = async () =>{
   onSubmit: async (values) =>{
     const {id} = params;
     try {        
-        const res = await AxiosService.put(`${ApiRoutes.EDIT_TOPIC.path}/${id}`,values, {authenticate: ApiRoutes.EDIT_TOPIC.authenticate})
+        const res = await AxiosService.put(`${AdminApi.TOPIC_BY_ID.path}/${id}`, values)
         console.log(res)
-        if(res.status === 200){
+        if(res.status === 201){
            toast.success(res.data.message)
-           navigate(`/admin/syllabus/topic/${syllabus_id}`)
+           navigate(`/admin/syllabus/topic/${topic.syllabus_id}`)
         }
     } catch (error) {
         console.log(error)
@@ -58,8 +49,14 @@ const getTopic = async () =>{
   }
   })
   useEffect(()=>{
-    getTopic()
+    dispatch(getTopicById(params.id))
   },[])
+
+  useEffect(()=>{
+     if(topic){
+        setInitialValues(topic)
+     }
+  },[topic])
   
   return (
     <>
@@ -104,7 +101,7 @@ const getTopic = async () =>{
                             </div>                        
                         </div>                             
                         <button type="submit" className="btn btn-primary mr-2 text-dark">Submit</button>
-                        <button className="btn btn-warning text-dark" onClick={()=> navigate(`/admin/syllabus/topic/${syllabus_id}`)}>Cancel</button>
+                        <button className="btn btn-warning text-dark" onClick={()=> navigate(`/admin/syllabus/topic/${topic.syllabus_id}`)}>Cancel</button>
                     </form>
                 </div>
             </div>

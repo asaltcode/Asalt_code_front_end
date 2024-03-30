@@ -1,26 +1,27 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import "../../assets/style/Login.css"
 // import "../style/signup.css"
 import { useNavigate, Link } from 'react-router-dom'
 import EmailVerifyAnim from '../../animation/EmailVerifyAnim'
 import { useFormik } from 'formik'
 import * as Yup from "yup"
-import AxiosService from '../../utils/AxiosService'
-import ApiRoutes from '../../utils/ApiRoutes'
 import { toast } from 'react-toastify'
 import Loading from '../../animation/Loading'
+import { clearAuthError, login } from '../../Redux/Actions/UserActions'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 // import useAuth from '../hook/useAuth'
 
 const Login = () => {
     // const {setAuth} = useAuth()
-  
+    const dispatch = useDispatch()
+    const {loading, error, isAuthenticated} = useSelector(state => state.authState)
     const navigate = useNavigate()
     const [toggleEye, setToggleEye] = useState("fa-eye-slash")
     const [passwordType, setPasswordType] = useState("password")
     const [scale, setScale] = useState(1);
-    const [loading, setLoading] = useState(null)
+    // const [loading, setLoading] = useState(null)
     const [beEmailError, setBeEmailError] = useState(null)
     const [bePasswordError, setBePasswordError] = useState(null)
 
@@ -45,37 +46,52 @@ const Login = () => {
         password: Yup.string().required('Password is Required'),
       }),
       onSubmit: async (values) =>{
-         try {
-            setLoading(true)
-            const res = await AxiosService.post(ApiRoutes.LOG_IN.path, values, {authenticate: ApiRoutes.LOG_IN.authenticate})
-            localStorage.setItem('token', res.data.token)
-            localStorage.setItem('name', res.data.name)
-            console.log(res)
-            if(res.status === 200){
-                const user = await AxiosService.get(ApiRoutes.GET_USER.path, {authenticate : ApiRoutes.GET_USER.authenticate })
-                if(res?.data?.role === 'admin' &&  user?.data?.user?.role === "admin"){
-                    navigate('/admin')              
-                }
-                else if(res?.data?.role === 'user' && user?.data?.user?.role === "user" ){
-                    navigate('/')
-                }
-            }
-            else if(res.status === 202){
-                toast.info(res.data.message)   
-            }
+        const {email, password} = values
+       
+        dispatch(login(email, password))
+        //  try {
+        //     setLoading(true)
+        //     // const res = await AxiosService.post(ApiRoutes.LOG_IN.path, values, {authenticate: ApiRoutes.LOG_IN.authenticate})
+        //     const res = await AxiosService.post("/auth/singin",values)
+        //     localStorage.setItem('token', res.data.token)
+        //     localStorage.setItem('name', res.data.name)
+        //     console.log(res)
+        //     if(res.status === 200){
+        //         const user = await AxiosService.get(ApiRoutes.GET_USER.path, {authenticate : ApiRoutes.GET_USER.authenticate })
+        //         if(res?.data?.role === 'admin' &&  user?.data?.user?.role === "admin"){
+        //             navigate('/admin')              
+        //         }
+        //         else if(res?.data?.role === 'user' && user?.data?.user?.role === "user" ){
+        //             navigate('/')
+        //         }
+        //     }
+        //     else if(res.status === 202){
+        //         toast.info(res.data.message)   
+        //     }
            
-         } catch (error) {
-            console.log(error)
-           toast.error(error.response.data.message || error.message)   
-            error.response.data.field === 'email' ? setBeEmailError(error.response.data.message): setBePasswordError(error.response.data.message)            
-         }finally{
-            setLoading(false)
-         }
+        //  } catch (error) {
+        //     console.log(error)
+        //    toast.error(error.response.data.message || error.message)   
+        //     error.response.data.field === 'email' ? setBeEmailError(error.response.data.message): setBePasswordError(error.response.data.message)            
+        //  }finally{
+        //     setLoading(false)
+        //  }
       }
     })
-  
+  useEffect(()=>{
+    if(isAuthenticated){
+        navigate("/")
+    }
+    if(error){
+      toast(error, {
+        type: "error",
+        onOpen: ()=> dispatch(clearAuthError)
+      })
+      return
+    }
+  },[isAuthenticated, error, dispatch])
   return (<>
-  {loading && <Loading/>}
+  {loading ? <Loading/> : 
   <section>
         <button className='button' onClick={()=>navigate("/")} style={{marginTop: '20px', marginLeft: "30px", width: "50px" ,position: 'fixed'} }>
             <i className="fa-solid fa-arrow-left"></i>
@@ -108,6 +124,7 @@ const Login = () => {
             </form>
         </div>
     </section>
+}
   </> )
 }
 

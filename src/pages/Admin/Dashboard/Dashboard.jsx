@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-// import "../assets/vendors/mdi/css/materialdesignicons.min.css"
-// import "../assets/vendors/css/vendor.bundle.base.css"
-// import "../assets/vendors/jvectormap/jquery-jvectormap.css"
-// import "../assets/vendors/flag-icon-css/css/flag-icon.min.css"
-// import "../assets/vendors/owl-carousel-2/owl.carousel.min.css"
-// import "../assets/vendors/owl-carousel-2/owl.theme.default.min.css"
-// import "../../../assets/css/style.css";
 import "../../../assets/css/test.css";
-// import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Topbar from "../Global/Topbar";
 import Sidebar from "../Global/Sidebar";
 import { Outlet } from "react-router-dom";

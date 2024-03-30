@@ -7,17 +7,28 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import {Autoplay, EffectCoverflow, Pagination,  Navigation } from 'swiper/modules';
-import {useSelector } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
+import { getCarousels } from '../../../Redux/Actions/CarouselActions';
+import { toast } from 'react-toastify';
+import Loading from "../../../animation/Loading"
 const Sliders = () => {
-  const crousel = useSelector(state => state.Crousel)
+  const dispatch = useDispatch()
+  const {carousels, loading, error} = useSelector(state => state.carouselsState)
+  useEffect(()=>{
+    if(error){
+      toast.error(error)
+     return () => {}; 
+    }
+    dispatch(getCarousels())
+  },[error, dispatch])
   return (
     <>
-    <div className="container-fluid">
-        <Swiper effect={'coverflow'} grabCursor={true} centeredSlides={true} loop={true} autoplay={{ delay: 1500, disableOnInteraction: false, }} slidesPerView={'auto'} coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 2.5, }} 
+     {loading ? <Loading/>: <div className="container-fluid">
+        <Swiper effect={'coverflow'} grabCursor={true}  centeredSlides={true} loop={true} autoplay={{ delay: 1500, disableOnInteraction: false, }} slidesPerView={"auto"} coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 2.5, }} 
         pagination={{ el: '.swiper-pagination' , clickable: true }} navigation={{nextEl: '.swiper-button-next' , prevEl: '.swiper-button-prev' , clickable: true, }} modules={[EffectCoverflow, Pagination, Navigation, Autoplay]} className="swiper_container"> 
             {/* Show all Slider images */}
             <SwiperSlide><img src="https://images.pexels.com/photos/3937174/pexels-photo-3937174.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" /></SwiperSlide>
-            {crousel.map( (images, index) =>(<SwiperSlide key={index}><img src={images.imageUrl} alt={images.imageAlt} /></SwiperSlide>))}
+            {carousels && carousels.map( (images, index) =>(<SwiperSlide key={index}><img src={images.imageUrl} alt={images.imageAlt} /></SwiperSlide>))}
             <SwiperSlide><img src="https://images.pexels.com/photos/1762851/pexels-photo-1762851.jpeg?auto=compress&cs=tinysrgb&w=600" /></SwiperSlide>
           <div className="slider-controler">
               <div className="swiper-button-prev slider-arrow">
@@ -32,7 +43,7 @@ const Sliders = () => {
               <div className="swiper-pagination"></div>
           </div>
         </Swiper>
-    </div>
+    </div>}
     </>
   )
 }

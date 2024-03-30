@@ -3,7 +3,7 @@ import ApiRoutes from "../../../utils/ApiRoutes"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 
-const UserTableList = ({users, setUsers, id, userEmail, userName, userLastName, userRole, userVerify, createdAt}) =>{
+const UserTableList = ({id, userEmail, userName, userLastName, userRole, userVerify, createdAt}) =>{
     //Scrolls to the correct ID
     const scrollToElement = id =>  document.getElementById(id) && document.getElementById(id).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}) 
     const navigate = useNavigate()   
@@ -21,17 +21,17 @@ const UserTableList = ({users, setUsers, id, userEmail, userName, userLastName, 
     }
 
     const handleDelete = async (id, userName) =>{
-        const index = findIndex(users, id)        
-        let newArray = [...users]
-        newArray.splice(index, 1)
-        const result = confirm(`Are you sure you want to delete this '${userName}'?`);
-        if (result) {
-            setUsers(newArray)
-            const res = await AxiosService.delete(`${ApiRoutes.DEL_USER_BY_ID.path}${id}`, {authenticate : ApiRoutes.DEL_USER_BY_ID.authenticate})
-            if(res.status === 200){
-                toast.error("User Delete successfully")
-            }
-        } 
+        // const index = findIndex(users, id)        
+        // let newArray = [...users]
+        // newArray.splice(index, 1)
+        // const result = confirm(`Are you sure you want to delete this '${userName}'?`);
+        // if (result) {
+        //     setUsers(newArray)
+        //     const res = await AxiosService.delete(`${ApiRoutes.DEL_USER_BY_ID.path}${id}`, {authenticate : ApiRoutes.DEL_USER_BY_ID.authenticate})
+        //     if(res.status === 200){
+        //         toast.error("User Delete successfully")
+        //     }
+        // } 
     }
     return (
     <>
