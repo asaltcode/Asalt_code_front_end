@@ -1,4 +1,3 @@
-import axios from "axios";
 import AxiosService from "../../utils/AxiosService";
 import ApiRoutes from "../../utils/ApiRoutes";
 import {
