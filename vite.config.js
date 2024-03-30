@@ -11,7 +11,7 @@ export default defineConfig({
     // Enable hot module replacement (HMR) for faster development
     hmr: true,
     proxy: {
-      '/': {
+      '/api': {
         target: 'https://asalt-code-back-end-d9ge.vercel.app',
         changeOrigin: true,
         
