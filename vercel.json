@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "https://asalt-code-back-end-d9ge.vercel.app/api/:1"
+            "destination": "https://asalt-code-back-end-d9ge.vercel.app/api/"
         },
         {
             "source": "/health",
