@@ -4,8 +4,13 @@ import animationData from './json/SuccessAnimation.json'
 import { toast } from 'react-toastify'
 import AxiosService from '../utils/AxiosService'
 import ApiRoutes from '../utils/ApiRoutes'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const EmailVerifyAnim = () => {
+    const navigate = useNavigate()
+    const {user, isAuthenticated} = useSelector(state => state.authState)
+    const email = sessionStorage.getItem('email')
     const handleResendEmail = async () =>{
       const {email, name} = sessionStorage
      try {
@@ -30,6 +35,11 @@ const EmailVerifyAnim = () => {
         autoplay: true,
       });
     }, []); // Run the effect once when the component mounts
+    useEffect(()=>{
+      if(isAuthenticated && user){
+        navigate("/")
+      }
+    },[isAuthenticated, user])
   return (
     <>
     {/* The container for the Lottie animation */}
@@ -39,6 +49,7 @@ const EmailVerifyAnim = () => {
          <h1>Verify Your Email</h1> <br />
         <p className="lh-1" >Please check your email for a link to verify your email adress</p>
         <p className="lh-1">Once verified, you'll be able to continue.</p>
+        <p className="lh-1 text-primary">{email}</p>
     </div>
     {/* This is a animation */}
    <div id='animation-container' className='overflow-hidden' style={{height: '400px', width: '400px', position: "fixed", transition: "none"}}></div>

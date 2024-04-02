@@ -7,16 +7,24 @@ import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import UploadLoading from '../../../animation/UploadLoading'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAdminCourses } from '../../../Redux/AdminActions/AdminCourseActions'
+import { getSyllabus } from '../../../Redux/Actions/SyllabusActions'
 
 const AddTopic = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const {courses, error} = useSelector(state => state.adminCoursesState)
+    const {syllabus} = useSelector(state => state.syllabusState)
     const [loading, setLoading] = useState(null)
+    const videoRef = useRef(null);
     const [file, setFile] = useState(null);
+    const [mediaStream, setMediaStream] = useState("");
     const [courseUrl, setCourseUrl] = useState("")
     // const [duration, setDuration] = useState("")
-    // const [courseId, setCourseId] = useState("")
+    const [courseId, setCourseId] = useState("")
     // const [public_id, setPublic_id] = useState("")
-    const [syllabus, setSyllabus] = useState([])
+    // const [syllabus, setSyllabus] = useState([])
     const [course, setCourse] = useState([])
     const urlRef = useRef({duration: "", topic_video_id: "", public_id: "", video_url: ""})
 
@@ -38,9 +46,9 @@ const AddTopic = () => {
 //     }
 //     }
     
-const onChange = (e) => {
-setFile(e.target.files[0]);
-};
+// const onChange = (e) => {
+// setFile(e.target.files[0]);
+// };
 const config = {
     headers: {
         'Content-Type': 'multipart/form-data',
@@ -53,70 +61,49 @@ const config = {
 
 
 let handleUpload = async (e) =>{ // handle video upload
-    setLoading(true)
-  try {
-    const file = e.target.files[0]
-    const formData = new FormData();
-          formData.append('topic', file);
-          console.log(formData)
-          if(file){
-            const res = await AxiosService.post(ApiRoutes.VIDEO_UPLOAD.path, formData, {
-                headers: {'Content-Type': 'multipart/form-data'}
-            })
-            if(res.status === 200){
-                toast.success("file upload successfully")
-                console.log(res.data)
-                // setCourseUrl(res.data.url)
-                urlRef.current = {
-                     duration: res.data.duration,
-                     topic_video_id: res.data.id,
-                     public_id: res.data.public_id}
-                // setCourseId(res.data.id)
-                // setDuration(res.data.duration)
-                // setPublic_id(res.data.public_id)
-               }
-          }else{
-            toast.error("Select file")
-          }      
+//     setLoading(true)
+//   try {
+//     const file = e.target.files[0]
+//     const formData = new FormData();
+//           formData.append('topic', file);
+//           console.log(formData)
+//           if(file){
+//             const res = await AxiosService.post(ApiRoutes.VIDEO_UPLOAD.path, formData, {
+//                 headers: {'Content-Type': 'multipart/form-data'}
+//             })
+//             if(res.status === 200){
+//                 toast.success("file upload successfully")
+//                 console.log(res.data)
+//                 // setCourseUrl(res.data.url)
+//                 urlRef.current = {
+//                      duration: res.data.duration,
+//                      topic_video_id: res.data.id,
+//                      public_id: res.data.public_id}
+//                 // setCourseId(res.data.id)
+//                 // setDuration(res.data.duration)
+//                 // setPublic_id(res.data.public_id)
+//                }
+//           }else{
+//             toast.error("Select file")
+//           }      
       
-  } catch (error) {
-    console.log(error)
-    toast.error(error.response.data.message || error.message)     
-  }finally{
-    setLoading(false)
-  }
+//   } catch (error) {
+//     console.log(error)
+//     toast.error(error.response.data.message || error.message)     
+//   }finally{
+//     setLoading(false)
+//   }
 }
 
-const  getCourse = async () =>{
-    try {
-     const res = await AxiosService.post(ApiRoutes.GET_ALL_COURSE.path, {authenticate: ApiRoutes.GET_ALL_COURSE.authenticate})            
-         setCourse(res.data.courses)
-         } catch (error) {
-             console.log(error)
-            toast.error(error.response.data.message || error.message)   
-         }
- }
-
-const findSyllabus = async (id) =>{
-    console.log(id)
-    try {
-        const res = await AxiosService.post(`${ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_ADMIN.path}/${id}`, {authenticate: ApiRoutes.GET_SYLLABUS_BY_COURSE_ID_ADMIN.authenticate})
-        console.log(res.data)
-        if(res.status === 200){
-            setSyllabus(res.data.syllabus)
-        }
-    } catch (error) {
-        console.log(error)
-            toast.error(error.response.data.message || error.message)   
-    }
-}
-
+//find All syllabus by course id
+const findSyllabus = async (id) => dispatch(getSyllabus(id))
 
 
 let formik = useFormik({ //Formik Validations
 initialValues: initialValues,
 validationSchema: Yup.object({
     title: Yup.string().required('Title is required').max(60,'Title can not exceed 30 characters').min(5,'Title can not be shorter than 5 leters'),
+    syllabus_id: Yup.string().required('Syllabus_id is required'),
     visibility: Yup.bool().required("Visibility is required"),
     topic_video: Yup.string().required("File is required")    
 }),
@@ -124,28 +111,50 @@ validationSchema: Yup.object({
 author:Yup.string().required("Role is required"),
 enableReinitialize:true,
 onSubmit: async (values,  { resetForm }) =>{
+    const {title, visibility, syllabus_id, topic_video} = values
    try {
-     values.topic_video = urlRef.current.video_url
-     const res = await AxiosService.post(ApiRoutes.ADD_TOPIC.path, {...values,  topic_video_id: courseId, duration, public_id}, {authenticate: ApiRoutes.ADD_TOPIC.authenticate})
-     if(res.status === 200){
+    setLoading(true)
+    const formData = new FormData();
+    formData.append("title", title)
+    formData.append("visibility", visibility)
+    formData.append("syllabus_id", syllabus_id)
+    formData.append("topic_video", topic_video)
+    console.log(values)
+    //  values.topic_video = urlRef.current.video_url
+     const res = await AxiosService.post("/admin/topic/new", formData)
+     if(res.status === 201){
          toast.success("Topic Added Successufully")
          resetForm(initialValues)
+        //  values.topic_video = ""
      }
    } catch (error) {
     console.log(error)
     toast.error(error.response.data.message || error.message)     
+   }finally{
+    setLoading(false)
    }
 }
 })
 
+const handleChange = (e) => {
+    const file = e.target.files[0]
+    formik.setFieldValue("topic_video", file);
+    if (file.type.indexOf('video') === -1) {
+        alert('Unsupported file format');
+        return;
+      }
+  
+      const url = URL.createObjectURL(file);
+      videoRef.current.src = url;
+      videoRef.current.play();
+  };
+
 useEffect(()=>{
-    getCourse()   
+    dispatch(getAdminCourses)
 },[])
   return (
     <>
      {loading && <UploadLoading/>}
-     {`hit ${urlRef.current}`}
-     {console.log(urlRef.current)}
     <div id='edit' className="col-12 grid-margin">
         <div  className="card">
             <div className="card-body">
@@ -183,7 +192,7 @@ useEffect(()=>{
                                     <select className="form-control text-light" onChange={(e)=>findSyllabus(e.target.value)}>
                                         <option value="">Select Course</option>   
                                         {
-                                            course.map((data, index)=>{
+                                            courses && courses.map((data, index)=>{
                                                 return <option key={index} value={data._id}>{data.title}</option>   
                                             })
                                         }                                    
@@ -198,7 +207,7 @@ useEffect(()=>{
                                     <select name='syllabus_id' className="form-control text-light" onChange={formik.handleChange} value={formik.values.syllabus_id}>
                                         <option value="">Select Syllabus</option>   
                                         {
-                                            syllabus.map((data, index)=>{
+                                            syllabus && syllabus.map((data, index)=>{
                                                 return <option key={index} value={data._id}>{data.title}</option>   
                                             })
                                         }                                    
@@ -207,6 +216,8 @@ useEffect(()=>{
                                 </div>
                             </div>
                         </div>     
+                    </div>   
+                    <div className="row">  
                         <div className="col-md-6">
                             <div className="form-group row">
                                 <label htmlFor="file" className="col-sm-3 col-form-label text-light">File upload</label>
@@ -218,9 +229,16 @@ useEffect(()=>{
                                         <button className="btn btn-primary" type="button">Upload</button>
                                     </div> */}
 
-                               <input id="file" name="topic_video" type="file" accept="video/mp4" onChange={handleUpload} className="form-control" />
+                               <input id="file" name="topic_video" type="file" accept="video/mp4" onChange={handleChange} className="form-control"/>
                                {/* <button className='btn btn-warning text-dark rounded-3 p-2' type='button' onClick={handleUpload}>Upload</button> */}
-                               {courseUrl !== "" || formik.errors.topic_video ? (<div className="errorMes">{formik.errors.topic_video}</div>) : null} 
+                               {formik.errors.topic_video ? (<div className="errorMes">{formik.errors.topic_video}</div>) : null} 
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-6">
+                            <div className="form-group row">                              
+                                <div className="col-sm-12">
+                                    <video ref={videoRef} controls></video>
                                 </div>
                             </div>
                         </div>

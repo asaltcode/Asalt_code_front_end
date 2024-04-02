@@ -42,7 +42,6 @@ const AuthSlicer = createSlice({
     signupSuccess(state, action) {
       return {
         loading: false,
-        isAuthenticated: true,
         user: action.payload.user,
       };
     },

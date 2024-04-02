@@ -56,6 +56,12 @@ const syllabusSlicer = createSlice({
         error: action.payload,
       };
     },
+    getSyllabusByCourseIdReq(state, action){
+      return {
+        ...state,
+        loading: true
+      };
+    }
   },
 });
 

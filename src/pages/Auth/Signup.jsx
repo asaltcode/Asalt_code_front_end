@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../assets/style/signup.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -6,11 +6,14 @@ import * as Yup from 'yup';
 import AxiosService from '../../utils/AxiosService'
 import ApiRoutes from '../../utils/ApiRoutes'
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { onLoading, endLoading } from '../../Redux/loaderSlicer';
+import { signup } from '../../Redux/Actions/UserActions';
+import Loading from '../../animation/Loading';
 
 const Signup = () => {
   const dispatch = useDispatch()
+  const {user, isAuthenticated, loading} = useSelector(state => state.authState)
   const navigate = useNavigate()
   const [toggleEye, setToggleEye] = useState("fa-eye-slash");
   const [passwordType, setPasswordType] = useState("password");
@@ -47,7 +50,9 @@ const Signup = () => {
     }),
     onSubmit: async (values)=>{
       const {name, email, password} = values
-      const datas = {name : cap(name), email, password}
+      const userData = {name : cap(name), email, password}
+      console.log(userData)
+      dispatch(signup(userData))
 
 
       
@@ -72,8 +77,19 @@ const Signup = () => {
     }
   })
 
+  useEffect(()=>{
+    if(!isAuthenticated && user){
+      sessionStorage.setItem("email", user.email)
+     return navigate("/email-verify")
+    }
+    if(isAuthenticated && user){
+      navigate("/")
+    }
+  },[user])
+
   return (
     <>
+    {loading && <Loading/>}
     <div className="form-container">
         <form onSubmit={formik.handleSubmit} className="signup-form" id="forms">
             <h1 className="top-head">Create Account</h1>

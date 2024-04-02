@@ -38,7 +38,7 @@ export const clearAuthError = (dispatch) => {
 export const signup = (userData) => async (dispatch) => {
   try {
     dispatch(signupRequest());
-    const { data } = await AxiosService.post(SIGN_UP.path, { userData });
+    const { data } = await AxiosService.post(SIGN_UP.path, userData);
     dispatch(signupSuccess(data));
   } catch (error) {
     dispatch(signupFail(error.response.data.message));

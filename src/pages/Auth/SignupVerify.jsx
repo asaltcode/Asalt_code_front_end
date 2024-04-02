@@ -2,22 +2,25 @@ import React,{useState, useEffect} from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import AxiosService from '../../utils/AxiosService'
 import ApiRoutes from '../../utils/ApiRoutes'
+import { useDispatch } from 'react-redux'
+import { loadUser } from '../../Redux/Actions/UserActions'
 
 const SignupVerify = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [verifyStatus, setVerifyStatus] = useState("")
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
   const getData = async ()=>{
     try {
       const token = queryParams.get('token');
-      const res = await AxiosService.get(`${ApiRoutes.VERIFY.path}?token=${token}`,{authenticate: ApiRoutes.VERIFY.authenticate})
-      if(res.status === 200){
+      const res = await AxiosService.post(`/auth/signup/verify?token=${token}`)
+      if(res.status === 201){
         setVerifyStatus(res.data.message)
-       await localStorage.setItem("token", res.data.token)
-        setTimeout(()=>{
-          navigate('/login')
-        },3000)
+        setTimeout(async ()=>{
+         await dispatch(loadUser)
+          navigate('/')
+        },2000)
       }
     } catch (error) {
       setVerifyStatus(error.response.data.message)

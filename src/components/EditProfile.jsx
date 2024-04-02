@@ -13,7 +13,7 @@ const EditProfile = () => {
     const {user, error, loading} = useSelector(state => state.authState)
     const navigate = useNavigate()
     const [avatar, setAvatar] = useState("");
-    const [avatarPreview, setAvatarPreview] = useState("../../public/defaultProfile.png");
+    const [avatarPreview, setAvatarPreview] = useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png");
 
 
     let [initialValues, setInitialValues] = useState(
@@ -23,7 +23,7 @@ const EditProfile = () => {
             email: "",
             gender: "",
             dob: "",
-          }
+        }
     )
 
 
@@ -87,7 +87,7 @@ useEffect(()=>{
                 <div className="row">
                 <div className="card-body col-md-4 border-right">
                     <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <img className="rounded-circle user-profile-image mt-5 object-fit-cover" src={user && user.avatar ? user.avatar : "../../public/defaultProfile.png"} height="150" width="150"  />
+                    <img className="rounded-circle user-profile-image mt-5 object-fit-cover" src={user && user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} height="150" width="150"  />
                         <span className="font-weight-bold text-light">{user && user.name}</span>
                         <span className="text-primary">{user && user.email}</span>
                         {/* <span>United States</span> */}
@@ -167,7 +167,7 @@ useEffect(()=>{
                                             </figure>
                                         </div>
                                         <div className='custom-file'>
-                                            <input type='file' name='avatar' className='custom-file-input' id='customFile' accept='image/' onChange={onChangeAvatar}/>
+                                            <input type='file' name='avatar' className='custom-file-input' id='customFile' accept='image/*' onChange={onChangeAvatar}/>
                                             <label className='custom-file-label col-form-label' htmlFor='customFile'>Choose Avatar</label>
                                         </div>
                                     </div>

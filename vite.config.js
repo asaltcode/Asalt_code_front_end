@@ -13,6 +13,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://asalt-code-back-end-d9ge.vercel.app',
+        // target: 'http://localhost:8000',
         changeOrigin: true,
         
       },

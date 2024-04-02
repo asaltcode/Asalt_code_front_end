@@ -84,7 +84,7 @@ const handleVideoEnded = () => {
                     <div className="col-12"> 
                        <div className="video-box-wraper">
                        <div className="video-box">                          
-                            <CloudinaryVideoPlayer publicId={video} cloudName={"dgnysns9a"} onEnded={handleVideoEnded} />                   
+                            <CloudinaryVideoPlayer publicId={video} cloudName={"dny3d7flg"} onEnded={handleVideoEnded} />                   
                         </div>
                           <div className="video-header">
                              <h1>{videoTitle}</h1>
